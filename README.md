@@ -1,6 +1,6 @@
 # Capacitor Text to Speech Plugin
 
-Capacitory community plugin for native HTTP requests, file download/uploads, and cookie management.
+Capacitory community plugin for text to speech engine.
 
 <!-- Badges -->
 <!-- <a href="https://npmjs.com/package/@capacitor-community/http">
