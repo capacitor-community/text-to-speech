@@ -1,5 +1,5 @@
 import { WebPlugin } from '@capacitor/core';
-import { TextToSpeechPlugin } from './definitions';
+import { TextToSpeechPlugin, TTSOptions } from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   constructor() {
@@ -8,10 +8,26 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
       platforms: ['web']
     });
   }
-
-  async echo(options: { value: string }): Promise<{value: string}> {
-    console.log('ECHO', options);
-    return options;
+  speak(options: TTSOptions): Promise<void> {
+    console.warn(options);
+    throw new Error("Method not implemented.");
+  }
+  stop(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+  getSupportedLanguages(): Promise<string> {
+    throw new Error("Method not implemented.");
+  }
+  openInstall(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+  setPitchRate(options: { pitchRate: number; }): Promise<void> {
+    console.warn(options);
+    throw new Error("Method not implemented.");
+  }
+  setSpeechRate(options: { speechRate: number; }): Promise<void> {
+    console.warn(options);
+    throw new Error("Method not implemented.");
   }
 }
 
