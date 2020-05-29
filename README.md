@@ -14,7 +14,7 @@ Capacitory community plugin for native HTTP requests, file download/uploads, and
 
 | Maintainer | GitHub | Social | Sponsoring Company |
 | -----------| -------| -------| -------------------|
-| Priyank | [priyankpat](https://github.com/priyankpat) | [N/A](https://twitter.com) | Ionic |
+| Priyank Patel | [priyankpat](https://github.com/priyankpat) | [N/A](https://twitter.com) | Ionic |
 
 Mainteinance Status: Actively Maintained
 
@@ -30,7 +30,7 @@ On iOS, no further steps are needed.
 On Android, register the plugin in your main activity:
 
 ```java
-import com.getcapacitor.plugin.http.Http;
+import com.getcapacitor.community.tts;
 
 public class MainActivity extends BridgeActivity {
   @Override
