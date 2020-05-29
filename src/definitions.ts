@@ -6,10 +6,11 @@ declare module "@capacitor/core" {
 
 export interface TextToSpeechPlugin {
   speak(options: TTSOptions): Promise<void>;
-  speak(text: string): Promise<void>;
   stop(): Promise<void>;
-  checkLanguage(): Promise<string>;
+  getSupportedLanguages(): Promise<string>;
   openInstall(): Promise<void>;
+  setPitchRate(options: { pitchRate: number; }): Promise<void>;
+  setSpeechRate(options: { speechRate: number; }): Promise<void>;
 }
 
 export interface TTSOptions {
