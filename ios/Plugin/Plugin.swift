@@ -10,7 +10,9 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
     
     var ttsSynthesizer: AVSpeechSynthesizer?
     var hasInitialized: Bool = false
-    var supportedLangs = AVSpeechSynthesisVoice.speechVoices()
+    var supportedLangs: [String] = Array(AVSpeechSynthesisVoice.speechVoices().map{
+        return $0.language
+    })
     var ttsUtterance: AVSpeechUtterance?
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
@@ -56,6 +58,7 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
         self.ttsUtterance?.voice = AVSpeechSynthesisVoice(language: locale)
         self.ttsUtterance?.rate = Float(speechRate)
         self.ttsUtterance?.pitchMultiplier = Float(pitchRate)
+        self.ttsSynthesizer?.speak(self.ttsUtterance!)
         
         call.success()
     }
