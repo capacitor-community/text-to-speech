@@ -21,7 +21,7 @@ Mainteinance Status: Actively Maintained
 ## Installation
 
 ```bash
-npm install @capacitor/http
+npm install @capacitor/text-to-speech
 npx cap sync
 ```
 
