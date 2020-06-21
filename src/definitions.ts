@@ -9,8 +9,8 @@ export interface TextToSpeechPlugin {
   stop(): Promise<void>;
   getSupportedLanguages(): Promise<string>;
   openInstall(): Promise<void>;
-  setPitchRate(options: { pitchRate: number; }): Promise<void>;
-  setSpeechRate(options: { speechRate: number; }): Promise<void>;
+  setPitchRate(options: { pitchRate: number }): Promise<void>;
+  setSpeechRate(options: { speechRate: number }): Promise<void>;
 }
 
 export interface TTSOptions {
