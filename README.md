@@ -4,9 +4,9 @@ Capacitory community plugin for text to speech engine.
 
 ## Maintainers
 
-| Maintainer | GitHub | Social | Sponsoring Company |
-| -----------| -------| -------| -------------------|
-| Priyank Patel | [priyankpat](https://github.com/priyankpat) | [N/A](https://twitter.com) | Ionic |
+| Maintainer    | GitHub                                      | Social                     | Sponsoring Company |
+| ------------- | ------------------------------------------- | -------------------------- | ------------------ |
+| Priyank Patel | [priyankpat](https://github.com/priyankpat) | [N/A](https://twitter.com) | Ionic              |
 
 Mainteinance Status: Actively Maintained
 
@@ -38,16 +38,23 @@ On Android, register the plugin in your main activity:
 import com.getcapacitor.community.tts.TextToSpeech;
 
 public class MainActivity extends BridgeActivity {
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     // Initializes the Bridge
-    this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-      // Additional plugins you've installed go here
-      // Ex: add(TotallyAwesomePlugin.class);
-      add(TextToSpeech.class);
-    }});
+    this.init(
+        savedInstanceState,
+        new ArrayList<Class<? extends Plugin>>() {
+
+          {
+            // Additional plugins you've installed go here
+            // Ex: add(TotallyAwesomePlugin.class);
+            add(TextToSpeech.class);
+          }
+        }
+      );
   }
 }
 ```
@@ -58,22 +65,22 @@ No configuration required for this plugin.
 
 ## Supported methods
 
-| Name  | Android | iOS | Web
-| :---- | :--- | :--- | :--- |
-| speak | ✅ | ✅ | ❌ 
-| stop | ✅ | ✅ | ❌ 
-| getSupportedLanguages | ✅ | ✅ | ❌ 
-| openInstall | ✅ | ✅ | ❌ 
-| setPitchRate | ✅ | ✅ | ❌ 
-| setSpeechRate | ✅ | ✅ | ❌ 
+| Name                  | Android | iOS | Web |
+| :-------------------- | :------ | :-- | :-- |
+| speak                 | ✅      | ✅  | ✅  |
+| stop                  | ✅      | ✅  | ✅  |
+| getSupportedLanguages | ✅      | ✅  | ✅  |
+| openInstall           | ✅      | ✅  | ❌  |
+| setPitchRate          | ✅      | ✅  | ❌  |
+| setSpeechRate         | ✅      | ✅  | ❌  |
 
 ## Usage
 
 ```typescript
 // Must import the package once to make sure the web support initializes
-import '@capacitor-community/http';
+import "@capacitor-community/http";
 
-import { Plugins } from '@capacitor/core';
+import { Plugins } from "@capacitor/core";
 
 const { TextToSpeech } = Plugins;
 
@@ -82,12 +89,19 @@ const { TextToSpeech } = Plugins;
  * @param text - desired text to play in speech
  *        locale - supported locale (can be obtained by calling getSupportedLanguages())
  *        rate - speech rate (1.0 is the normal speech rate, lower values slow down the speech, greater values accelerate it)
+ *        pitch - pitch rate (1.0 is the normal pitch rate, smaller value lowers the tone and greater value increases it)
+ *        volume - volume of the synthesis (0 - 1)
+ *        voice - index of the voice (can be obtained by calling getSupportedVoices()) (Android/Web Only)
  * @returns void
  */
 TextToSpeech.speak({
-  text: 'This is a sample text.',
-  locale: 'en_US',
+  text: "This is a sample text.",
+  locale: "en_US",
   rate: 1.0,
+  pitch: 1,
+  volume: 1,
+  voice: 10,
+  category: "ambient",
 });
 
 /**
@@ -100,9 +114,16 @@ TextToSpeech.stop();
 /**
  * This method will return list of supported languages.
  * @param none
- * @returns void
+ * @returns languages - list of available languages
  */
 TextToSpeech.getSupportedLanguages();
+
+/**
+ * This method will return list of supported voices.
+ * @param none
+ * @returns voices - list of available voices
+ */
+TextToSpeech.getSupportedVoices();
 
 /**
  * This method will trigger the platform TextToSpeech engine to start the activity that installs the resource files on the device that are required for TTS to be operational.
@@ -117,7 +138,7 @@ TextToSpeech.openInstall();
  * @returns void
  */
 TextToSpeech.setPitchRate({
-  pitchRate: 1.5
+  pitchRate: 1.5,
 });
 
 /**
@@ -128,5 +149,4 @@ TextToSpeech.setPitchRate({
 TextToSpeech.setSpeechRate({
   speechRate: 0.5,
 });
-
 ```

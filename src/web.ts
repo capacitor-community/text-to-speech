@@ -10,6 +10,9 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   private activeUtterance: any;
   private notSupportedMessage =
     "Speech Synthesizer is not yet initialized or supported.";
+
+  private supportedVoices: SpeechSynthesisVoice[] = [];
+
   constructor() {
     super({
       name: "TextToSpeech",
@@ -41,6 +44,8 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
 
       if (!this.activeUtterance) {
         this.activeUtterance = new SpeechSynthesisUtterance();
+        this.supportedVoices = window.speechSynthesis.getVoices();
+        this.activeUtterance.voice = this.supportedVoices[voice];
         this.activeUtterance.rate = rate >= 0.1 && rate <= 10 ? rate : 1;
         this.activeUtterance.volume = volume >= 0 && volume <= 1 ? volume : 1;
         this.activeUtterance.text = text;
@@ -75,14 +80,28 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     });
   }
 
-  getSupportedLanguages(): Promise<string | SpeechSynthesisVoice[]> {
+  getSupportedLanguages(): Promise<{ languages: any }> {
     return new Promise((resolve, reject) => {
       if (!this.speechSynthesizer) {
         reject(this.notSupportedMessage);
         return;
       }
 
-      resolve(this.speechSynthesizer.getVoices() as SpeechSynthesisVoice[]);
+      resolve();
+    });
+  }
+
+  getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }> {
+    return new Promise((resolve, reject) => {
+      if (!this.speechSynthesizer) {
+        reject(this.notSupportedMessage);
+        return;
+      }
+
+      this.supportedVoices = window.speechSynthesis.getVoices();
+      resolve({
+        voices: this.supportedVoices,
+      });
     });
   }
 

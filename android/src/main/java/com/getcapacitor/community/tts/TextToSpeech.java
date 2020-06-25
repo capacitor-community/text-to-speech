@@ -12,6 +12,7 @@ import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
+import android.speech.tts.Voice;
 import android.util.Log;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
@@ -274,7 +275,7 @@ public class TextToSpeech
   }
 
   @PluginMethod
-  public void openInstall() {
+  public void openInstall(PluginCall call) {
     try {
       PackageManager packageManager = context.getPackageManager();
       Intent installIntent = new Intent();
@@ -291,12 +292,26 @@ public class TextToSpeech
         installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(installIntent);
       }
+
+      call.success();
     } catch (Exception ex) {
       Log.d(
         TAG,
         "Caught exception while handling openInstall(): " +
         ex.getLocalizedMessage()
       );
+
+      call.error(ex.getLocalizedMessage());
+    }
+  }
+
+  @PluginMethod
+  public void getSupportedVoices(PluginCall call) {
+    try {
+      Set<Voice> voices = tts.getVoices();
+      call.success(new JSObject().put("voices", voices));
+    } catch (Exception ex) {
+      call.error(ex.getLocalizedMessage());
     }
   }
 

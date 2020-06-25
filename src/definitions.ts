@@ -7,7 +7,8 @@ declare module "@capacitor/core" {
 export interface TextToSpeechPlugin {
   speak(options: TTSOptions): Promise<void>;
   stop(): Promise<void>;
-  getSupportedLanguages(): Promise<string | SpeechSynthesisVoice[]>;
+  getSupportedLanguages(): Promise<{ languages: any }>;
+  getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
   openInstall(): Promise<void>;
   setPitchRate(options: { pitchRate: number }): Promise<void>;
   setSpeechRate(options: { speechRate: number }): Promise<void>;
@@ -19,7 +20,7 @@ export interface TTSOptions {
   rate?: number;
   pitch?: number;
   volume?: number;
-  voice?: string; // Web only
+  voice?: number; // Web only
   category?: string; // iOS only
 }
 
