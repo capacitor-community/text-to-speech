@@ -101,4 +101,10 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
             "languages": supportedLangs
         ])
     }
+    
+    @objc func getSupportedVoices(_ call: CAPPluginCall) {
+        call.success([
+            "voices": []
+        ])
+    }
 }
