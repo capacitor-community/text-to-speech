@@ -78,7 +78,7 @@ No configuration required for this plugin.
 
 ```typescript
 // Must import the package once to make sure the web support initializes
-import "@capacitor-community/http";
+import "@capacitor-community/text-to-speech";
 
 import { Plugins } from "@capacitor/core";
 
