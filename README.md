@@ -1,12 +1,27 @@
-# Capacitor Text to Speech Plugin
+<p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
+<h3 align="center">Text to Speech</h3>
+<p align="center"><strong><code>@capacitor-community/text-to-speech</code></strong></p>
+<p align="center">
+  Capacitor community plugin for native <a href="https://firebase.google.com/docs/crashlytics">Firebase Crashlytics</a>.
+</p>
 
-Capacitory community plugin for text to speech engine.
+<p align="center">
+  <img src="https://img.shields.io/maintenance/yes/2020?style=flat-square" />
+  <a href="https://github.com/capacitor-community/text-to-speech/actions?query=workflow%3A%22Test+and+Build+Plugin%22"><img src="https://img.shields.io/github/workflow/status/capacitor-community/text-to-speech/Test%20and%20Build%20Plugin?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capacitor-community/text-to-speech"><img src="https://img.shields.io/npm/l/@capacitor-community/text-to-speech?style=flat-square" /></a>
+<br>
+  <a href="https://www.npmjs.com/package/@capacitor-community/text-to-speech"><img src="https://img.shields.io/npm/dw/@capacitor-community/text-to-speech?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capacitor-community/text-to-speech"><img src="https://img.shields.io/npm/v/@capacitor-community/text-to-speech?style=flat-square" /></a>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-3-orange?style=flat-square" /></a>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+</p>
 
 ## Maintainers
 
-| Maintainer    | GitHub                                      | Social                     | Sponsoring Company |
-| ------------- | ------------------------------------------- | -------------------------- | ------------------ |
-| Priyank Patel | [priyankpat](https://github.com/priyankpat) | [N/A](https://twitter.com) | Ionic              |
+| Maintainer    | GitHub                                      | Social                                           |
+| ------------- | ------------------------------------------- | ------------------------------------------------ |
+| Priyank Patel | [priyankpat](https://github.com/priyankpat) | [@priyankpat\_](https://twitter.com/priyankpat_) |
 
 Mainteinance Status: Actively Maintained
 
@@ -85,11 +100,12 @@ import { Plugins } from "@capacitor/core";
 const { TextToSpeech } = Plugins;
 
 /**
+ * Platform: Android/iOS/Web
  * This method will trigger text to speech engine and play desired text.
  * @param text - desired text to play in speech
  *        locale - supported locale (can be obtained by calling getSupportedLanguages())
- *        rate - speech rate (1.0 is the normal speech rate, lower values slow down the speech, greater values accelerate it)
- *        pitch - pitch rate (1.0 is the normal pitch rate, smaller value lowers the tone and greater value increases it)
+ *        speechRate - speech rate (1.0 is the normal speech rate, lower values slow down the speech, greater values accelerate it)
+ *        pitchRate - pitch rate (1.0 is the normal pitch rate, smaller value lowers the tone and greater value increases it)
  *        volume - volume of the synthesis (0 - 1)
  *        voice - index of the voice (can be obtained by calling getSupportedVoices()) (Android/Web Only)
  * @returns void
@@ -97,14 +113,15 @@ const { TextToSpeech } = Plugins;
 TextToSpeech.speak({
   text: "This is a sample text.",
   locale: "en_US",
-  rate: 1.0,
-  pitch: 1,
-  volume: 1,
+  speechRate: 1.0,
+  pitchRate: 1,
+  volume: 1.0,
   voice: 10,
   category: "ambient",
 });
 
 /**
+ * Platform: Android/iOS/Web
  * This method will stop the engine if it's in the middle of playback.
  * @param none
  * @returns void
@@ -112,6 +129,7 @@ TextToSpeech.speak({
 TextToSpeech.stop();
 
 /**
+ * Platform: Android/iOS/Web
  * This method will return list of supported languages.
  * @param none
  * @returns languages - list of available languages
@@ -119,6 +137,7 @@ TextToSpeech.stop();
 TextToSpeech.getSupportedLanguages();
 
 /**
+ * Platform: Android/iOS/Web
  * This method will return list of supported voices.
  * @param none
  * @returns voices - list of available voices
@@ -126,6 +145,7 @@ TextToSpeech.getSupportedLanguages();
 TextToSpeech.getSupportedVoices();
 
 /**
+ * Platform: Android/iOS
  * This method will trigger the platform TextToSpeech engine to start the activity that installs the resource files on the device that are required for TTS to be operational.
  * @param none
  * @returns void
@@ -133,6 +153,7 @@ TextToSpeech.getSupportedVoices();
 TextToSpeech.openInstall();
 
 /**
+ * * Platform: Android/iOS
  * This method will change the pitch rate while the text is being played.
  * @param pitchRate - rate of the pitch (1.0 is the normal pitch, lower values lower the tone of the synthesized voice, greater values increase it)
  * @returns void
@@ -142,6 +163,7 @@ TextToSpeech.setPitchRate({
 });
 
 /**
+ * * Platform: Android/iOS
  * This method will change the speech rate while the text is being played.
  * @param speechRate - speech rate (1.0 is the normal speech rate, lower values slow down the speech, greater values accelerate it)
  * @returns void
