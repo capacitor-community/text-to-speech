@@ -36,7 +36,7 @@
     "dist/",
     "ios/",
     "android/",
-    "TextToSpeech.podspec"
+    "CapacitorCommunityTextToSpeech.podspec"
   ],
   "keywords": [
     "capacitor",
