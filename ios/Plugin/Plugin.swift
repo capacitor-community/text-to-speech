@@ -1,10 +1,6 @@
 import AVFoundation
 import Capacitor
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitor.ionicframework.com/docs/plugins/ios
- */
 @objc(TextToSpeech)
 public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
     
@@ -37,6 +33,7 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
         let speechRate = call.getDouble("speechRate") ?? 1.0
         let pitchRate = call.getDouble("pitchRate") ?? 1.0
         let category = call.getString("category") ?? "ambient"
+        let volume = call.getDouble("volume") ?? 1.0
         
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: [])
@@ -58,6 +55,7 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
         self.ttsUtterance?.voice = AVSpeechSynthesisVoice(language: locale)
         self.ttsUtterance?.rate = Float(speechRate)
         self.ttsUtterance?.pitchMultiplier = Float(pitchRate)
+        self.ttsUtterance?.volume = Float(volume)
         self.ttsSynthesizer?.speak(self.ttsUtterance!)
         
         call.success()
