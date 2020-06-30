@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/text-to-speech",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A native plugin for text to speech engine",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
