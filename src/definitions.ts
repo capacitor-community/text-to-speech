@@ -17,8 +17,8 @@ export interface TextToSpeechPlugin {
 export interface TTSOptions {
   text: string;
   locale?: string;
-  rate?: number;
-  pitch?: number;
+  speechRate?: number;
+  pitchRate?: number;
   volume?: number;
   voice?: number; // Web only
   category?: string; // iOS only
