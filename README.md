@@ -2,7 +2,7 @@
 <h3 align="center">Text to Speech</h3>
 <p align="center"><strong><code>@capacitor-community/text-to-speech</code></strong></p>
 <p align="center">
-  Capacitor community plugin for native <a href="https://firebase.google.com/docs/crashlytics">Firebase Crashlytics</a>.
+  Capacitor community plugin for native Text to Speech.
 </p>
 
 <p align="center">
