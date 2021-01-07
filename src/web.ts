@@ -53,9 +53,9 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
         this.activeUtterance.lang = locale;
         this.activeUtterance.pitch =
           pitchRate >= 0 && pitchRate <= 2 ? pitchRate : 2;
-        if (voice) {
+        /*if (voice) {
           this.activeUtterance.voice = voice;
-        }
+        }*/
         this.activeUtterance.onend = (ev: any) => {
           resolve(ev);
           this.activeUtterance = undefined;
