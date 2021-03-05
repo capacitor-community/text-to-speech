@@ -28,13 +28,13 @@
 To use npm
 
 ```bash
-npm install @capacitor/text-to-speech
+npm install @capacitor-community/text-to-speech
 ```
 
 To use yarn
 
 ```bash
-yarn add @capacitor/text-to-speech
+yarn add @capacitor-community/text-to-speech
 ```
 
 Sync native files
