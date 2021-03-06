@@ -7,7 +7,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2020?style=flat-square" />
-  <a href="https://github.com/capacitor-community/text-to-speech/actions?query=workflow%3A%22Test+and+Build+Plugin%22"><img src="https://img.shields.io/github/workflow/status/capacitor-community/text-to-speech/Test%20and%20Build%20Plugin?style=flat-square" /></a>
+  <a href="https://github.com/capacitor-community/text-to-speech/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/capacitor-community/text-to-speech/CI/master?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/@capacitor-community/text-to-speech"><img src="https://img.shields.io/npm/l/@capacitor-community/text-to-speech?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/@capacitor-community/text-to-speech"><img src="https://img.shields.io/npm/dw/@capacitor-community/text-to-speech?style=flat-square" /></a>
@@ -91,9 +91,9 @@ No configuration required for this plugin.
 
 ```typescript
 // Must import the package once to make sure the web support initializes
-import "@capacitor-community/text-to-speech";
+import '@capacitor-community/text-to-speech';
 
-import { Plugins } from "@capacitor/core";
+import { Plugins } from '@capacitor/core';
 
 const { TextToSpeech } = Plugins;
 
@@ -109,13 +109,13 @@ const { TextToSpeech } = Plugins;
  * @returns void
  */
 TextToSpeech.speak({
-  text: "This is a sample text.",
-  locale: "en_US",
+  text: 'This is a sample text.',
+  locale: 'en_US',
   speechRate: 1.0,
   pitchRate: 1,
   volume: 1.0,
   voice: 10,
-  category: "ambient",
+  category: 'ambient',
 });
 
 /**
