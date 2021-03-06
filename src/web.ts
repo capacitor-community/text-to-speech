@@ -1,22 +1,22 @@
-import { WebPlugin } from "@capacitor/core";
+import { WebPlugin } from '@capacitor/core';
 import {
   TextToSpeechPlugin,
   TTSOptions,
   SpeechSynthesisVoice,
-} from "./definitions";
+} from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   private speechSynthesizer: any;
   private activeUtterance: any;
   private notSupportedMessage =
-    "Speech Synthesizer is not yet initialized or supported.";
+    'Speech Synthesizer is not yet initialized or supported.';
 
   private supportedVoices: SpeechSynthesisVoice[] = [];
 
   constructor() {
     super({
-      name: "TextToSpeech",
-      platforms: ["web"],
+      name: 'TextToSpeech',
+      platforms: ['web'],
     });
 
     if (!this.speechSynthesizer && window && window.speechSynthesis) {
@@ -31,12 +31,12 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
       }
 
       if (!options) {
-        reject("No options were provided.");
+        reject('No options were provided.');
         return;
       }
 
       if (!options.text) {
-        reject("Text option was not provided");
+        reject('Text option was not provided');
         return;
       }
 
@@ -108,17 +108,17 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   }
 
   openInstall(): Promise<void> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   setPitchRate(_options: { pitchRate: number }): Promise<void> {
     // Pitch rate cannot be set while engine is active
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   setSpeechRate(_options: { speechRate: number }): Promise<void> {
     // Speech rate cannot be set while engine is active
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 }
 
@@ -126,5 +126,5 @@ const TextToSpeech = new TextToSpeechWeb();
 
 export { TextToSpeech };
 
-import { registerWebPlugin } from "@capacitor/core";
+import { registerWebPlugin } from '@capacitor/core';
 registerWebPlugin(TextToSpeech);
