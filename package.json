@@ -5,6 +5,9 @@
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {
+    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
+    "swiftlint": "node-swiftlint",
     "build": "npm run clean && tsc",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
