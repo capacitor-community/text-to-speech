@@ -37,9 +37,10 @@
     "typescript": "3.9.5"
   },
   "files": [
+    "android/src/main/",
+    "android/build.gradle",
     "dist/",
-    "ios/",
-    "android/",
+    "ios/Plugin/",
     "CapacitorCommunityTextToSpeech.podspec"
   ],
   "keywords": [
