@@ -19,9 +19,9 @@
 
 ## Maintainers
 
-| Maintainer    | GitHub                                      | Social                                           |
-| ------------- | ------------------------------------------- | ------------------------------------------------ |
-| Priyank Patel | [priyankpat](https://github.com/priyankpat) | [@priyankpat\_](https://twitter.com/priyankpat_) |
+| Maintainer | GitHub                                    | Social                                        |
+| ---------- | ----------------------------------------- | --------------------------------------------- |
+| Robin Genz | [robingenz](https://github.com/robingenz) | [@robin_genz](https://twitter.com/robin_genz) |
 
 ## Installation
 

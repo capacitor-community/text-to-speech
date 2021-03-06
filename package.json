@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-community/text-to-speech",
   "version": "0.2.1",
-  "description": "A native plugin for text to speech engine",
+  "description": "⚡️ Capacitor plugin for synthesizing speech from text. ",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {
@@ -14,7 +14,10 @@
     "prepublishOnly": "npm run build",
     "npm-publish": "np"
   },
-  "author": "Priyank Patel <priyank.patel@stackspace.ca>",
+  "contributors": [
+    "Priyank Patel <priyank.patel@stackspace.ca>",
+    "Robin Genz <mail@robingenz.dev>"
+  ],
   "license": "MIT",
   "dependencies": {
     "@capacitor/core": "latest"
@@ -53,7 +56,6 @@
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
-  "homepage": "https://github.com/capacitor-community/text-to-speech",
   "repository": {
     "type": "git",
     "url": "https://github.com/capacitor-community/text-to-speech"
