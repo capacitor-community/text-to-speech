@@ -26,7 +26,7 @@
 ## Installation
 
 ```
-npm install @capacitor-community/privacy-screen
+npm install @capacitor-community/text-to-speech
 npx cap sync
 ```
 
