@@ -20,17 +20,18 @@
     "@capacitor/core": "latest"
   },
   "devDependencies": {
-    "@capacitor/android": "latest",
-    "@capacitor/ios": "latest",
+    "@capacitor/android": "2.4.7",
+    "@capacitor/core": "2.4.7",
+    "@capacitor/ios": "2.4.7",
     "@ionic/prettier-config": "1.0.1",
     "@ionic/swiftlint-config": "1.1.2",
-    "np": "^6.2.4",
-    "prettier": "^2.0.5",
-    "prettier-plugin-java": "^0.8.0",
-    "rimraf": "^3.0.2",
+    "np": "6.2.4",
+    "prettier": "2.0.5",
+    "prettier-plugin-java": "0.8.3",
+    "rimraf": "3.0.2",
     "rollup": "2.21.0",
     "swiftlint": "1.0.1",
-    "typescript": "^3.9.5"
+    "typescript": "3.9.5"
   },
   "files": [
     "dist/",
