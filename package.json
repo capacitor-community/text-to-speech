@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-community/text-to-speech",
   "version": "0.2.1",
-  "description": "⚡️ Capacitor plugin for synthesizing speech from text. ",
+  "description": "Capacitor plugin for synthesizing speech from text.",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -13,7 +13,7 @@
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build",
-    "npm-publish": "np"
+    "release": "standard-version"
   },
   "contributors": [
     "Priyank Patel <priyank.patel@stackspace.ca>",
@@ -29,11 +29,11 @@
     "@capacitor/ios": "2.4.7",
     "@ionic/prettier-config": "1.0.1",
     "@ionic/swiftlint-config": "1.1.2",
-    "np": "6.2.4",
     "prettier": "2.0.5",
     "prettier-plugin-java": "0.8.3",
     "rimraf": "3.0.2",
     "rollup": "2.21.0",
+    "standard-version": "9.1.0",
     "swiftlint": "1.0.1",
     "typescript": "3.9.5"
   },
