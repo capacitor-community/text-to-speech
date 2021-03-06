@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2020?style=flat-square" />
+  <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
   <a href="https://github.com/capacitor-community/text-to-speech/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/capacitor-community/text-to-speech/CI/master?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/@capacitor-community/text-to-speech"><img src="https://img.shields.io/npm/l/@capacitor-community/text-to-speech?style=flat-square" /></a>
 <br>
@@ -25,27 +25,14 @@
 
 ## Installation
 
-To use npm
-
-```bash
+```
 npm install @capacitor-community/text-to-speech
-```
-
-To use yarn
-
-```bash
-yarn add @capacitor-community/text-to-speech
-```
-
-Sync native files
-
-```bash
 npx cap sync
 ```
 
-On iOS, no further steps are needed.
+On **iOS**, no further steps are needed.
 
-On Android, register the plugin in your main activity:
+On **Android**, register the plugin in your main activity:
 
 ```java
 import com.getcapacitor.community.tts.TextToSpeech;
@@ -170,3 +157,11 @@ TextToSpeech.setSpeechRate({
   speechRate: 0.5,
 });
 ```
+
+## Changelog
+
+See [CHANGELOG.md](https://github.com/capacitor-community/text-to-speech/blob/master/CHANGELOG.md).
+
+## License
+
+See [LICENSE](https://github.com/capacitor-community/text-to-speech/blob/master/LICENSE).
