@@ -2,7 +2,8 @@
   "name": "@capacitor-community/text-to-speech",
   "version": "0.2.1",
   "description": "⚡️ Capacitor plugin for synthesizing speech from text. ",
-  "main": "dist/esm/index.js",
+  "main": "dist/plugin.js",
+  "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {
     "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
