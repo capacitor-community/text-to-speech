@@ -26,6 +26,7 @@ import java.util.Set;
 
 @NativePlugin
 public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpeech.OnInitListener {
+
     public static final String TAG = "TextToSpeech";
 
     private boolean ttsInitialized = false;
@@ -137,7 +138,6 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
 
             tts.setOnUtteranceProgressListener(
                 new UtteranceProgressListener() {
-
                     @Override
                     public void onStart(String utteranceId) {}
 
