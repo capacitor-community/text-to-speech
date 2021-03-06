@@ -5,6 +5,9 @@
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {
+    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
+    "swiftlint": "node-swiftlint",
     "build": "npm run clean && tsc",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
@@ -19,18 +22,14 @@
   "devDependencies": {
     "@capacitor/android": "latest",
     "@capacitor/ios": "latest",
-    "husky": "^4.2.5",
+    "@ionic/prettier-config": "1.0.1",
+    "@ionic/swiftlint-config": "1.1.2",
     "np": "^6.2.4",
     "prettier": "^2.0.5",
     "prettier-plugin-java": "^0.8.0",
-    "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
+    "swiftlint": "1.0.1",
     "typescript": "^3.9.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   },
   "files": [
     "dist/",
@@ -51,6 +50,8 @@
       "src": "android"
     }
   },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
   "homepage": "https://github.com/capacitor-community/text-to-speech",
   "repository": {
     "type": "git",
