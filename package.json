@@ -22,12 +22,15 @@
   "devDependencies": {
     "@capacitor/android": "latest",
     "@capacitor/ios": "latest",
+    "@ionic/prettier-config": "1.0.1",
+    "@ionic/swiftlint-config": "1.1.2",
     "husky": "^4.2.5",
     "np": "^6.2.4",
     "prettier": "^2.0.5",
     "prettier-plugin-java": "^0.8.0",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
+    "swiftlint": "1.0.1",
     "typescript": "^3.9.5"
   },
   "husky": {
@@ -54,6 +57,8 @@
       "src": "android"
     }
   },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
   "homepage": "https://github.com/capacitor-community/text-to-speech",
   "repository": {
     "type": "git",
