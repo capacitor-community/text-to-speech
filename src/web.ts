@@ -5,8 +5,8 @@ import {
   SpeechSynthesisVoice,
   TTSPitchOptions,
   TTSRateOptions,
-  TTSVoices,
-  TTSLanguages,
+  TTSSupportedVoices,
+  TTSSupportedLanguages,
 } from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
@@ -51,13 +51,13 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     this.speechSynthesis.cancel();
   }
 
-  public async getSupportedLanguages(): Promise<TTSLanguages> {
+  public async getSupportedLanguages(): Promise<TTSSupportedLanguages> {
     const voices = this.getSpeechSynthesisVoices();
     const languages = voices.map(voice => voice.lang);
     return { languages };
   }
 
-  public async getSupportedVoices(): Promise<TTSVoices> {
+  public async getSupportedVoices(): Promise<TTSSupportedVoices> {
     const voices = this.getSpeechSynthesisVoices();
     return { voices };
   }
@@ -97,21 +97,21 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   ): Promise<SpeechSynthesisUtterance> {
     const utterance = new SpeechSynthesisUtterance();
     const voices = this.getSpeechSynthesisVoices();
-    const { text, locale, speechRate, volume, voice, pitchRate } = options;
+    const { text, lang, rate, volume, voice, pitch: pitchRate } = options;
     if (voice) {
       utterance.voice = voices[voice];
     }
     if (volume) {
       utterance.volume = volume >= 0 && volume <= 1 ? volume : 1;
     }
-    if (speechRate) {
-      utterance.rate = speechRate >= 0.1 && speechRate <=10 ? speechRate : 1;
+    if (rate) {
+      utterance.rate = rate >= 0.1 && rate <=10 ? rate : 1;
     }
     if (pitchRate) {
       utterance.pitch = pitchRate >= 0 && pitchRate <= 2 ? pitchRate : 2;
     }
-    if (locale) {
-      utterance.lang = locale;
+    if (lang) {
+      utterance.lang = lang;
     }
     utterance.text = text;
     return utterance;
