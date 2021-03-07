@@ -1,124 +1,120 @@
 import { WebPlugin } from '@capacitor/core';
 import {
   TextToSpeechPlugin,
-  TTSOptions,
+  TTSSpeakOptions,
   SpeechSynthesisVoice,
+  TTSPitchOptions,
+  TTSRateOptions,
+  TTSVoices,
+  TTSLanguages,
 } from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
-  private speechSynthesizer: any;
-  private activeUtterance: any;
-  private notSupportedMessage =
-    'Speech Synthesizer is not yet initialized or supported.';
-
-  private supportedVoices: SpeechSynthesisVoice[] = [];
+  private speechSynthesis: SpeechSynthesis | null;
+  private currentlyActive = false;
 
   constructor() {
     super({
       name: 'TextToSpeech',
       platforms: ['web'],
     });
+    this.speechSynthesis = this.getSpeechSynthesis();
+  }
 
-    if (!this.speechSynthesizer && window && window.speechSynthesis) {
-      this.speechSynthesizer = window.speechSynthesis;
+  public async speak(options: TTSSpeakOptions): Promise<void> {
+    const speechSynthesis = this.speechSynthesis;
+    if (!speechSynthesis) {
+      this.throwUnsupportedError();
     }
-  }
-  speak(options: TTSOptions): Promise<void> {
+    if (this.currentlyActive) {
+      return;
+    }
+    this.currentlyActive = true;
+    const utterance = await this.createSpeechSynthesisUtterance(options);
     return new Promise((resolve, reject) => {
-      if (!this.speechSynthesizer) {
-        reject(this.notSupportedMessage);
-        return;
-      }
-
-      if (!options) {
-        reject('No options were provided.');
-        return;
-      }
-
-      if (!options.text) {
-        reject('Text option was not provided');
-        return;
-      }
-
-      const { text, locale, speechRate, volume, voice, pitchRate } = options;
-
-      if (!this.activeUtterance) {
-        this.activeUtterance = new SpeechSynthesisUtterance();
-        this.supportedVoices = window.speechSynthesis.getVoices();
-        this.activeUtterance.voice = this.supportedVoices[voice];
-        this.activeUtterance.rate =
-          speechRate >= 0.1 && speechRate <= 10 ? speechRate : 1;
-        this.activeUtterance.volume = volume >= 0 && volume <= 1 ? volume : 1;
-        this.activeUtterance.text = text;
-        this.activeUtterance.lang = locale;
-        this.activeUtterance.pitch =
-          pitchRate >= 0 && pitchRate <= 2 ? pitchRate : 2;
-        if (voice) {
-          this.activeUtterance.voice = voice;
-        }
-        this.activeUtterance.onend = (ev: any) => {
-          resolve(ev);
-          this.activeUtterance = undefined;
-        };
-        this.activeUtterance.onerror = (ev: any) => {
-          reject(ev);
-          this.activeUtterance = undefined;
-        };
-
-        this.speechSynthesizer.speak(this.activeUtterance);
-      }
+      utterance.onend = () => {
+        this.currentlyActive = false;
+        resolve();
+      };
+      utterance.onerror = (event: any) => {
+        this.currentlyActive = false;
+        reject(event);
+      };
+      speechSynthesis.speak(utterance);
     });
   }
 
-  stop(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (!this.speechSynthesizer) {
-        reject(this.notSupportedMessage);
-        return;
-      }
-
-      this.speechSynthesizer.cancel();
-      resolve();
-    });
+  public async stop(): Promise<void> {
+    if (!this.speechSynthesis) {
+      this.throwUnsupportedError();
+    }
+    this.speechSynthesis.cancel();
   }
 
-  getSupportedLanguages(): Promise<{ languages: any }> {
-    return new Promise((resolve, reject) => {
-      if (!this.speechSynthesizer) {
-        reject(this.notSupportedMessage);
-        return;
-      }
-
-      resolve();
-    });
+  public async getSupportedLanguages(): Promise<TTSLanguages> {
+    const voices = this.getSpeechSynthesisVoices();
+    const languages = voices.map(voice => voice.lang);
+    return { languages };
   }
 
-  getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }> {
-    return new Promise((resolve, reject) => {
-      if (!this.speechSynthesizer) {
-        reject(this.notSupportedMessage);
-        return;
-      }
-
-      this.supportedVoices = window.speechSynthesis.getVoices();
-      resolve({
-        voices: this.supportedVoices,
-      });
-    });
+  public async getSupportedVoices(): Promise<TTSVoices> {
+    const voices = this.getSpeechSynthesisVoices();
+    return { voices };
   }
 
-  openInstall(): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async openInstall(): Promise<void> {
+    throw new Error('Not implemented on web.');
   }
 
-  setPitchRate(_options: { pitchRate: number }): Promise<void> {
-    // Pitch rate cannot be set while engine is active
-    throw new Error('Method not implemented.');
+  public async setPitch(_options: TTSPitchOptions): Promise<void> {
+    throw new Error('Not implemented on web.');
   }
 
-  setSpeechRate(_options: { speechRate: number }): Promise<void> {
-    // Speech rate cannot be set while engine is active
-    throw new Error('Method not implemented.');
+  public async setRate(_options: TTSRateOptions): Promise<void> {
+    throw new Error('Not implemented on web.');
+  }
+
+  private throwUnsupportedError(): never {
+    throw new Error('Not supported on this device.');
+  }
+
+  private getSpeechSynthesis(): SpeechSynthesis | null {
+    if ('speechSynthesis' in window) {
+      return window.speechSynthesis;
+    }
+    return null;
+  }
+
+  private getSpeechSynthesisVoices(): SpeechSynthesisVoice[] {
+    if (!this.speechSynthesis) {
+      this.throwUnsupportedError();
+    }
+    return this.speechSynthesis.getVoices();
+  }
+
+  private async createSpeechSynthesisUtterance(
+    options: TTSSpeakOptions,
+  ): Promise<SpeechSynthesisUtterance> {
+    const utterance = new SpeechSynthesisUtterance();
+    const voices = this.getSpeechSynthesisVoices();
+    const { text, locale, speechRate, volume, voice, pitchRate } = options;
+    if (voice) {
+      utterance.voice = voices[voice];
+    }
+    if (volume) {
+      utterance.volume = volume >= 0 && volume <= 1 ? volume : 1;
+    }
+    if (speechRate) {
+      utterance.rate = speechRate >= 0.1 && speechRate <=10 ? speechRate : 1;
+    }
+    if (pitchRate) {
+      utterance.pitch = pitchRate >= 0 && pitchRate <= 2 ? pitchRate : 2;
+    }
+    if (locale) {
+      utterance.lang = locale;
+    }
+    utterance.text = text;
+    return utterance;
   }
 }
 
