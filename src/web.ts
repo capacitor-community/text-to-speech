@@ -1,12 +1,8 @@
 import { WebPlugin } from '@capacitor/core';
 import {
   TextToSpeechPlugin,
-  TTSSpeakOptions,
   SpeechSynthesisVoice,
-  TTSPitchOptions,
-  TTSRateOptions,
-  TTSSupportedVoices,
-  TTSSupportedLanguages,
+  TTSOptions,
 } from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
@@ -21,7 +17,7 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     this.speechSynthesis = this.getSpeechSynthesis();
   }
 
-  public async speak(options: TTSSpeakOptions): Promise<void> {
+  public async speak(options: TTSOptions): Promise<void> {
     const speechSynthesis = this.speechSynthesis;
     if (!speechSynthesis) {
       this.throwUnsupportedError();
@@ -51,13 +47,13 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     this.speechSynthesis.cancel();
   }
 
-  public async getSupportedLanguages(): Promise<TTSSupportedLanguages> {
+  public async getSupportedLanguages(): Promise<{ languages: string[] }> {
     const voices = this.getSpeechSynthesisVoices();
     const languages = voices.map(voice => voice.lang);
     return { languages };
   }
 
-  public async getSupportedVoices(): Promise<TTSSupportedVoices> {
+  public async getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }> {
     const voices = this.getSpeechSynthesisVoices();
     return { voices };
   }
@@ -66,11 +62,11 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     throw new Error('Not implemented on web.');
   }
 
-  public async setPitch(_options: TTSPitchOptions): Promise<void> {
+  public async setPitchRate(_options: { pitchRate: number }): Promise<void> {
     throw new Error('Not implemented on web.');
   }
 
-  public async setRate(_options: TTSRateOptions): Promise<void> {
+  public async setSpeechRate(_options: { speechRate: number }): Promise<void> {
     throw new Error('Not implemented on web.');
   }
 
@@ -93,25 +89,25 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   }
 
   private async createSpeechSynthesisUtterance(
-    options: TTSSpeakOptions,
+    options: TTSOptions,
   ): Promise<SpeechSynthesisUtterance> {
     const utterance = new SpeechSynthesisUtterance();
     const voices = this.getSpeechSynthesisVoices();
-    const { text, lang, rate, volume, voice, pitch: pitchRate } = options;
+    const { text, locale,speechRate, volume, voice, pitchRate } = options;
     if (voice) {
       utterance.voice = voices[voice];
     }
     if (volume) {
       utterance.volume = volume >= 0 && volume <= 1 ? volume : 1;
     }
-    if (rate) {
-      utterance.rate = rate >= 0.1 && rate <=10 ? rate : 1;
+    if (speechRate) {
+      utterance.rate = speechRate >= 0.1 && speechRate <=10 ? speechRate : 1;
     }
     if (pitchRate) {
       utterance.pitch = pitchRate >= 0 && pitchRate <= 2 ? pitchRate : 2;
     }
-    if (lang) {
-      utterance.lang = lang;
+    if (locale) {
+      utterance.lang = locale;
     }
     utterance.text = text;
     return utterance;

@@ -5,39 +5,23 @@ declare module '@capacitor/core' {
 }
 
 export interface TextToSpeechPlugin {
-  speak(options: TTSSpeakOptions): Promise<void>;
+  speak(options: TTSOptions): Promise<void>;
   stop(): Promise<void>;
-  getSupportedLanguages(): Promise<TTSSupportedLanguages>;
-  getSupportedVoices(): Promise<TTSSupportedVoices>;
+  getSupportedLanguages(): Promise<{ languages: string[] }>;
+  getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
   openInstall(): Promise<void>;
-  setPitch(options: TTSPitchOptions): Promise<void>;
-  setRate(options: TTSRateOptions): Promise<void>;
+  setPitchRate(options: { pitchRate: number }): Promise<void>;
+  setSpeechRate(options: { speechRate: number }): Promise<void>;
 }
 
-export interface TTSSpeakOptions {
+export interface TTSOptions {
   text: string;
-  lang?: string;
-  rate?: number;
-  pitch?: number;
+  locale?: string;
+  speechRate?: number;
+  pitchRate?: number;
   volume?: number;
   voice?: number; // Web only
   category?: string; // iOS only
-}
-
-export interface TTSPitchOptions {
-  pitch: number;
-}
-
-export interface TTSRateOptions {
-  rate: number;
-}
-
-export interface TTSSupportedVoices {
-  voices: SpeechSynthesisVoice[];
-}
-
-export interface TTSSupportedLanguages {
-  languages: string[];
 }
 
 /**
