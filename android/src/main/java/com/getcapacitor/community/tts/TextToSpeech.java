@@ -252,8 +252,15 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
     @PluginMethod
     public void getSupportedVoices(PluginCall call) {
         try {
-            Set<Voice> voices = tts.getVoices();
-            call.success(new JSObject().put("voices", voices));
+            ArrayList<JSObject> voices = new ArrayList<>();
+            Set<Voice> supportedVoices = tts.getVoices();
+            for (Voice supportedVoice : supportedVoices) {
+                JSObject obj = this.convertVoiceToJSObject(supportedVoice);
+                voices.add(obj);
+            }
+            JSObject ret = new JSObject();
+            ret.put("voices", JSArray.from(voices.toArray()));
+            call.success(ret);
         } catch (Exception ex) {
             call.error(ex.getLocalizedMessage());
         }
@@ -261,5 +268,16 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
 
     private boolean isStringValid(String value) {
         return (value != null && !value.isEmpty() && !value.equals("null"));
+    }
+
+    private JSObject convertVoiceToJSObject(Voice voice) {
+        Locale locale = voice.getLocale();
+        JSObject obj = new JSObject();
+        obj.put("voiceURI", voice.getName());
+        obj.put("name", locale.getDisplayLanguage() + " " + locale.getDisplayCountry());
+        obj.put("lang", locale.toLanguageTag());
+        obj.put("localService", !voice.isNetworkConnectionRequired());
+        obj.put("default", false);
+        return obj;
     }
 }
