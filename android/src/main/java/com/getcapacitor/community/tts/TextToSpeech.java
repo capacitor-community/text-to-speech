@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
 import android.util.Log;
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
@@ -32,7 +33,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
     private boolean ttsInitialized = false;
     private android.speech.tts.TextToSpeech tts = null;
     private Context context = null;
-    private ArrayList<Locale> supportedLangs;
+    private ArrayList<Locale> supportedLocales = new ArrayList<>();
 
     @Override
     public void onInit(int status) {
@@ -52,7 +53,10 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                     tts.setLanguage(new Locale("en", "US"));
                     tts.speak("", android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams);
                 }
-
+                Set<Locale> availableLanguages = tts.getAvailableLanguages();
+                if (availableLanguages != null) {
+                    this.supportedLocales.addAll(availableLanguages);
+                }
                 ttsInitialized = true;
             }
         } catch (Exception ex) {
@@ -68,13 +72,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
 
         try {
             context = getContext();
-            supportedLangs = new ArrayList<>();
             tts = new android.speech.tts.TextToSpeech(context, this);
-
-            Set<Locale> supportedLanguages = tts.getAvailableLanguages();
-            if (supportedLanguages != null) {
-                supportedLangs.addAll(supportedLanguages);
-            }
         } catch (Exception ex) {
             Log.d(TAG, "Caught exception on TextToSpeech load(): " + ex.getLocalizedMessage());
         }
@@ -100,8 +98,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                 locale = "en-US";
             } else {
                 locale = call.getString("locale");
-
-                if (!supportedLangs.contains(new Locale(locale))) {
+                if (!supportedLocales.contains(Locale.forLanguageTag((locale)))) {
                     call.error(ERROR_UNSUPPORTED_LOCALE);
                     return;
                 }
@@ -195,9 +192,14 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
     @PluginMethod
     public void getSupportedLanguages(PluginCall call) {
         try {
-            JSObject success = new JSObject();
-            success.put("languages", supportedLangs.toArray());
-            call.success(success);
+            ArrayList<String> languages = new ArrayList<>();
+            for (Locale supportedLocale : this.supportedLocales) {
+                String tag = supportedLocale.toLanguageTag();
+                languages.add(tag);
+            }
+            JSObject ret = new JSObject();
+            ret.put("languages", JSArray.from(languages.toArray()));
+            call.success(ret);
         } catch (Exception ex) {
             Log.d(TAG, "Exception caught while handling checkLanguage(): " + ex.getLocalizedMessage());
             call.error(ex.getLocalizedMessage());
