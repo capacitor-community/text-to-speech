@@ -37,7 +37,7 @@ export interface TTSSupportedVoices {
 }
 
 export interface TTSSupportedLanguages {
-  languages: any;
+  languages: string[];
 }
 
 /**
