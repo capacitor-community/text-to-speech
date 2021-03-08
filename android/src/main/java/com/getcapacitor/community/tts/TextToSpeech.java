@@ -83,7 +83,6 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
         try {
             String text;
             String locale;
-            String voice;
             double speechRate;
             double volume;
             double pitchRate;
@@ -96,7 +95,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
             }
 
             if (!call.hasOption("text") || !isStringValid(call.getString("locale"))) {
-                locale = null;
+                locale = "en-US";
             } else {
                 locale = call.getString("locale");
                 if (!supportedLocales.contains(Locale.forLanguageTag((locale)))) {
@@ -123,12 +122,6 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                 volume = call.getFloat("volume");
             }
 
-            if (!call.hasOption("voice") || !isStringValid(call.getString("voice"))) {
-                voice = null;
-            } else {
-                voice = call.getString("voice");
-            }
-
             if (tts == null) {
                 call.error(ERROR_TTS_NOT_INITIALIZED);
                 return;
@@ -136,10 +129,6 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
 
             if (!ttsInitialized) {
                 call.error(ERROR_TTS_NOT_INITIALIZED);
-            }
-
-            if (locale == null && voice == null) {
-                locale = "en-US";
             }
 
             tts.stop();
@@ -170,18 +159,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                 ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, call.getCallbackId());
                 ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
-                if (locale != null) {
-                    tts.setLanguage(new Locale(locale));
-                }
-
-                if (voice != null) {
-                    for (Voice v : tts.getVoices()) {
-                        if (voice.equals(v.getName())) {
-                            tts.setVoice(v);
-                        }
-                    }
-                }
-
+                tts.setLanguage(new Locale(locale));
                 tts.setSpeechRate((float) speechRate);
                 tts.setPitch((float) pitchRate);
                 tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, call.getCallbackId());
