@@ -83,6 +83,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
         try {
             String text;
             String locale;
+            String voice;
             double speechRate;
             double volume;
             double pitchRate;
@@ -95,7 +96,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
             }
 
             if (!call.hasOption("text") || !isStringValid(call.getString("locale"))) {
-                locale = "en-US";
+                locale = null;
             } else {
                 locale = call.getString("locale");
                 if (!supportedLocales.contains(Locale.forLanguageTag((locale)))) {
@@ -122,6 +123,12 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                 volume = call.getFloat("volume");
             }
 
+            if (!call.hasOption("voice") || !isStringValid(call.getString("voice"))) {
+                voice = null;
+            } else {
+                voice = call.getString("voice");
+            }
+
             if (tts == null) {
                 call.error(ERROR_TTS_NOT_INITIALIZED);
                 return;
@@ -129,6 +136,10 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
 
             if (!ttsInitialized) {
                 call.error(ERROR_TTS_NOT_INITIALIZED);
+            }
+
+            if (locale == null && voice == null) {
+                locale = "en-US";
             }
 
             tts.stop();
@@ -159,7 +170,18 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                 ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, call.getCallbackId());
                 ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
-                tts.setLanguage(new Locale(locale));
+                if (locale != null) {
+                    tts.setLanguage(new Locale(locale));
+                }
+
+                if (voice != null) {
+                    for (Voice v : tts.getVoices()) {
+                        if (voice.equals(v.getName())) {
+                            tts.setVoice(v);
+                        }
+                    }
+                }
+
                 tts.setSpeechRate((float) speechRate);
                 tts.setPitch((float) pitchRate);
                 tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, call.getCallbackId());
@@ -252,8 +274,15 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
     @PluginMethod
     public void getSupportedVoices(PluginCall call) {
         try {
-            Set<Voice> voices = tts.getVoices();
-            call.success(new JSObject().put("voices", voices));
+            ArrayList<JSObject> voices = new ArrayList<>();
+            Set<Voice> supportedVoices = tts.getVoices();
+            for (Voice supportedVoice : supportedVoices) {
+                JSObject obj = this.convertVoiceToJSObject(supportedVoice);
+                voices.add(obj);
+            }
+            JSObject ret = new JSObject();
+            ret.put("voices", JSArray.from(voices.toArray()));
+            call.success(ret);
         } catch (Exception ex) {
             call.error(ex.getLocalizedMessage());
         }
@@ -261,5 +290,16 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
 
     private boolean isStringValid(String value) {
         return (value != null && !value.isEmpty() && !value.equals("null"));
+    }
+
+    private JSObject convertVoiceToJSObject(Voice voice) {
+        Locale locale = voice.getLocale();
+        JSObject obj = new JSObject();
+        obj.put("voiceURI", voice.getName());
+        obj.put("name", locale.getDisplayLanguage() + " " + locale.getDisplayCountry());
+        obj.put("lang", locale.toLanguageTag());
+        obj.put("localService", !voice.isNetworkConnectionRequired());
+        obj.put("default", false);
+        return obj;
     }
 }
