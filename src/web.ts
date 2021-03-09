@@ -23,6 +23,9 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     if (!this.speechSynthesis) {
       this.throwUnsupportedError();
     }
+    if (!options.text) {
+      throw new Error('Text option was not provided.');
+    }
     const speechSynthesis = this.speechSynthesis;
     if (this.currentlyActive) {
       return;
