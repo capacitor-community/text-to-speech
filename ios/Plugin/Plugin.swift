@@ -13,9 +13,9 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         do {
-            try AVAudioSession.sharedInstance().setActive(false, options: [])
+            try AVAudioSession.sharedInstance().setActive(false)
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient)
-            try AVAudioSession.sharedInstance().setActive(true, options: [])
+            try AVAudioSession.sharedInstance().setActive(true)
         } catch {}
     }
     
@@ -35,18 +35,17 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
         let category = call.getString("category") ?? "ambient"
         let volume = call.getDouble("volume") ?? 1.0
         
-        do {
-            try AVAudioSession.sharedInstance().setActive(false, options: [])
-        } catch {}
+        var avAudioSessionCategory = AVAudioSession.Category.ambient
+        if category != "ambient" {
+            avAudioSessionCategory = AVAudioSession.Category.playback
+        }
         
-        if (category == "ambient") {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient)
-            }  catch {}
-        } else {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-            } catch {}
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+            try AVAudioSession.sharedInstance().setCategory(avAudioSessionCategory, mode:.default, options: AVAudioSession.CategoryOptions.duckOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            call.reject(error.localizedDescription)
         }
         
         self.ttsSynthesizer?.stopSpeaking(at: .immediate)
