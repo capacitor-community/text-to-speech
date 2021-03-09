@@ -20,9 +20,6 @@
     "Robin Genz <mail@robingenz.dev>"
   ],
   "license": "MIT",
-  "dependencies": {
-    "@capacitor/core": "latest"
-  },
   "devDependencies": {
     "@capacitor/android": "2.4.7",
     "@capacitor/core": "2.4.7",
@@ -36,6 +33,9 @@
     "standard-version": "9.1.0",
     "swiftlint": "1.0.1",
     "typescript": "3.9.5"
+  },
+  "peerDependencies": {
+    "@capacitor/core": "^2.4.6"
   },
   "files": [
     "android/src/main/",

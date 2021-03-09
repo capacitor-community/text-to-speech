@@ -6,6 +6,7 @@ import {
 } from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
+  private speechSynthesis: SpeechSynthesis | null = null;
   private currentlyActive = false;
 
   constructor() {
@@ -13,10 +14,16 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
       name: 'TextToSpeech',
       platforms: ['web'],
     });
+    if ('speechSynthesis' in window) {
+      this.speechSynthesis = window.speechSynthesis;
+    }
   }
 
   public async speak(options: TTSOptions): Promise<void> {
-    const speechSynthesis = this.getSpeechSynthesis();
+    if (!this.speechSynthesis) {
+      this.throwUnsupportedError();
+    }
+    const speechSynthesis = this.speechSynthesis;
     if (this.currentlyActive) {
       return;
     }
@@ -36,8 +43,10 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   }
 
   public async stop(): Promise<void> {
-    const speechSynthesis = this.getSpeechSynthesis();
-    speechSynthesis.cancel();
+    if (!this.speechSynthesis) {
+      this.throwUnsupportedError();
+    }
+    this.speechSynthesis.cancel();
   }
 
   public async getSupportedLanguages(): Promise<{ languages: string[] }> {
@@ -54,22 +63,22 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   }
 
   public async openInstall(): Promise<void> {
-    this.throwNotImplementedError();
+    this.throwUnimplementedError();
   }
 
   public async setPitchRate(_options: { pitchRate: number }): Promise<void> {
-    this.throwNotImplementedError();
+    this.throwUnimplementedError();
   }
 
   public async setSpeechRate(_options: { speechRate: number }): Promise<void> {
-    this.throwNotImplementedError();
+    this.throwUnimplementedError();
   }
 
   private async createSpeechSynthesisUtterance(
     options: TTSOptions,
   ): Promise<SpeechSynthesisUtterance> {
-    const utterance = new SpeechSynthesisUtterance();
     const voices = this.getSpeechSynthesisVoices();
+    const utterance = new SpeechSynthesisUtterance();
     const { text, locale, speechRate, volume, voice, pitchRate } = options;
     if (voice) {
       utterance.voice = voices[voice];
@@ -91,22 +100,17 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   }
 
   private getSpeechSynthesisVoices(): SpeechSynthesisVoice[] {
-    const speechSynthesis = this.getSpeechSynthesis();
-    return speechSynthesis.getVoices();
-  }
-
-  private getSpeechSynthesis(): SpeechSynthesis {
-    if ('speechSynthesis' in window) {
-      return window.speechSynthesis;
+    if (!this.speechSynthesis) {
+      this.throwUnsupportedError();
     }
-    this.throwUnsupportedError();
+    return this.speechSynthesis.getVoices();
   }
 
   private throwUnsupportedError(): never {
     throw new Error('Not supported on this device.');
   }
 
-  private throwNotImplementedError(): never {
+  private throwUnimplementedError(): never {
     throw new Error('Not implemented on web.');
   }
 }
