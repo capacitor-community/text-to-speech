@@ -31,7 +31,7 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
       return;
     }
     this.currentlyActive = true;
-    const utterance = await this.createSpeechSynthesisUtterance(options);
+    const utterance = this.createSpeechSynthesisUtterance(options);
     return new Promise((resolve, reject) => {
       utterance.onend = () => {
         this.currentlyActive = false;
@@ -78,9 +78,9 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     this.throwUnimplementedError();
   }
 
-  private async createSpeechSynthesisUtterance(
+  private createSpeechSynthesisUtterance(
     options: TTSOptions,
-  ): Promise<SpeechSynthesisUtterance> {
+  ): SpeechSynthesisUtterance {
     const voices = this.getSpeechSynthesisVoices();
     const utterance = new SpeechSynthesisUtterance();
     const { text, locale, speechRate, volume, voice, pitchRate } = options;
