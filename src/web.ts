@@ -52,7 +52,10 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   public async getSupportedLanguages(): Promise<{ languages: string[] }> {
     const voices = this.getSpeechSynthesisVoices();
     const languages = voices.map(voice => voice.lang);
-    return { languages };
+    const filteredLanguages = languages.filter(
+      (v, i, a) => a.indexOf(v) == i,
+    );
+    return { languages: filteredLanguages };
   }
 
   public async getSupportedVoices(): Promise<{
