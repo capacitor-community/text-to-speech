@@ -30,10 +30,10 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
     @objc func speak(_ call: CAPPluginCall) {
         let text = call.getString("text") ?? ""
         let locale = call.getString("locale") ?? "en-US"
-        let speechRate = call.getDouble("speechRate") ?? 1.0
-        let pitchRate = call.getDouble("pitchRate") ?? 1.0
+        let speechRate = call.getFloat("speechRate") ?? 1.0
+        let pitchRate = call.getFloat("pitchRate") ?? 1.0
         let category = call.getString("category") ?? "ambient"
-        let volume = call.getDouble("volume") ?? 1.0
+        let volume = call.getFloat("volume") ?? 1.0
         
         var avAudioSessionCategory = AVAudioSession.Category.ambient
         if category != "ambient" {
@@ -52,9 +52,9 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
         
         self.ttsUtterance = type(of: AVSpeechUtterance()).init(string: text)
         self.ttsUtterance?.voice = AVSpeechSynthesisVoice(language: locale)
-        self.ttsUtterance?.rate = Float(speechRate)
-        self.ttsUtterance?.pitchMultiplier = Float(pitchRate)
-        self.ttsUtterance?.volume = Float(volume)
+        self.ttsUtterance?.rate = adjustRate(speechRate);
+        self.ttsUtterance?.pitchMultiplier = pitchRate
+        self.ttsUtterance?.volume = volume
         self.ttsSynthesizer?.speak(self.ttsUtterance!)
         
         call.success()
@@ -103,5 +103,17 @@ public class TextToSpeech: CAPPlugin, AVSpeechSynthesizerDelegate {
         call.success([
             "voices": []
         ])
+    }
+
+    // Adjust rate for a closer match to other platform.
+    @objc func adjustRate(_ rate: Float) -> Float {
+        let baseRate = AVSpeechUtteranceDefaultSpeechRate
+        if rate == 1 {
+            return baseRate
+        }
+        if rate > baseRate {
+            return baseRate + (rate * 0.025)
+        }
+        return rate / 2
     }
 }
