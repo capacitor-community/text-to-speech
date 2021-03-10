@@ -1,6 +1,5 @@
 package com.getcapacitor.community.tts;
 
-import static com.getcapacitor.community.tts.Constant.ERROR_TEXT_MISSING;
 import static com.getcapacitor.community.tts.Constant.ERROR_TTS_NOT_INITIALIZED;
 import static com.getcapacitor.community.tts.Constant.ERROR_UNSUPPORTED_LOCALE;
 import static com.getcapacitor.community.tts.Constant.ERROR_UTTERANCE;
@@ -88,8 +87,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
             double pitchRate;
 
             if (!call.hasOption("text") || !isStringValid(call.getString("text"))) {
-                call.error(ERROR_TEXT_MISSING);
-                return;
+                text = "";
             } else {
                 text = call.getString("text");
             }
