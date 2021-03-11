@@ -87,8 +87,8 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
             double volume = call.getDouble("volume", 1.0);
 
             if (!supportedLocales.contains(Locale.forLanguageTag((locale)))) {
-              call.error(ERROR_UNSUPPORTED_LOCALE);
-              return;
+                call.error(ERROR_UNSUPPORTED_LOCALE);
+                return;
             }
 
             if (tts == null || !ttsInitialized) {
