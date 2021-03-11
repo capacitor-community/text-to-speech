@@ -80,53 +80,20 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
     @PluginMethod
     public void speak(final PluginCall call) {
         try {
-            String text;
-            String locale;
-            double speechRate;
-            double volume;
-            double pitchRate;
+            String text = call.getString("text", "");
+            String locale = call.getString("locale", "en-US");
+            float speechRate = call.getFloat("rate", 1.0f);
+            float pitchRate = call.getFloat("pitch", 1.0f);
+            double volume = call.getDouble("volume", 1.0);
 
-            if (!call.hasOption("text") || !isStringValid(call.getString("text"))) {
-                text = "";
-            } else {
-                text = call.getString("text");
+            if (!supportedLocales.contains(Locale.forLanguageTag((locale)))) {
+              call.error(ERROR_UNSUPPORTED_LOCALE);
+              return;
             }
 
-            if (!call.hasOption("text") || !isStringValid(call.getString("locale"))) {
-                locale = "en-US";
-            } else {
-                locale = call.getString("locale");
-                if (!supportedLocales.contains(Locale.forLanguageTag((locale)))) {
-                    call.error(ERROR_UNSUPPORTED_LOCALE);
-                    return;
-                }
-            }
-
-            if (!call.hasOption("rate") || !isStringValid(call.getString("rate"))) {
-                speechRate = 1.0;
-            } else {
-                speechRate = call.getFloat("rate");
-            }
-
-            if (!call.hasOption("pitch") || !isStringValid(call.getString("pitch"))) {
-                pitchRate = 1.0;
-            } else {
-                pitchRate = call.getFloat("pitch");
-            }
-
-            if (!call.hasOption("volume") || !isStringValid(call.getString("volume"))) {
-                volume = 1.0;
-            } else {
-                volume = call.getFloat("volume");
-            }
-
-            if (tts == null) {
+            if (tts == null || !ttsInitialized) {
                 call.error(ERROR_TTS_NOT_INITIALIZED);
                 return;
-            }
-
-            if (!ttsInitialized) {
-                call.error(ERROR_TTS_NOT_INITIALIZED);
             }
 
             tts.stop();
@@ -158,8 +125,8 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                 ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
                 tts.setLanguage(new Locale(locale));
-                tts.setSpeechRate((float) speechRate);
-                tts.setPitch((float) pitchRate);
+                tts.setSpeechRate(speechRate);
+                tts.setPitch(pitchRate);
                 tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, call.getCallbackId());
             } else {
                 HashMap<String, String> ttsParams = new HashMap<>();
@@ -167,7 +134,7 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
                 ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, Double.toString(volume));
 
                 tts.setLanguage(new Locale(locale));
-                tts.setPitch((float) pitchRate);
+                tts.setPitch(pitchRate);
                 tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams);
             }
         } catch (Exception ex) {
@@ -262,10 +229,6 @@ public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpe
         } catch (Exception ex) {
             call.error(ex.getLocalizedMessage());
         }
-    }
-
-    private boolean isStringValid(String value) {
-        return (value != null && !value.isEmpty() && !value.equals("null"));
     }
 
     private JSObject convertVoiceToJSObject(Voice voice) {
