@@ -30,7 +30,6 @@ jobs:
   lint:
     name: Lint
     runs-on: macos-latest
-    if: false
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -41,4 +40,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Lint script
-        run: npm run lint
+        run: npm run prettier -- --check
