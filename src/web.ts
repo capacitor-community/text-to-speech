@@ -7,7 +7,6 @@ import {
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   private speechSynthesis: SpeechSynthesis | null = null;
-  private currentlyActive = false;
 
   constructor() {
     super({
@@ -23,19 +22,14 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     if (!this.speechSynthesis) {
       this.throwUnsupportedError();
     }
+    await this.stop();
     const speechSynthesis = this.speechSynthesis;
-    if (this.currentlyActive) {
-      return;
-    }
-    this.currentlyActive = true;
     const utterance = this.createSpeechSynthesisUtterance(options);
     return new Promise((resolve, reject) => {
       utterance.onend = () => {
-        this.currentlyActive = false;
         resolve();
       };
       utterance.onerror = (event: any) => {
-        this.currentlyActive = false;
         reject(event);
       };
       speechSynthesis.speak(utterance);
