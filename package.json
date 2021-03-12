@@ -61,7 +61,7 @@
   "swiftlint": "@ionic/swiftlint-config",
   "repository": {
     "type": "git",
-    "url": "https://github.com/capacitor-community/text-to-speech"
+    "url": "https://github.com/capacitor-community/text-to-speech.git"
   },
   "bugs": {
     "url": "https://github.com/capacitor-community/text-to-speech/issues"
