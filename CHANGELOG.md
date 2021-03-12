@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/capacitor-community/text-to-speech/compare/v0.2.2...v0.2.3) (2021-03-12)
+
+
+### Bug Fixes
+
+* **ios:** pod failed to validate ([#46](https://github.com/capacitor-community/text-to-speech/issues/46)) ([6a83100](https://github.com/capacitor-community/text-to-speech/commit/6a831003d3c29f9fa6a46dc27e20267246b3ec1a))
+
 ### [0.2.2](https://github.com/capacitor-community/text-to-speech/compare/v0.2.1...v0.2.2) (2021-03-11)
 
 
