@@ -15,10 +15,7 @@
     "prepublishOnly": "npm run build",
     "release": "standard-version"
   },
-  "contributors": [
-    "Priyank Patel <priyank.patel@stackspace.ca>",
-    "Robin Genz <mail@robingenz.dev>"
-  ],
+  "author": "Robin Genz <mail@robingenz.dev>",
   "license": "MIT",
   "devDependencies": {
     "@capacitor/android": "2.4.7",
@@ -35,7 +32,7 @@
     "typescript": "3.9.5"
   },
   "peerDependencies": {
-    "@capacitor/core": "^2.4.6"
+    "@capacitor/core": "^2.4.2"
   },
   "files": [
     "android/src/main/",
@@ -61,7 +58,7 @@
   "swiftlint": "@ionic/swiftlint-config",
   "repository": {
     "type": "git",
-    "url": "https://github.com/capacitor-community/text-to-speech"
+    "url": "https://github.com/capacitor-community/text-to-speech.git"
   },
   "bugs": {
     "url": "https://github.com/capacitor-community/text-to-speech/issues"
