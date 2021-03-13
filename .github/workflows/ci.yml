@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build web assets
+    name: Build
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -20,8 +20,12 @@ jobs:
           node-version: '12'
       - name: Install dependencies
         run: npm ci
-      - name: Build web assets
-        run: npm run build
+      - name: Build iOS
+        run: npm run verify:ios
+      - name: Build Android
+        run: npm run verify:android
+      - name: Build Web
+        run: npm run verify:web
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -40,4 +44,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Lint script
-        run: npm run prettier -- --check
+        run: npm run lint
