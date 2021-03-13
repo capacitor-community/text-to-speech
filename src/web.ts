@@ -7,10 +7,7 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   private supportedVoices: SpeechSynthesisVoice[] | undefined;
 
   constructor() {
-    super({
-      name: 'TextToSpeech',
-      platforms: ['web'],
-    });
+    super();
     if ('speechSynthesis' in window) {
       this.speechSynthesis = window.speechSynthesis;
     }
