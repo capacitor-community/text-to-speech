@@ -1,20 +1,74 @@
 export interface TextToSpeechPlugin {
+  /**
+   * Starts text to speech.
+   */
   speak(options: TTSOptions): Promise<void>;
+  /**
+   * Stops text to speech.
+   */
   stop(): Promise<void>;
+  /**
+   * Returns all supported languages.
+   */
   getSupportedLanguages(): Promise<{ languages: string[] }>;
+  /**
+   * Returns all supported voices.
+   */
   getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
+  /**
+   * Verifies proper installation and availability of resource files on the system.
+   */
   openInstall(): Promise<void>;
+  /**
+   * Sets the pitch rate.
+   */
   setPitchRate(options: { pitchRate: number }): Promise<void>;
+  /**
+   * Sets the speech rate.
+   */
   setSpeechRate(options: { speechRate: number }): Promise<void>;
 }
 
 export interface TTSOptions {
+  /**
+   * Text to be spoken.
+   */
   text: string;
+  /**
+   * Language spoken in.
+   * Possible languages can be queried using `getSupportedLanguages`.
+   *
+   * Default: `en-US`
+   */
   locale?: string;
+  /**
+   * Default: `1`
+   */
   speechRate?: number;
+  /**
+   * Default: `1`
+   */
   pitchRate?: number;
+  /**
+   * Default: `1`
+   */
   volume?: number;
-  voice?: number; // Web only
+  /**
+   * The index of the selected voice.
+   * Possible voices can be queried using `getSupportedVoices`.
+   *
+   * Only available for Web.
+   */
+  voice?: number;
+  /**
+   * Select the iOS Audio session category.
+   * Possible values: `ambient` and `playback`
+   * Use `playback` to play audio even when the app is in the background.
+   *
+   * Only available for iOS.
+   *
+   * Default: `ambient`
+   */
   category?: string; // iOS only
 }
 
