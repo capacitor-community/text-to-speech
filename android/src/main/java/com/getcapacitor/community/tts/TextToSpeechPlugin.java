@@ -9,6 +9,7 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 
 @CapacitorPlugin(name = "TextToSpeech")
 public class TextToSpeechPlugin extends Plugin {
+
     public static final String LOG_TAG = "TextToSpeechPlugin";
 
     public static final String ERROR_UTTERANCE = "Failed to read text.";
@@ -54,7 +55,7 @@ public class TextToSpeechPlugin extends Plugin {
         };
 
         try {
-            implementation.speak(text, locale, rate, pitch, volume, call.getCallbackId() ,resultCallback);
+            implementation.speak(text, locale, rate, pitch, volume, call.getCallbackId(), resultCallback);
         } catch (Exception ex) {
             call.reject(ex.getLocalizedMessage());
         }

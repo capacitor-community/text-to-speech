@@ -9,16 +9,15 @@ import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
 import android.util.Log;
-
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
 public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListener {
+
     public static final String LOG_TAG = "TextToSpeech";
 
     private Context context;
@@ -40,22 +39,32 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         this.initializationStatus = status;
     }
 
-    public void speak(String text, String locale, float rate, float pitch, double volume, String callbackId, SpeakResultCallback resultCallback) {
+    public void speak(
+        String text,
+        String locale,
+        float rate,
+        float pitch,
+        double volume,
+        String callbackId,
+        SpeakResultCallback resultCallback
+    ) {
         tts.stop();
-        tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
-            @Override
-            public void onStart(String utteranceId) {}
+        tts.setOnUtteranceProgressListener(
+            new UtteranceProgressListener() {
+                @Override
+                public void onStart(String utteranceId) {}
 
-            @Override
-            public void onDone(String utteranceId) {
-                resultCallback.onDone();
-            }
+                @Override
+                public void onDone(String utteranceId) {
+                    resultCallback.onDone();
+                }
 
-            @Override
-            public void onError(String utteranceId) {
-                resultCallback.onError();
+                @Override
+                public void onError(String utteranceId) {
+                    resultCallback.onError();
+                }
             }
-        });
+        );
 
         if (Build.VERSION.SDK_INT >= 21) {
             Bundle ttsParams = new Bundle();
