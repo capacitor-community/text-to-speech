@@ -34,7 +34,7 @@ public class TextToSpeechPlugin extends Plugin {
         String locale = call.getString("locale", "en-US");
         float rate = call.getFloat("speechRate", 1.0f);
         float pitch = call.getFloat("pitchRate", 1.0f);
-        double volume = call.getDouble("volume", 1.0);
+        float volume = call.getFloat("volume", 1.0f);
 
         boolean isLocaleSupported = implementation.isLocaleSupported(locale);
         if (!isLocaleSupported) {

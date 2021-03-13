@@ -44,7 +44,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         String locale,
         float rate,
         float pitch,
-        double volume,
+        float volume,
         String callbackId,
         SpeakResultCallback resultCallback
     ) {
@@ -78,7 +78,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         } else {
             HashMap<String, String> ttsParams = new HashMap<>();
             ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
-            ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, Double.toString(volume));
+            ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
 
             tts.setLanguage(new Locale(locale));
             tts.setSpeechRate(rate);
