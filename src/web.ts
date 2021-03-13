@@ -4,6 +4,7 @@ import type { TextToSpeechPlugin, TTSOptions } from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   private speechSynthesis: SpeechSynthesis | null = null;
+  private supportedVoices: SpeechSynthesisVoice[] | undefined;
 
   constructor() {
     super({
@@ -95,7 +96,10 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     if (!this.speechSynthesis) {
       this.throwUnsupportedError();
     }
-    return this.speechSynthesis.getVoices();
+    if (!this.supportedVoices || this.supportedVoices.length < 1) {
+      this.supportedVoices = this.speechSynthesis.getVoices();
+    }
+    return this.supportedVoices;
   }
 
   private throwUnsupportedError(): never {
