@@ -7,12 +7,69 @@ import Capacitor
  */
 @objc(TextToSpeechPlugin)
 public class TextToSpeechPlugin: CAPPlugin {
+    private static let ERROR_UNSUPPORTED_LOCALE = "This locale is not supported."
+    
     private let implementation = TextToSpeech()
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
+    @objc public func speak(_ call: CAPPluginCall) {
+        let text = call.getString("text") ?? ""
+        let locale = call.getString("locale") ?? "en-US"
+        let rate = call.getFloat("speechRate") ?? 1.0
+        let pitch = call.getFloat("pitchRate") ?? 1.0
+        let category = call.getString("category") ?? "ambient"
+        let volume = call.getFloat("volume") ?? 1.0
+        
+        let isLanguageSupported = implementation.isLanguageSupported(locale)
+        guard isLanguageSupported else {
+            call.reject(TextToSpeechPlugin.ERROR_UNSUPPORTED_LOCALE)
+            return
+        }
+        
+        do {
+            try implementation.speak(text, locale, rate, pitch, category, volume)
+            call.resolve()
+        } catch {
+            call.reject(error.localizedDescription)
+        }
+    }
+    
+    @objc public func stop(_ call: CAPPluginCall) {
+        implementation.stop()
+        call.resolve()
+    }
+    
+    @objc public func openInstall(_ call: CAPPluginCall) {
+        call.resolve()
+    }
+    
+    @objc public func setSpeechRate(_ call: CAPPluginCall) {
+        guard let rate = call.getFloat("speechRate") else {
+            call.reject("speechRate must be provided and must be a number.")
+            return
+        }
+        implementation.setSpeechRate(rate)
+        call.resolve()
+    }
+    
+    @objc public func setPitchRate(_ call: CAPPluginCall) {
+        guard let pitch = call.getFloat("pitchRate") else {
+            call.reject("pitchRate must be provided and must be a number.")
+            return
+        }
+        implementation.setPitchRate(pitch)
+        call.resolve()
+    }
+    
+    @objc func getSupportedLanguages(_ call: CAPPluginCall) {
+        let languages = self.implementation.getSupportedLanguages()
         call.resolve([
-            "value": implementation.echo(value)
+            "languages": languages
+        ])
+    }
+    
+    @objc func getSupportedVoices(_ call: CAPPluginCall) {
+        call.resolve([
+            "voices": []
         ])
     }
 }
