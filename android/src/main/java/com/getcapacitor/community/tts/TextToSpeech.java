@@ -84,8 +84,8 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
 
     public JSArray getSupportedLanguages() {
         ArrayList<String> languages = new ArrayList<>();
-        Set<Locale> availableLanguages = tts.getAvailableLanguages();
-        for (Locale supportedLocale : availableLanguages) {
+        Set<Locale> supportedLocales = tts.getAvailableLanguages();
+        for (Locale supportedLocale : supportedLocales) {
             String tag = supportedLocale.toLanguageTag();
             languages.add(tag);
         }
@@ -129,9 +129,16 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         }
     }
 
-
     public boolean isAvailable() {
         if (tts != null && initializationStatus == android.speech.tts.TextToSpeech.SUCCESS) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isLocaleSupported(String locale) {
+        Set<Locale> supportedLocales = tts.getAvailableLanguages();
+        if (supportedLocales.contains(Locale.forLanguageTag(locale))) {
             return true;
         }
         return false;

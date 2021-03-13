@@ -12,6 +12,7 @@ public class TextToSpeechPlugin extends Plugin {
     public static final String LOG_TAG = "TextToSpeechPlugin";
 
     public static final String ERROR_UTTERANCE = "Failed to read text.";
+    public static final String ERROR_UNSUPPORTED_LOCALE = "This locale is not supported.";
 
     private TextToSpeech implementation;
 
@@ -33,6 +34,12 @@ public class TextToSpeechPlugin extends Plugin {
         float rate = call.getFloat("speechRate", 1.0f);
         float pitch = call.getFloat("pitchRate", 1.0f);
         double volume = call.getDouble("volume", 1.0);
+
+        boolean isLocaleSupported = implementation.isLocaleSupported(locale);
+        if (!isLocaleSupported) {
+            call.reject(ERROR_UNSUPPORTED_LOCALE);
+            return;
+        }
 
         SpeakResultCallback resultCallback = new SpeakResultCallback() {
             @Override
