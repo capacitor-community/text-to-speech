@@ -1,18 +1,18 @@
 export interface TextToSpeechPlugin {
   /**
-   * Starts text to speech.
+   * Starts the TTS engine and plays the desired text.
    */
   speak(options: TTSOptions): Promise<void>;
   /**
-   * Stops text to speech.
+   * Stops the TTS engine.
    */
   stop(): Promise<void>;
   /**
-   * Returns all supported languages.
+   * Returns a list of supported languages.
    */
   getSupportedLanguages(): Promise<{ languages: string[] }>;
   /**
-   * Returns all supported voices.
+   * Returns a list of supported voices.
    */
   getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
   /**
@@ -20,11 +20,15 @@ export interface TextToSpeechPlugin {
    */
   openInstall(): Promise<void>;
   /**
-   * Sets the pitch rate.
+   * Changes the pitch rate while the text is being played.
+   *
+   * Only available for Android.
    */
   setPitchRate(options: { pitchRate: number }): Promise<void>;
   /**
-   * Sets the speech rate.
+   * Changes the speech rate while the text is being played.
+   *
+   * Only available for Android.
    */
   setSpeechRate(options: { speechRate: number }): Promise<void>;
 }
@@ -42,15 +46,21 @@ export interface TTSOptions {
    */
   locale?: string;
   /**
-   * Default: `1`
+   * The speech rate.
+   *
+   * Default: `1.0`
    */
   speechRate?: number;
   /**
-   * Default: `1`
+   * The pitch rate.
+   *
+   * Default: `1.0`
    */
   pitchRate?: number;
   /**
-   * Default: `1`
+   * The volume.
+   *
+   * Default: `1.0`
    */
   volume?: number;
   /**
