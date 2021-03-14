@@ -80,9 +80,9 @@ import { TextToSpeech } from '@capacitor-community/text-to-speech';
 const speak = async () => {
   await TextToSpeech.speak({
     text: 'This is a sample text.',
-    locale: 'en_US',
-    speechRate: 1.0,
-    pitchRate: 1.0,
+    lang: 'en_US',
+    rate: 1.0,
+    pitch: 1.0,
     volume: 1.0,
     category: 'ambient',
   });
