@@ -17,6 +17,8 @@ export interface TextToSpeechPlugin {
   getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
   /**
    * Verifies proper installation and availability of resource files on the system.
+   *
+   * Only available for Android.
    */
   openInstall(): Promise<void>;
 }
