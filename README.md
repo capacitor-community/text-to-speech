@@ -99,18 +99,6 @@ const getSupportedLanguages = async () => {
 const getSupportedVoices = async () => {
   const voices = await TextToSpeech.getSupportedVoices();
 };
-
-const setPitchRate = async () => {
-  await TextToSpeech.setPitchRate({
-    pitchRate: 1.5,
-  });
-};
-
-const setSpeechRate = async () => {
-  await TextToSpeech.setSpeechRate({
-    speechRate: 0.5,
-  });
-};
 ```
 
 ## API
