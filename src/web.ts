@@ -61,21 +61,21 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   ): SpeechSynthesisUtterance {
     const voices = this.getSpeechSynthesisVoices();
     const utterance = new SpeechSynthesisUtterance();
-    const { text, locale, speechRate, volume, voice, pitchRate } = options;
+    const { text, lang, rate, pitch, volume, voice } = options;
     if (voice) {
       utterance.voice = voices[voice];
     }
     if (volume) {
       utterance.volume = volume >= 0 && volume <= 1 ? volume : 1;
     }
-    if (speechRate) {
-      utterance.rate = speechRate >= 0.1 && speechRate <= 10 ? speechRate : 1;
+    if (rate) {
+      utterance.rate = rate >= 0.1 && rate <= 10 ? rate : 1;
     }
-    if (pitchRate) {
-      utterance.pitch = pitchRate >= 0 && pitchRate <= 2 ? pitchRate : 2;
+    if (pitch) {
+      utterance.pitch = pitch >= 0 && pitch <= 2 ? pitch : 2;
     }
-    if (locale) {
-      utterance.lang = locale;
+    if (lang) {
+      utterance.lang = lang;
     }
     utterance.text = text;
     return utterance;

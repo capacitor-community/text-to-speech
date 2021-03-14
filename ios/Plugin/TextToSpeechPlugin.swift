@@ -7,26 +7,26 @@ import Capacitor
  */
 @objc(TextToSpeechPlugin)
 public class TextToSpeechPlugin: CAPPlugin {
-    private static let ERROR_UNSUPPORTED_LOCALE = "This locale is not supported."
+    private static let ERROR_UNSUPPORTED_LOCALE = "This language is not supported."
 
     private let implementation = TextToSpeech()
 
     @objc public func speak(_ call: CAPPluginCall) {
         let text = call.getString("text") ?? ""
-        let locale = call.getString("locale") ?? "en-US"
-        let rate = call.getFloat("speechRate") ?? 1.0
-        let pitch = call.getFloat("pitchRate") ?? 1.0
-        let category = call.getString("category") ?? "ambient"
+        let lang = call.getString("lang") ?? "en-US"
+        let rate = call.getFloat("rate") ?? 1.0
+        let pitch = call.getFloat("pitch") ?? 1.0
         let volume = call.getFloat("volume") ?? 1.0
+        let category = call.getString("category") ?? "ambient"
 
-        let isLanguageSupported = implementation.isLanguageSupported(locale)
+        let isLanguageSupported = implementation.isLanguageSupported(lang)
         guard isLanguageSupported else {
             call.reject(TextToSpeechPlugin.ERROR_UNSUPPORTED_LOCALE)
             return
         }
 
         do {
-            try implementation.speak(text, locale, rate, pitch, category, volume)
+            try implementation.speak(text, lang, rate, pitch, category, volume)
             call.resolve()
         } catch {
             call.reject(error.localizedDescription)
