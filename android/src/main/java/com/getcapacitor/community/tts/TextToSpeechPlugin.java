@@ -101,28 +101,6 @@ public class TextToSpeechPlugin extends Plugin {
     }
 
     @PluginMethod
-    public void setPitchRate(final PluginCall call) {
-        float pitch = call.getFloat("pitchRate", 1.0f);
-        try {
-            implementation.setPitch(pitch);
-            call.resolve();
-        } catch (Exception ex) {
-            call.reject(ex.getLocalizedMessage());
-        }
-    }
-
-    @PluginMethod
-    public void setSpeechRate(final PluginCall call) {
-        float rate = call.getFloat("speechRate", 1.0f);
-        try {
-            implementation.setPitch(rate);
-            call.resolve();
-        } catch (Exception ex) {
-            call.reject(ex.getLocalizedMessage());
-        }
-    }
-
-    @PluginMethod
     public void openInstall(PluginCall call) {
         try {
             implementation.openInstall();

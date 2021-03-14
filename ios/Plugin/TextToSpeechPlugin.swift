@@ -42,24 +42,6 @@ public class TextToSpeechPlugin: CAPPlugin {
         call.resolve()
     }
 
-    @objc public func setSpeechRate(_ call: CAPPluginCall) {
-        guard let rate = call.getFloat("speechRate") else {
-            call.reject("speechRate must be provided and must be a number.")
-            return
-        }
-        implementation.setSpeechRate(rate)
-        call.resolve()
-    }
-
-    @objc public func setPitchRate(_ call: CAPPluginCall) {
-        guard let pitch = call.getFloat("pitchRate") else {
-            call.reject("pitchRate must be provided and must be a number.")
-            return
-        }
-        implementation.setPitchRate(pitch)
-        call.resolve()
-    }
-
     @objc func getSupportedLanguages(_ call: CAPPluginCall) {
         let languages = self.implementation.getSupportedLanguages()
         call.resolve([

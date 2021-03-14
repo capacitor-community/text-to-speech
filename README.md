@@ -122,8 +122,6 @@ const setSpeechRate = async () => {
 * [`getSupportedLanguages()`](#getsupportedlanguages)
 * [`getSupportedVoices()`](#getsupportedvoices)
 * [`openInstall()`](#openinstall)
-* [`setPitchRate(...)`](#setpitchrate)
-* [`setSpeechRate(...)`](#setspeechrate)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -190,40 +188,6 @@ openInstall() => Promise<void>
 ```
 
 Verifies proper installation and availability of resource files on the system.
-
---------------------
-
-
-### setPitchRate(...)
-
-```typescript
-setPitchRate(options: { pitchRate: number; }) => Promise<void>
-```
-
-Changes the pitch rate while the text is being played.
-
-Only available for Android.
-
-| Param         | Type                                |
-| ------------- | ----------------------------------- |
-| **`options`** | <code>{ pitchRate: number; }</code> |
-
---------------------
-
-
-### setSpeechRate(...)
-
-```typescript
-setSpeechRate(options: { speechRate: number; }) => Promise<void>
-```
-
-Changes the speech rate while the text is being played.
-
-Only available for Android.
-
-| Param         | Type                                 |
-| ------------- | ------------------------------------ |
-| **`options`** | <code>{ speechRate: number; }</code> |
 
 --------------------
 
