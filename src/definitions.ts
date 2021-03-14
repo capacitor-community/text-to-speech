@@ -17,42 +17,44 @@ export interface TextToSpeechPlugin {
   getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
   /**
    * Verifies proper installation and availability of resource files on the system.
+   *
+   * Only available for Android.
    */
   openInstall(): Promise<void>;
 }
 
 export interface TTSOptions {
   /**
-   * Text to be spoken.
+   * The text that will be synthesised when the utterance is spoken.
    */
   text: string;
   /**
-   * Language spoken in.
+   * The language of the utterance.
    * Possible languages can be queried using `getSupportedLanguages`.
    *
-   * Default: `en-US`
+   * Default: `en-US`.
    */
-  locale?: string;
+  lang?: string;
   /**
-   * The speech rate.
+   * The speed at which the utterance will be spoken at.
    *
-   * Default: `1.0`
+   * Default: `1.0`.
    */
-  speechRate?: number;
+  rate?: number;
   /**
-   * The pitch rate.
+   * The pitch at which the utterance will be spoken at.
    *
-   * Default: `1.0`
+   * Default: `1.0`.
    */
-  pitchRate?: number;
+  pitch?: number;
   /**
-   * The volume.
+   * The volume that the utterance will be spoken at.
    *
-   * Default: `1.0`
+   * Default: `1.0`.
    */
   volume?: number;
   /**
-   * The index of the selected voice.
+   * The index of the selected voice that will be used to speak the utterance.
    * Possible voices can be queried using `getSupportedVoices`.
    *
    * Only available for Web.
@@ -60,12 +62,12 @@ export interface TTSOptions {
   voice?: number;
   /**
    * Select the iOS Audio session category.
-   * Possible values: `ambient` and `playback`
+   * Possible values: `ambient` and `playback`.
    * Use `playback` to play audio even when the app is in the background.
    *
    * Only available for iOS.
    *
-   * Default: `ambient`
+   * Default: `ambient`.
    */
   category?: string; // iOS only
 }
@@ -80,7 +82,7 @@ export interface SpeechSynthesisVoice {
   default: boolean;
   /**
    * BCP 47 language tag indicating the language of the voice.
-   * Example: `en-US`
+   * Example: `en-US`.
    */
   lang: string;
   /**
@@ -89,12 +91,12 @@ export interface SpeechSynthesisVoice {
   localService: boolean;
   /**
    * Human-readable name that represents the voice.
-   * Example: `Microsoft Zira Desktop - English (United States)`
+   * Example: `Microsoft Zira Desktop - English (United States)`.
    */
   name: string;
   /**
    * Type of URI and location of the speech synthesis service for this voice.
-   * Example: `urn:moz-tts:sapi:Microsoft Zira Desktop - English (United States)?en-US`
+   * Example: `urn:moz-tts:sapi:Microsoft Zira Desktop - English (United States)?en-US`.
    */
   voiceURI: string;
 }

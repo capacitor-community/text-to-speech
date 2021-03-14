@@ -13,7 +13,7 @@ public class TextToSpeechPlugin extends Plugin {
     public static final String LOG_TAG = "TextToSpeechPlugin";
 
     public static final String ERROR_UTTERANCE = "Failed to read text.";
-    public static final String ERROR_UNSUPPORTED_LOCALE = "This locale is not supported.";
+    public static final String ERROR_UNSUPPORTED_LANGUAGE = "This language is not supported.";
 
     private TextToSpeech implementation;
 
@@ -31,14 +31,14 @@ public class TextToSpeechPlugin extends Plugin {
         }
 
         String text = call.getString("text", "");
-        String locale = call.getString("locale", "en-US");
-        float rate = call.getFloat("speechRate", 1.0f);
-        float pitch = call.getFloat("pitchRate", 1.0f);
+        String lang = call.getString("lang", "en-US");
+        float rate = call.getFloat("rate", 1.0f);
+        float pitch = call.getFloat("pitch", 1.0f);
         float volume = call.getFloat("volume", 1.0f);
 
-        boolean isLocaleSupported = implementation.isLocaleSupported(locale);
-        if (!isLocaleSupported) {
-            call.reject(ERROR_UNSUPPORTED_LOCALE);
+        boolean isLanguageSupported = implementation.isLanguageSupported(lang);
+        if (!isLanguageSupported) {
+            call.reject(ERROR_UNSUPPORTED_LANGUAGE);
             return;
         }
 
@@ -55,7 +55,7 @@ public class TextToSpeechPlugin extends Plugin {
         };
 
         try {
-            implementation.speak(text, locale, rate, pitch, volume, call.getCallbackId(), resultCallback);
+            implementation.speak(text, lang, rate, pitch, volume, call.getCallbackId(), resultCallback);
         } catch (Exception ex) {
             call.reject(ex.getLocalizedMessage());
         }

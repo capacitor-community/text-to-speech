@@ -80,9 +80,9 @@ import { TextToSpeech } from '@capacitor-community/text-to-speech';
 const speak = async () => {
   await TextToSpeech.speak({
     text: 'This is a sample text.',
-    locale: 'en_US',
-    speechRate: 1.0,
-    pitchRate: 1.0,
+    lang: 'en_US',
+    rate: 1.0,
+    pitch: 1.0,
     volume: 1.0,
     category: 'ambient',
   });
@@ -98,18 +98,6 @@ const getSupportedLanguages = async () => {
 
 const getSupportedVoices = async () => {
   const voices = await TextToSpeech.getSupportedVoices();
-};
-
-const setPitchRate = async () => {
-  await TextToSpeech.setPitchRate({
-    pitchRate: 1.5,
-  });
-};
-
-const setSpeechRate = async () => {
-  await TextToSpeech.setSpeechRate({
-    speechRate: 0.5,
-  });
 };
 ```
 
@@ -189,6 +177,8 @@ openInstall() => Promise<void>
 
 Verifies proper installation and availability of resource files on the system.
 
+Only available for Android.
+
 --------------------
 
 
@@ -197,28 +187,28 @@ Verifies proper installation and availability of resource files on the system.
 
 #### TTSOptions
 
-| Prop             | Type                | Description                                                                                                                                                                                      |
-| ---------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **`text`**       | <code>string</code> | Text to be spoken.                                                                                                                                                                               |
-| **`locale`**     | <code>string</code> | Language spoken in. Possible languages can be queried using `getSupportedLanguages`. Default: `en-US`                                                                                            |
-| **`speechRate`** | <code>number</code> | The speech rate. Default: `1.0`                                                                                                                                                                  |
-| **`pitchRate`**  | <code>number</code> | The pitch rate. Default: `1.0`                                                                                                                                                                   |
-| **`volume`**     | <code>number</code> | The volume. Default: `1.0`                                                                                                                                                                       |
-| **`voice`**      | <code>number</code> | The index of the selected voice. Possible voices can be queried using `getSupportedVoices`. Only available for Web.                                                                              |
-| **`category`**   | <code>string</code> | Select the iOS Audio session category. Possible values: `ambient` and `playback` Use `playback` to play audio even when the app is in the background. Only available for iOS. Default: `ambient` |
+| Prop           | Type                | Description                                                                                                                                                                                        |
+| -------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`text`**     | <code>string</code> | The text that will be synthesised when the utterance is spoken.                                                                                                                                    |
+| **`lang`**     | <code>string</code> | The language of the utterance. Possible languages can be queried using `getSupportedLanguages`. Default: `en-US`.                                                                                  |
+| **`rate`**     | <code>number</code> | The speed at which the utterance will be spoken at. Default: `1.0`.                                                                                                                                |
+| **`pitch`**    | <code>number</code> | The pitch at which the utterance will be spoken at. Default: `1.0`.                                                                                                                                |
+| **`volume`**   | <code>number</code> | The volume that the utterance will be spoken at. Default: `1.0`.                                                                                                                                   |
+| **`voice`**    | <code>number</code> | The index of the selected voice that will be used to speak the utterance. Possible voices can be queried using `getSupportedVoices`. Only available for Web.                                       |
+| **`category`** | <code>string</code> | Select the iOS Audio session category. Possible values: `ambient` and `playback`. Use `playback` to play audio even when the app is in the background. Only available for iOS. Default: `ambient`. |
 
 
 #### SpeechSynthesisVoice
 
 The <a href="#speechsynthesisvoice">SpeechSynthesisVoice</a> interface represents a voice that the system supports.
 
-| Prop               | Type                 | Description                                                                                                                                                 |
-| ------------------ | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`default`**      | <code>boolean</code> | Specifies whether the voice is the default voice for the current app (`true`) or not (`false`).                                                             |
-| **`lang`**         | <code>string</code>  | BCP 47 language tag indicating the language of the voice. Example: `en-US`                                                                                  |
-| **`localService`** | <code>boolean</code> | Specifies whether the voice is supplied by a local (`true`) or remote (`false`) speech synthesizer service.                                                 |
-| **`name`**         | <code>string</code>  | Human-readable name that represents the voice. Example: `Microsoft Zira Desktop - English (United States)`                                                  |
-| **`voiceURI`**     | <code>string</code>  | Type of URI and location of the speech synthesis service for this voice. Example: `urn:moz-tts:sapi:Microsoft Zira Desktop - English (United States)?en-US` |
+| Prop               | Type                 | Description                                                                                                                                                  |
+| ------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **`default`**      | <code>boolean</code> | Specifies whether the voice is the default voice for the current app (`true`) or not (`false`).                                                              |
+| **`lang`**         | <code>string</code>  | BCP 47 language tag indicating the language of the voice. Example: `en-US`.                                                                                  |
+| **`localService`** | <code>boolean</code> | Specifies whether the voice is supplied by a local (`true`) or remote (`false`) speech synthesizer service.                                                  |
+| **`name`**         | <code>string</code>  | Human-readable name that represents the voice. Example: `Microsoft Zira Desktop - English (United States)`.                                                  |
+| **`voiceURI`**     | <code>string</code>  | Type of URI and location of the speech synthesis service for this voice. Example: `urn:moz-tts:sapi:Microsoft Zira Desktop - English (United States)?en-US`. |
 
 </docgen-api>
 

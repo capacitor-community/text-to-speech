@@ -41,7 +41,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
 
     public void speak(
         String text,
-        String locale,
+        String lang,
         float rate,
         float pitch,
         float volume,
@@ -71,7 +71,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
-            tts.setLanguage(new Locale(locale));
+            tts.setLanguage(new Locale(lang));
             tts.setSpeechRate(rate);
             tts.setPitch(pitch);
             tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, callbackId);
@@ -80,7 +80,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
             ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
 
-            tts.setLanguage(new Locale(locale));
+            tts.setLanguage(new Locale(lang));
             tts.setSpeechRate(rate);
             tts.setPitch(pitch);
             tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams);
@@ -133,9 +133,9 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         return false;
     }
 
-    public boolean isLocaleSupported(String locale) {
+    public boolean isLanguageSupported(String lang) {
         Set<Locale> supportedLocales = tts.getAvailableLanguages();
-        if (supportedLocales.contains(Locale.forLanguageTag(locale))) {
+        if (supportedLocales.contains(Locale.forLanguageTag(lang))) {
             return true;
         }
         return false;

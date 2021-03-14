@@ -17,7 +17,7 @@ import AVFoundation
         } catch {}
     }
 
-    @objc public func speak(_ text: String, _ locale: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float) throws {
+    @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float) throws {
         var avAudioSessionCategory = AVAudioSession.Category.ambient
         if category != "ambient" {
             avAudioSessionCategory = AVAudioSession.Category.playback
@@ -30,7 +30,7 @@ import AVFoundation
         self.synthesizer.stopSpeaking(at: .immediate)
 
         self.utterance = type(of: AVSpeechUtterance()).init(string: text)
-        self.utterance?.voice = AVSpeechSynthesisVoice(language: locale)
+        self.utterance?.voice = AVSpeechSynthesisVoice(language: lang)
         self.utterance?.rate = adjustRate(rate)
         self.utterance?.pitchMultiplier = pitch
         self.utterance?.volume = volume
