@@ -42,14 +42,6 @@ import AVFoundation
         synthesizer.stopSpeaking(at: .immediate)
     }
 
-    @objc public func setSpeechRate(_ rate: Float) {
-        self.utterance?.rate = rate
-    }
-
-    @objc public func setPitchRate(_ pitch: Float) {
-        self.utterance?.pitchMultiplier = pitch
-    }
-
     @objc public func getSupportedLanguages() -> [String] {
         return Array(AVSpeechSynthesisVoice.speechVoices().map {
             return $0.language

@@ -113,18 +113,6 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         return result;
     }
 
-    public void setPitch(float pitch) {
-        tts.setPitch(pitch);
-    }
-
-    public void setRate(float rate) {
-        if (Build.VERSION.SDK_INT >= 27) {
-            tts.setSpeechRate(rate * 0.7f);
-        } else {
-            tts.setSpeechRate(rate);
-        }
-    }
-
     public void openInstall() {
         PackageManager packageManager = context.getPackageManager();
         Intent installIntent = new Intent();

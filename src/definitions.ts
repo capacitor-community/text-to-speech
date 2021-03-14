@@ -19,18 +19,6 @@ export interface TextToSpeechPlugin {
    * Verifies proper installation and availability of resource files on the system.
    */
   openInstall(): Promise<void>;
-  /**
-   * Changes the pitch rate while the text is being played.
-   *
-   * Only available for Android.
-   */
-  setPitchRate(options: { pitchRate: number }): Promise<void>;
-  /**
-   * Changes the speech rate while the text is being played.
-   *
-   * Only available for Android.
-   */
-  setSpeechRate(options: { speechRate: number }): Promise<void>;
 }
 
 export interface TTSOptions {

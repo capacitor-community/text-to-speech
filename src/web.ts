@@ -56,14 +56,6 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     this.throwUnimplementedError();
   }
 
-  public async setPitchRate(_options: { pitchRate: number }): Promise<void> {
-    this.throwUnimplementedError();
-  }
-
-  public async setSpeechRate(_options: { speechRate: number }): Promise<void> {
-    this.throwUnimplementedError();
-  }
-
   private createSpeechSynthesisUtterance(
     options: TTSOptions,
   ): SpeechSynthesisUtterance {
