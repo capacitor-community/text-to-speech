@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/capacitor-community/text-to-speech/compare/v0.2.3...v1.0.0) (2021-03-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* `TTSOptions` properties `locale`, `speechRate`, `pitchRate` renamed to `lang`, `rate`, `pitch`.
+* remove `setSpeechRate` and `setPitchRate`
+* Update to Capacitor v3
+
+### Features
+
+* add Capacitor 3 support ([#47](https://github.com/capacitor-community/text-to-speech/issues/47)) ([912a914](https://github.com/capacitor-community/text-to-speech/commit/912a91455f100aa430d1a108090fb7f8ff2bc8e9))
+
+
+* remove `setSpeechRate` and `setPitchRate` ([#49](https://github.com/capacitor-community/text-to-speech/issues/49)) ([c4bd0a8](https://github.com/capacitor-community/text-to-speech/commit/c4bd0a85197921f23fd43f3d4a9f6bd2d998183a))
+* rename `TTSOptions` properties ([#51](https://github.com/capacitor-community/text-to-speech/issues/51)) ([83c4370](https://github.com/capacitor-community/text-to-speech/commit/83c43708165f5365158eb05eb22e5f69f15b7bef))
+
 ### [0.2.3](https://github.com/capacitor-community/text-to-speech/compare/v0.2.2...v0.2.3) (2021-03-12)
 
 
