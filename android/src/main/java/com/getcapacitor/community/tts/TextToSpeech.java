@@ -1,9 +1,5 @@
 package com.getcapacitor.community.tts;
 
-import static com.getcapacitor.community.tts.Constant.ERROR_TTS_NOT_INITIALIZED;
-import static com.getcapacitor.community.tts.Constant.ERROR_UNSUPPORTED_LOCALE;
-import static com.getcapacitor.community.tts.Constant.ERROR_UTTERANCE;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,220 +11,146 @@ import android.speech.tts.Voice;
 import android.util.Log;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.getcapacitor.NativePlugin;
-import com.getcapacitor.Plugin;
-import com.getcapacitor.PluginCall;
-import com.getcapacitor.PluginMethod;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
-@NativePlugin
-public class TextToSpeech extends Plugin implements android.speech.tts.TextToSpeech.OnInitListener {
+public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListener {
 
-    public static final String TAG = "TextToSpeech";
+    public static final String LOG_TAG = "TextToSpeech";
 
-    private boolean ttsInitialized = false;
+    private Context context;
     private android.speech.tts.TextToSpeech tts = null;
-    private Context context = null;
-    private ArrayList<Locale> supportedLocales = new ArrayList<>();
+    private int initializationStatus;
+    private JSObject[] supportedVoices = null;
+
+    TextToSpeech(Context context) {
+        this.context = context;
+        try {
+            tts = new android.speech.tts.TextToSpeech(context, this);
+        } catch (Exception ex) {
+            Log.d(LOG_TAG, ex.getLocalizedMessage());
+        }
+    }
 
     @Override
     public void onInit(int status) {
-        try {
-            if (status != android.speech.tts.TextToSpeech.SUCCESS) {
-                tts = null;
-                ttsInitialized = false;
-            } else {
-                if (Build.VERSION.SDK_INT >= 21) {
-                    Bundle ttsParams = new Bundle();
-                    ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
-                    tts.setLanguage(new Locale("en", "US"));
-                    tts.speak("", android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, "");
-                } else {
-                    HashMap<String, String> ttsParams = new HashMap<>();
-                    ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
-                    tts.setLanguage(new Locale("en", "US"));
-                    tts.speak("", android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams);
+        this.initializationStatus = status;
+    }
+
+    public void speak(
+        String text,
+        String locale,
+        float rate,
+        float pitch,
+        float volume,
+        String callbackId,
+        SpeakResultCallback resultCallback
+    ) {
+        tts.stop();
+        tts.setOnUtteranceProgressListener(
+            new UtteranceProgressListener() {
+                @Override
+                public void onStart(String utteranceId) {}
+
+                @Override
+                public void onDone(String utteranceId) {
+                    resultCallback.onDone();
                 }
-                Set<Locale> availableLanguages = tts.getAvailableLanguages();
-                if (availableLanguages != null) {
-                    this.supportedLocales.addAll(availableLanguages);
+
+                @Override
+                public void onError(String utteranceId) {
+                    resultCallback.onError();
                 }
-                ttsInitialized = true;
             }
-        } catch (Exception ex) {
-            Log.d(TAG, "Caught exception while listening to OnInitListener.OnInit(): " + ex.getLocalizedMessage());
+        );
 
-            ttsInitialized = false;
-        }
-    }
+        if (Build.VERSION.SDK_INT >= 21) {
+            Bundle ttsParams = new Bundle();
+            ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
+            ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
-    @Override
-    public void load() {
-        super.load();
-
-        try {
-            context = getContext();
-            tts = new android.speech.tts.TextToSpeech(context, this);
-        } catch (Exception ex) {
-            Log.d(TAG, "Caught exception on TextToSpeech load(): " + ex.getLocalizedMessage());
-        }
-    }
-
-    @PluginMethod
-    public void speak(final PluginCall call) {
-        try {
-            String text = call.getString("text", "");
-            String locale = call.getString("locale", "en-US");
-            float speechRate = call.getFloat("speechRate", 1.0f);
-            float pitchRate = call.getFloat("pitchRate", 1.0f);
-            double volume = call.getDouble("volume", 1.0);
-
-            if (!supportedLocales.contains(Locale.forLanguageTag((locale)))) {
-                call.error(ERROR_UNSUPPORTED_LOCALE);
-                return;
-            }
-
-            if (tts == null || !ttsInitialized) {
-                call.error(ERROR_TTS_NOT_INITIALIZED);
-                return;
-            }
-
-            tts.stop();
-
-            tts.setOnUtteranceProgressListener(
-                new UtteranceProgressListener() {
-                    @Override
-                    public void onStart(String utteranceId) {}
-
-                    @Override
-                    public void onDone(String utteranceId) {
-                        if (!utteranceId.equals("")) {
-                            call.success();
-                        }
-                    }
-
-                    @Override
-                    public void onError(String utteranceId) {
-                        if (!utteranceId.equals("")) {
-                            call.error(ERROR_UTTERANCE);
-                        }
-                    }
-                }
-            );
-
-            if (Build.VERSION.SDK_INT >= 21) {
-                Bundle ttsParams = new Bundle();
-                ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, call.getCallbackId());
-                ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
-
-                tts.setLanguage(new Locale(locale));
-                tts.setSpeechRate(speechRate);
-                tts.setPitch(pitchRate);
-                tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, call.getCallbackId());
-            } else {
-                HashMap<String, String> ttsParams = new HashMap<>();
-                ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, call.getCallbackId());
-                ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, Double.toString(volume));
-
-                tts.setLanguage(new Locale(locale));
-                tts.setPitch(pitchRate);
-                tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams);
-            }
-        } catch (Exception ex) {
-            Log.d(TAG, "Exception caught while handling speak(): " + ex.getLocalizedMessage());
-            call.error(ex.getLocalizedMessage());
-        }
-    }
-
-    @PluginMethod
-    public void stop(PluginCall call) {
-        try {
-            tts.stop();
-            call.success();
-        } catch (Exception ex) {
-            Log.d(TAG, "Exception caught while handling stop(): " + ex.getLocalizedMessage());
-            call.error(ex.getLocalizedMessage());
-        }
-    }
-
-    @PluginMethod
-    public void getSupportedLanguages(PluginCall call) {
-        try {
-            ArrayList<String> languages = new ArrayList<>();
-            for (Locale supportedLocale : this.supportedLocales) {
-                String tag = supportedLocale.toLanguageTag();
-                languages.add(tag);
-            }
-            JSObject ret = new JSObject();
-            ret.put("languages", JSArray.from(languages.toArray()));
-            call.success(ret);
-        } catch (Exception ex) {
-            Log.d(TAG, "Exception caught while handling checkLanguage(): " + ex.getLocalizedMessage());
-            call.error(ex.getLocalizedMessage());
-        }
-    }
-
-    @PluginMethod
-    public void setPitchRate(final PluginCall call) {
-        float pitchRate = call.getFloat("pitchRate", 1.0f);
-        tts.setPitch(pitchRate);
-
-        call.success();
-    }
-
-    @PluginMethod
-    public void setSpeechRate(final PluginCall call) {
-        float speechRate = call.getFloat("speechRate", 1.0f);
-
-        if (Build.VERSION.SDK_INT >= 27) {
-            tts.setSpeechRate((float) speechRate * 0.7f);
+            tts.setLanguage(new Locale(locale));
+            tts.setSpeechRate(rate);
+            tts.setPitch(pitch);
+            tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, callbackId);
         } else {
-            tts.setSpeechRate((float) speechRate);
-        }
+            HashMap<String, String> ttsParams = new HashMap<>();
+            ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
+            ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
 
-        call.success();
-    }
-
-    @PluginMethod
-    public void openInstall(PluginCall call) {
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            Intent installIntent = new Intent();
-            installIntent.setAction(android.speech.tts.TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-
-            ResolveInfo resolveInfo = packageManager.resolveActivity(installIntent, PackageManager.MATCH_DEFAULT_ONLY);
-
-            if (resolveInfo == null) {} else {
-                installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(installIntent);
-            }
-
-            call.success();
-        } catch (Exception ex) {
-            Log.d(TAG, "Caught exception while handling openInstall(): " + ex.getLocalizedMessage());
-
-            call.error(ex.getLocalizedMessage());
+            tts.setLanguage(new Locale(locale));
+            tts.setSpeechRate(rate);
+            tts.setPitch(pitch);
+            tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams);
         }
     }
 
-    @PluginMethod
-    public void getSupportedVoices(PluginCall call) {
-        try {
-            ArrayList<JSObject> voices = new ArrayList<>();
-            Set<Voice> supportedVoices = tts.getVoices();
-            for (Voice supportedVoice : supportedVoices) {
-                JSObject obj = this.convertVoiceToJSObject(supportedVoice);
-                voices.add(obj);
-            }
-            JSObject ret = new JSObject();
-            ret.put("voices", JSArray.from(voices.toArray()));
-            call.success(ret);
-        } catch (Exception ex) {
-            call.error(ex.getLocalizedMessage());
+    public void stop() {
+        tts.stop();
+    }
+
+    public JSArray getSupportedLanguages() {
+        ArrayList<String> languages = new ArrayList<>();
+        Set<Locale> supportedLocales = tts.getAvailableLanguages();
+        for (Locale supportedLocale : supportedLocales) {
+            String tag = supportedLocale.toLanguageTag();
+            languages.add(tag);
         }
+        JSArray result = JSArray.from(languages.toArray());
+        return result;
+    }
+
+    public JSArray getSupportedVoices() {
+        ArrayList<JSObject> voices = new ArrayList<>();
+        Set<Voice> supportedVoices = tts.getVoices();
+        for (Voice supportedVoice : supportedVoices) {
+            JSObject obj = this.convertVoiceToJSObject(supportedVoice);
+            voices.add(obj);
+        }
+        JSArray result = JSArray.from(voices.toArray());
+        return result;
+    }
+
+    public void setPitch(float pitch) {
+        tts.setPitch(pitch);
+    }
+
+    public void setRate(float rate) {
+        if (Build.VERSION.SDK_INT >= 27) {
+            tts.setSpeechRate(rate * 0.7f);
+        } else {
+            tts.setSpeechRate(rate);
+        }
+    }
+
+    public void openInstall() {
+        PackageManager packageManager = context.getPackageManager();
+        Intent installIntent = new Intent();
+        installIntent.setAction(android.speech.tts.TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+
+        ResolveInfo resolveInfo = packageManager.resolveActivity(installIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+        if (resolveInfo != null) {
+            installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(installIntent);
+        }
+    }
+
+    public boolean isAvailable() {
+        if (tts != null && initializationStatus == android.speech.tts.TextToSpeech.SUCCESS) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isLocaleSupported(String locale) {
+        Set<Locale> supportedLocales = tts.getAvailableLanguages();
+        if (supportedLocales.contains(Locale.forLanguageTag(locale))) {
+            return true;
+        }
+        return false;
     }
 
     private JSObject convertVoiceToJSObject(Voice voice) {

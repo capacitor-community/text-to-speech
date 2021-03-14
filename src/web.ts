@@ -1,18 +1,13 @@
 import { WebPlugin } from '@capacitor/core';
-import {
-  TextToSpeechPlugin,
-  SpeechSynthesisVoice,
-  TTSOptions,
-} from './definitions';
+
+import type { TextToSpeechPlugin, TTSOptions } from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   private speechSynthesis: SpeechSynthesis | null = null;
+  private supportedVoices: SpeechSynthesisVoice[] | undefined;
 
   constructor() {
-    super({
-      name: 'TextToSpeech',
-      platforms: ['web'],
-    });
+    super();
     if ('speechSynthesis' in window) {
       this.speechSynthesis = window.speechSynthesis;
     }
@@ -98,21 +93,19 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     if (!this.speechSynthesis) {
       this.throwUnsupportedError();
     }
-    return this.speechSynthesis.getVoices();
+    if (!this.supportedVoices || this.supportedVoices.length < 1) {
+      this.supportedVoices = this.speechSynthesis.getVoices();
+    }
+    return this.supportedVoices;
   }
 
   private throwUnsupportedError(): never {
-    throw new Error('Not supported on this device.');
+    throw this.unavailable(
+      'SpeechSynthesis API not available in this browser.',
+    );
   }
 
   private throwUnimplementedError(): never {
-    throw new Error('Not implemented on web.');
+    throw this.unimplemented('Not implemented on web.');
   }
 }
-
-const TextToSpeech = new TextToSpeechWeb();
-
-export { TextToSpeech };
-
-import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(TextToSpeech);
