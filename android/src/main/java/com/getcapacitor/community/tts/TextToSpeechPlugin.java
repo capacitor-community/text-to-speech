@@ -109,4 +109,9 @@ public class TextToSpeechPlugin extends Plugin {
             call.reject(ex.getLocalizedMessage());
         }
     }
+
+    @Override
+    protected void handleOnDestroy() {
+        implementation.onDestroy();
+    }
 }
