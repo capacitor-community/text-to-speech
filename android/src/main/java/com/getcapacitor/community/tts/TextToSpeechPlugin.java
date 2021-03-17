@@ -104,9 +104,9 @@ public class TextToSpeechPlugin extends Plugin {
     public void isLanguageSupported(PluginCall call) {
         String lang = call.getString("lang", "");
         try {
-            boolean supported = implementation.isLanguageSupported(lang);
+            boolean isLanguageSupported = implementation.isLanguageSupported(lang);
             JSObject ret = new JSObject();
-            ret.put("supported", supported);
+            ret.put("supported", isLanguageSupported);
             call.resolve(ret);
         } catch (Exception ex) {
             call.reject(ex.getLocalizedMessage());
