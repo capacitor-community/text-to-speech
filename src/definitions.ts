@@ -16,6 +16,10 @@ export interface TextToSpeechPlugin {
    */
   getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
   /**
+   * Checks if a specific language is supported.
+   */
+  isLanguageSupported(options: { lang: string }): Promise<{ supported: boolean }>;
+  /**
    * Verifies proper installation and availability of resource files on the system.
    *
    * Only available for Android.

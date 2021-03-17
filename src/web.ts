@@ -52,6 +52,14 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     return { voices };
   }
 
+  public async isLanguageSupported(options: {
+    lang: string;
+  }): Promise<{ supported: boolean }> {
+    const result = await this.getSupportedLanguages();
+    const isLanguageSupported = result.languages.includes(options.lang);
+    return { supported: isLanguageSupported };
+  }
+
   public async openInstall(): Promise<void> {
     this.throwUnimplementedError();
   }
