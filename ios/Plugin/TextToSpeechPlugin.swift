@@ -54,4 +54,12 @@ public class TextToSpeechPlugin: CAPPlugin {
             "voices": []
         ])
     }
+
+    @objc func isLanguageSupported(_ call: CAPPluginCall) {
+        let lang = call.getString("lang") ?? ""
+        let isLanguageSupported = self.implementation.isLanguageSupported(lang)
+        call.resolve([
+            "supported": isLanguageSupported
+        ])
+    }
 }
