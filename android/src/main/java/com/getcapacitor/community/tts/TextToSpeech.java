@@ -141,6 +141,14 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         return false;
     }
 
+    public void onDestroy() {
+        if (tts == null) {
+            return;
+        }
+        tts.stop();
+        tts.shutdown();
+    }
+
     private JSObject convertVoiceToJSObject(Voice voice) {
         Locale locale = voice.getLocale();
         JSObject obj = new JSObject();
