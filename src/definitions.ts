@@ -18,7 +18,9 @@ export interface TextToSpeechPlugin {
   /**
    * Checks if a specific BCP 47 language tag is supported.
    */
-  isLanguageSupported(options: { lang: string }): Promise<{ supported: boolean }>;
+  isLanguageSupported(options: {
+    lang: string;
+  }): Promise<{ supported: boolean }>;
   /**
    * Verifies proper installation and availability of resource files on the system.
    *
