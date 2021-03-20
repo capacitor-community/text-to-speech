@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/capacitor-community/text-to-speech/compare/v1.0.0...v1.1.0) (2021-03-20)
+
+
+### Features
+
+* add `isLanguageSupported` method ([#58](https://github.com/capacitor-community/text-to-speech/issues/58)) ([eb39f93](https://github.com/capacitor-community/text-to-speech/commit/eb39f93e31c0ec008a0058b32464b4f43471b322))
+
+
+### Bug Fixes
+
+* **android:** shutdown tts on destroy ([#56](https://github.com/capacitor-community/text-to-speech/issues/56)) ([2b6da17](https://github.com/capacitor-community/text-to-speech/commit/2b6da17f4f73c9d4443a2cdd325a5f918dd04bc8))
+* **ios:** `speak` method resolves immediately on iOS ([#59](https://github.com/capacitor-community/text-to-speech/issues/59)) ([e77e8ba](https://github.com/capacitor-community/text-to-speech/commit/e77e8baf459d197798f16e5034288677d5e41cb1))
+
 ## [1.0.0](https://github.com/capacitor-community/text-to-speech/compare/v0.2.3...v1.0.0) (2021-03-14)
 
 
