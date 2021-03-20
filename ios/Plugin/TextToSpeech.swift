@@ -48,9 +48,9 @@ import AVFoundation
         })
     }
 
-    @objc public func isLanguageSupported(_ language: String) -> Bool {
-        let languages = self.getSupportedLanguages()
-        return languages.contains(language)
+    @objc public func isLanguageSupported(_ lang: String) -> Bool {
+        let voice = AVSpeechSynthesisVoice(language: lang)
+        return voice != nil
     }
 
     // Adjust rate for a closer match to other platform.
