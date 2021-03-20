@@ -12,4 +12,4 @@ jobs:
         uses: dwieeb/needs-reply@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-label: needs-reply
+          issue-label: needs reply
