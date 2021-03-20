@@ -109,6 +109,7 @@ const getSupportedVoices = async () => {
 * [`stop()`](#stop)
 * [`getSupportedLanguages()`](#getsupportedlanguages)
 * [`getSupportedVoices()`](#getsupportedvoices)
+* [`isLanguageSupported(...)`](#islanguagesupported)
 * [`openInstall()`](#openinstall)
 * [Interfaces](#interfaces)
 
@@ -149,7 +150,7 @@ Stops the TTS engine.
 getSupportedLanguages() => Promise<{ languages: string[]; }>
 ```
 
-Returns a list of supported languages.
+Returns a list of supported BCP 47 language tags.
 
 **Returns:** <code>Promise&lt;{ languages: string[]; }&gt;</code>
 
@@ -165,6 +166,23 @@ getSupportedVoices() => Promise<{ voices: SpeechSynthesisVoice[]; }>
 Returns a list of supported voices.
 
 **Returns:** <code>Promise&lt;{ voices: SpeechSynthesisVoice[]; }&gt;</code>
+
+--------------------
+
+
+### isLanguageSupported(...)
+
+```typescript
+isLanguageSupported(options: { lang: string; }) => Promise<{ supported: boolean; }>
+```
+
+Checks if a specific BCP 47 language tag is supported.
+
+| Param         | Type                           |
+| ------------- | ------------------------------ |
+| **`options`** | <code>{ lang: string; }</code> |
+
+**Returns:** <code>Promise&lt;{ supported: boolean; }&gt;</code>
 
 --------------------
 
