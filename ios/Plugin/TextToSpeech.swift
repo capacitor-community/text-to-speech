@@ -9,7 +9,7 @@ import Capacitor
         super.init()
         self.synthesizer.delegate = self
     }
-    
+
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         self.resolveCurrentCall()
     }
@@ -20,7 +20,7 @@ import Capacitor
 
     @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ call: CAPPluginCall) throws {
         self.synthesizer.stopSpeaking(at: .immediate)
-        
+
         var avAudioSessionCategory = AVAudioSession.Category.ambient
         if category != "ambient" {
             avAudioSessionCategory = AVAudioSession.Category.playback
@@ -65,7 +65,7 @@ import Capacitor
         }
         return rate / 2
     }
-    
+
     @objc private func resolveCurrentCall() {
         do {
             try AVAudioSession.sharedInstance().setActive(false)
@@ -73,7 +73,7 @@ import Capacitor
             CAPLog.print(error.localizedDescription)
         }
         guard let call = calls.first else {
-            return;
+            return
         }
         call.resolve()
         calls.removeFirst()
