@@ -134,11 +134,9 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
     }
 
     public boolean isLanguageSupported(String lang) {
-        Set<Locale> supportedLocales = tts.getAvailableLanguages();
-        if (supportedLocales.contains(Locale.forLanguageTag(lang))) {
-            return true;
-        }
-        return false;
+        Locale loc = Locale.forLanguageTag(lang);
+        int result = tts.isLanguageAvailable(loc);
+        return result == tts.LANG_AVAILABLE || result == tts.LANG_COUNTRY_AVAILABLE || result == tts.LANG_COUNTRY_VAR_AVAILABLE;
     }
 
     public void onDestroy() {

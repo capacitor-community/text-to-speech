@@ -8,13 +8,19 @@ export interface TextToSpeechPlugin {
    */
   stop(): Promise<void>;
   /**
-   * Returns a list of supported languages.
+   * Returns a list of supported BCP 47 language tags.
    */
   getSupportedLanguages(): Promise<{ languages: string[] }>;
   /**
    * Returns a list of supported voices.
    */
   getSupportedVoices(): Promise<{ voices: SpeechSynthesisVoice[] }>;
+  /**
+   * Checks if a specific BCP 47 language tag is supported.
+   */
+  isLanguageSupported(options: {
+    lang: string;
+  }): Promise<{ supported: boolean }>;
   /**
    * Verifies proper installation and availability of resource files on the system.
    *
