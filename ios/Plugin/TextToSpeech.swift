@@ -1,44 +1,45 @@
 import AVFoundation
+import Capacitor
 
 @objc public class TextToSpeech: NSObject, AVSpeechSynthesizerDelegate {
     let synthesizer = AVSpeechSynthesizer()
-    var utterance: AVSpeechUtterance?
+    var calls: [CAPPluginCall] = []
 
     override init() {
         super.init()
         self.synthesizer.delegate = self
     }
-
-    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        do {
-            try AVAudioSession.sharedInstance().setActive(false)
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {}
+    
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        self.resolveCurrentCall()
     }
 
-    @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float) throws {
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        self.resolveCurrentCall()
+    }
+
+    @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ call: CAPPluginCall) throws {
+        self.synthesizer.stopSpeaking(at: .immediate)
+        
         var avAudioSessionCategory = AVAudioSession.Category.ambient
         if category != "ambient" {
             avAudioSessionCategory = AVAudioSession.Category.playback
         }
 
-        try AVAudioSession.sharedInstance().setActive(false)
         try AVAudioSession.sharedInstance().setCategory(avAudioSessionCategory, mode: .default, options: AVAudioSession.CategoryOptions.duckOthers)
         try AVAudioSession.sharedInstance().setActive(true)
 
-        self.synthesizer.stopSpeaking(at: .immediate)
+        self.calls.append(call)
 
-        self.utterance = type(of: AVSpeechUtterance()).init(string: text)
-        self.utterance?.voice = AVSpeechSynthesisVoice(language: lang)
-        self.utterance?.rate = adjustRate(rate)
-        self.utterance?.pitchMultiplier = pitch
-        self.utterance?.volume = volume
-        self.synthesizer.speak(self.utterance!)
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: lang)
+        utterance.rate = adjustRate(rate)
+        utterance.pitchMultiplier = pitch
+        utterance.volume = volume
+        synthesizer.speak(utterance)
     }
 
     @objc public func stop() {
-        synthesizer.pauseSpeaking(at: .immediate)
         synthesizer.stopSpeaking(at: .immediate)
     }
 
@@ -63,5 +64,18 @@ import AVFoundation
             return baseRate + (rate * 0.025)
         }
         return rate / 2
+    }
+    
+    @objc private func resolveCurrentCall() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+        } catch {
+            CAPLog.print(error.localizedDescription)
+        }
+        guard let call = calls.first else {
+            return;
+        }
+        call.resolve()
+        calls.removeFirst()
     }
 }

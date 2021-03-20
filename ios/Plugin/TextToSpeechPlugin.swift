@@ -26,8 +26,7 @@ public class TextToSpeechPlugin: CAPPlugin {
         }
 
         do {
-            try implementation.speak(text, lang, rate, pitch, category, volume)
-            call.resolve()
+            try implementation.speak(text, lang, rate, pitch, category, volume, call)
         } catch {
             call.reject(error.localizedDescription)
         }
