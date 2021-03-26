@@ -7,7 +7,7 @@ import Capacitor
  */
 @objc(TextToSpeechPlugin)
 public class TextToSpeechPlugin: CAPPlugin {
-    private static let ERROR_UNSUPPORTED_LANGUAGE = "This language is not supported."
+    private static let errorUnsupportedLanguage = "This language is not supported."
 
     private let implementation = TextToSpeech()
 
@@ -21,7 +21,7 @@ public class TextToSpeechPlugin: CAPPlugin {
 
         let isLanguageSupported = implementation.isLanguageSupported(lang)
         guard isLanguageSupported else {
-            call.reject(TextToSpeechPlugin.ERROR_UNSUPPORTED_LANGUAGE)
+            call.reject(TextToSpeechPlugin.errorUnsupportedLanguage)
             return
         }
 
