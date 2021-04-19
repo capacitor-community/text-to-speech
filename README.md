@@ -25,46 +25,9 @@
 
 ## Installation
 
-### Capacitor 3.x
-
 ```
 npm install @capacitor-community/text-to-speech
 npx cap sync
-```
-
-### Capacitor 2.x
-
-```
-npm install @capacitor-community/text-to-speech@0.2.3
-npx cap sync
-```
-
-On **iOS**, no further steps are needed.
-
-On **Android**, register the plugin in your main activity:
-
-```java
-import com.getcapacitor.community.tts.TextToSpeech;
-
-public class MainActivity extends BridgeActivity {
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    // Initializes the Bridge
-    this.init(
-        savedInstanceState,
-        new ArrayList<Class<? extends Plugin>>() {
-          {
-            // Additional plugins you've installed go here
-            // Ex: add(TotallyAwesomePlugin.class);
-            add(TextToSpeech.class);
-          }
-        }
-      );
-  }
-}
 ```
 
 ### Android
