@@ -71,7 +71,14 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
-            tts.setLanguage(new Locale(lang));
+            String[] localeParts = lang.split("-", 3);
+            Locale locale = new Locale(lang);
+            if (localeParts.length == 2) {
+                locale = new Locale(localeParts[0], localeParts[1]);
+            } else if (localeParts.length == 3) {
+                locale = new Locale(localeParts[0], localeParts[1], localeParts[2]);
+            }
+            tts.setLanguage(locale);
             tts.setSpeechRate(rate);
             tts.setPitch(pitch);
             tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, callbackId);
