@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/capacitor-community/text-to-speech/compare/v1.1.0...v1.1.1) (2021-05-04)
+
+
+### Bug Fixes
+
+* **android:** handle IETF BCP 47 language tag string correctly ([#66](https://github.com/capacitor-community/text-to-speech/issues/66)) ([296adcb](https://github.com/capacitor-community/text-to-speech/commit/296adcba96641de60aea7cc74c292f2fdd3f7ada))
+
 ## [1.1.0](https://github.com/capacitor-community/text-to-speech/compare/v1.0.0...v1.1.0) (2021-03-20)
 
 
