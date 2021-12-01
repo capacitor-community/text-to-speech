@@ -10,12 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Remove needs-reply label
-        uses: octokit/request-action@v2.x
-        continue-on-error: true
-        with:
-          route: DELETE /repos/:repository/issues/:issue/labels/:label
-          repository: ${{ github.repository }}
-          issue: ${{ github.event.issue.number }}
-          label: 'needs: reply'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl --request DELETE \
+          --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels/needs%3A%20reply' \
+          --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}'
