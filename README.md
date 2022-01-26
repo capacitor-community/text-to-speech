@@ -89,13 +89,13 @@ const isLanguageSupported = async (lang: string) => {
 
 <docgen-index>
 
-- [`speak(...)`](#speak)
-- [`stop()`](#stop)
-- [`getSupportedLanguages()`](#getsupportedlanguages)
-- [`getSupportedVoices()`](#getsupportedvoices)
-- [`isLanguageSupported(...)`](#islanguagesupported)
-- [`openInstall()`](#openinstall)
-- [Interfaces](#interfaces)
+* [`speak(...)`](#speak)
+* [`stop()`](#stop)
+* [`getSupportedLanguages()`](#getsupportedlanguages)
+* [`getSupportedVoices()`](#getsupportedvoices)
+* [`isLanguageSupported(...)`](#islanguagesupported)
+* [`openInstall()`](#openinstall)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -114,7 +114,8 @@ Starts the TTS engine and plays the desired text.
 | ------------- | ------------------------------------------------- |
 | **`options`** | <code><a href="#ttsoptions">TTSOptions</a></code> |
 
----
+--------------------
+
 
 ### stop()
 
@@ -124,7 +125,8 @@ stop() => Promise<void>
 
 Stops the TTS engine.
 
----
+--------------------
+
 
 ### getSupportedLanguages()
 
@@ -136,7 +138,8 @@ Returns a list of supported BCP 47 language tags.
 
 **Returns:** <code>Promise&lt;{ languages: string[]; }&gt;</code>
 
----
+--------------------
+
 
 ### getSupportedVoices()
 
@@ -148,7 +151,8 @@ Returns a list of supported voices.
 
 **Returns:** <code>Promise&lt;{ voices: SpeechSynthesisVoice[]; }&gt;</code>
 
----
+--------------------
+
 
 ### isLanguageSupported(...)
 
@@ -164,7 +168,8 @@ Checks if a specific BCP 47 language tag is supported.
 
 **Returns:** <code>Promise&lt;{ supported: boolean; }&gt;</code>
 
----
+--------------------
+
 
 ### openInstall()
 
@@ -176,9 +181,11 @@ Verifies proper installation and availability of resource files on the system.
 
 Only available for Android.
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### TTSOptions
 
@@ -191,6 +198,7 @@ Only available for Android.
 | **`volume`**   | <code>number</code> | The volume that the utterance will be spoken at. Default: `1.0`.                                                                                                                                   |
 | **`voice`**    | <code>number</code> | The index of the selected voice that will be used to speak the utterance. Possible voices can be queried using `getSupportedVoices`. Only available for Web.                                       |
 | **`category`** | <code>string</code> | Select the iOS Audio session category. Possible values: `ambient` and `playback`. Use `playback` to play audio even when the app is in the background. Only available for iOS. Default: `ambient`. |
+
 
 #### SpeechSynthesisVoice
 
