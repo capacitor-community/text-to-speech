@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/capacitor-community/text-to-speech/compare/v1.1.1...v1.1.2) (2022-01-26)
+
+
+### Bug Fixes
+
+* inline source code in esm map files ([29a1aa8](https://github.com/capacitor-community/text-to-speech/commit/29a1aa8d5256ec1fcd168a0802b616fbd8935a58))
+
 ### [1.1.1](https://github.com/capacitor-community/text-to-speech/compare/v1.1.0...v1.1.1) (2021-05-04)
 
 
