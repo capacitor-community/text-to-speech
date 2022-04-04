@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/capacitor-community/text-to-speech/compare/v1.1.2...v1.1.3) (2022-04-04)
+
+
+### Bug Fixes
+
+* **web:** stop on window unload ([#79](https://github.com/capacitor-community/text-to-speech/issues/79)) ([22f4bd7](https://github.com/capacitor-community/text-to-speech/commit/22f4bd7c1e9c2e6ce745454e46b9cd16ef2c3c55))
+
 ### [1.1.2](https://github.com/capacitor-community/text-to-speech/compare/v1.1.1...v1.1.2) (2022-01-26)
 
 
