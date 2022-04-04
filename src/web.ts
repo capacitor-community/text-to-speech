@@ -10,6 +10,9 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     super();
     if ('speechSynthesis' in window) {
       this.speechSynthesis = window.speechSynthesis;
+      window.addEventListener("beforeunload", () => {
+          this.stop();
+      });
     }
   }
 
