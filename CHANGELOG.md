@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/capacitor-community/text-to-speech/compare/v2.0.0...v2.0.1) (2022-08-04)
+
+
+### Bug Fixes
+
+* **ios:** set deployment target to `13.0` ([dcda399](https://github.com/capacitor-community/text-to-speech/commit/dcda399a01d3fdc04eedbdfab4fa49064cba81b7))
+
 ## [2.0.0](https://github.com/capacitor-community/text-to-speech/compare/v1.1.3...v2.0.0) (2022-08-04)
 
 
