@@ -1,5 +1,6 @@
 import Foundation
 import Capacitor
+import AVFoundation
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -49,8 +50,22 @@ public class TextToSpeechPlugin: CAPPlugin {
     }
 
     @objc func getSupportedVoices(_ call: CAPPluginCall) {
+        let allVoices = AVSpeechSynthesisVoice.speechVoices()
+        var res: [[String: Any]] = []
+
+        for voice in allVoices {
+            let lang = [
+                "default": false,
+                "lang": voice.language,
+                "localService": true,
+                "name": voice.name,
+                "voiceURI": voice.identifier
+            ] as [String : Any]
+            res.append(lang)
+        }
+        
         call.resolve([
-            "voices": []
+            "voices": res
         ])
     }
 
