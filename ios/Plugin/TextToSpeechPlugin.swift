@@ -8,6 +8,7 @@ import Capacitor
 @objc(TextToSpeechPlugin)
 public class TextToSpeechPlugin: CAPPlugin {
     private static let errorUnsupportedLanguage = "This language is not supported."
+    private static let voiceNotFound = "Unable to locate voice. "
 
     private let implementation = TextToSpeech()
 
@@ -17,6 +18,7 @@ public class TextToSpeechPlugin: CAPPlugin {
         let rate = call.getFloat("rate") ?? 1.0
         let pitch = call.getFloat("pitch") ?? 1.0
         let volume = call.getFloat("volume") ?? 1.0
+        let voice : Int = Int(call.getFloat("voice") ?? -1.0)
         let category = call.getString("category") ?? "ambient"
 
         let isLanguageSupported = implementation.isLanguageSupported(lang)
@@ -25,8 +27,22 @@ public class TextToSpeechPlugin: CAPPlugin {
             return
         }
 
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: lang)
+        utterance.rate = adjustRate(rate)
+        utterance.pitchMultiplier = pitch
+        utterance.volume = volume
+
+        //Find the voice associated with the voice parameter if a voice specified. 
+        //If the specified voice is not available we will fall back to default rather than raising an error. 
+        let allVoices = AVSpeechSynthesisVoice.speechVoices()
+        if (voice >= 0 && voice < allVoices.count) {
+            utterance.voice = allVoices[voice]
+        }
+
         do {
-            try implementation.speak(text, lang, rate, pitch, category, volume, call)
+            try implementation.speakUtterance(category, utterance, call)
+
         } catch {
             call.reject(error.localizedDescription)
         }
@@ -60,5 +76,17 @@ public class TextToSpeechPlugin: CAPPlugin {
         call.resolve([
             "supported": isLanguageSupported
         ])
+    }
+
+    // Adjust rate for a closer match to other platform.
+    @objc private func adjustRate(_ rate: Float) -> Float {
+        let baseRate = AVSpeechUtteranceDefaultSpeechRate
+        if rate == 1 {
+            return baseRate
+        }
+        if rate > baseRate {
+            return baseRate + (rate * 0.025)
+        }
+        return rate / 2
     }
 }
