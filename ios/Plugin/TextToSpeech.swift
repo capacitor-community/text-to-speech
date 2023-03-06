@@ -18,7 +18,7 @@ import Capacitor
         self.resolveCurrentCall()
     }
 
-    @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ call: CAPPluginCall) throws {
+    @objc public func speakUtterance( _ category: String, _ utterance: AVSpeechUtterance, _ call: CAPPluginCall) throws {
         self.synthesizer.stopSpeaking(at: .immediate)
 
         var avAudioSessionCategory = AVAudioSession.Category.ambient
@@ -31,11 +31,6 @@ import Capacitor
 
         self.calls.append(call)
 
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: lang)
-        utterance.rate = adjustRate(rate)
-        utterance.pitchMultiplier = pitch
-        utterance.volume = volume
         synthesizer.speak(utterance)
     }
 
@@ -52,18 +47,6 @@ import Capacitor
     @objc public func isLanguageSupported(_ lang: String) -> Bool {
         let voice = AVSpeechSynthesisVoice(language: lang)
         return voice != nil
-    }
-
-    // Adjust rate for a closer match to other platform.
-    @objc private func adjustRate(_ rate: Float) -> Float {
-        let baseRate = AVSpeechUtteranceDefaultSpeechRate
-        if rate == 1 {
-            return baseRate
-        }
-        if rate > baseRate {
-            return baseRate + (rate * 0.025)
-        }
-        return rate / 2
     }
 
     @objc private func resolveCurrentCall() {
