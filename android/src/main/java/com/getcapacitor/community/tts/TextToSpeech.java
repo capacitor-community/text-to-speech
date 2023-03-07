@@ -153,7 +153,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         Locale locale = voice.getLocale();
         JSObject obj = new JSObject();
         obj.put("voiceURI", voice.getName());
-        obj.put("name", locale.getDisplayLanguage() + " " + locale.getDisplayCountry());
+        obj.put("name", locale.getDisplayLanguage() + " " + locale.getDisplayCountry() + " " + voice.getName());
         obj.put("lang", locale.toLanguageTag());
         obj.put("localService", !voice.isNetworkConnectionRequired());
         obj.put("default", false);
