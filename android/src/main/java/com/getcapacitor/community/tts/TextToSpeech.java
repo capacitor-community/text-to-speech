@@ -17,8 +17,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.Comparator;
 
-import android.util.Log;
-
 public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListener {
 
     public static final String LOG_TAG = "TextToSpeech";
@@ -83,10 +81,6 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
-      Log.d("TTSS", "Voice Value " + String.valueOf(voice));
-
-
-
             tts.setLanguage(locale);
             tts.setSpeechRate(rate);
             tts.setPitch(pitch);
@@ -95,10 +89,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
                 ArrayList<Voice> supportedVoices = getSupportedVoicesOrdered();
                 if (voice < supportedVoices.size()) {
                     Voice newVoice = supportedVoices.get(voice);
-                    Log.d("TTSS", "SETTING VOICE");
-                    Log.d("TTSS", newVoice.getName());
                     int resultCode = tts.setVoice(newVoice);
-                    Log.d("TTSS", String.valueOf(resultCode));
                 }
             }
 
