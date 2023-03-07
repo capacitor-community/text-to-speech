@@ -36,9 +36,11 @@ public class TextToSpeechPlugin: CAPPlugin {
 
         //Find the voice associated with the voice parameter if a voice specified. 
         //If the specified voice is not available we will fall back to default rather than raising an error. 
-        let allVoices = AVSpeechSynthesisVoice.speechVoices()
-        if (voice >= 0 && voice < allVoices.count) {
-            utterance.voice = allVoices[voice]
+        if (voice >= 0) {
+            let allVoices = AVSpeechSynthesisVoice.speechVoices()
+            if (voice < allVoices.count) {
+                utterance.voice = allVoices[voice]
+            }
         }
 
         do {
