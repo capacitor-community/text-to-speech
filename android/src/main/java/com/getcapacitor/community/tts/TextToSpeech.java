@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
+import java.util.Comparator;
+
+import android.util.Log;
 
 public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListener {
 
@@ -39,12 +42,19 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         this.initializationStatus = status;
     }
 
+
+
+
+    //A brief note on the voice property:
+    //voice is an index for the voice, and should probably be replaced by a string in the future (or perhaps with a voiceURI option in-lieu of voice)
+    //As is, we need to assign indices to the set in order to match things. 
     public void speak(
         String text,
         String lang,
         float rate,
         float pitch,
         float volume,
+        int voice,
         String callbackId,
         SpeakResultCallback resultCallback
     ) {
@@ -72,6 +82,19 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             Bundle ttsParams = new Bundle();
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
             ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
+
+      Log.d("TTSS", "Voice Value " + String.valueOf(voice));
+
+            if (voice >= 0) {
+                ArrayList<Voice> supportedVoices = getSupportedVoicesOrdered();
+                if (voice < supportedVoices.size()) {
+                    Voice newVoice = supportedVoices.get(voice);
+                          Log.d("TTSS", "SETTING VOICE");
+                    Log.d("TTSS", newVoice.getName());
+                    int resultCode = tts.setVoice(newVoice);
+                    Log.d("TTSS", String.valueOf(resultCode));
+                }
+            }
 
             tts.setLanguage(locale);
             tts.setSpeechRate(rate);
@@ -104,9 +127,22 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         return result;
     }
 
+    public ArrayList<Voice> getSupportedVoicesOrdered() {
+        Set<Voice> supportedVoices = tts.getVoices();
+        ArrayList<Voice> orderedVoices = new ArrayList<Voice>();
+        for (Voice supportedVoice : supportedVoices) {
+            orderedVoices.add(supportedVoice);
+        }
+
+        Comparator<Voice> voiceComparator = Comparator.comparing(v -> v.hashCode());
+        orderedVoices.sort(voiceComparator);
+
+        return orderedVoices;
+    }
+
     public JSArray getSupportedVoices() {
         ArrayList<JSObject> voices = new ArrayList<>();
-        Set<Voice> supportedVoices = tts.getVoices();
+        ArrayList<Voice> supportedVoices = getSupportedVoicesOrdered();
         for (Voice supportedVoice : supportedVoices) {
             JSObject obj = this.convertVoiceToJSObject(supportedVoice);
             voices.add(obj);
