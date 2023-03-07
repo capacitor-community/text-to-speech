@@ -85,20 +85,24 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
 
       Log.d("TTSS", "Voice Value " + String.valueOf(voice));
 
+
+
+            tts.setLanguage(locale);
+            tts.setSpeechRate(rate);
+            tts.setPitch(pitch);
+
             if (voice >= 0) {
                 ArrayList<Voice> supportedVoices = getSupportedVoicesOrdered();
                 if (voice < supportedVoices.size()) {
                     Voice newVoice = supportedVoices.get(voice);
-                          Log.d("TTSS", "SETTING VOICE");
+                    Log.d("TTSS", "SETTING VOICE");
                     Log.d("TTSS", newVoice.getName());
                     int resultCode = tts.setVoice(newVoice);
                     Log.d("TTSS", String.valueOf(resultCode));
                 }
             }
 
-            tts.setLanguage(locale);
-            tts.setSpeechRate(rate);
-            tts.setPitch(pitch);
+            
             tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, callbackId);
         } else {
             HashMap<String, String> ttsParams = new HashMap<>();
