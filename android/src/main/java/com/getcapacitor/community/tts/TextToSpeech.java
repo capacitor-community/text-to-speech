@@ -43,9 +43,6 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
 
 
 
-    //A brief note on the voice property:
-    //voice is an index for the voice, and should probably be replaced by a string in the future (or perhaps with a voiceURI option in-lieu of voice)
-    //As is, we need to assign indices to the set in order to match things. 
     public void speak(
         String text,
         String lang,
