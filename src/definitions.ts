@@ -32,31 +32,33 @@ export interface TextToSpeechPlugin {
 export interface TTSOptions {
   /**
    * The text that will be synthesised when the utterance is spoken.
+   * 
+   * @example "Hello world"
    */
   text: string;
   /**
    * The language of the utterance.
    * Possible languages can be queried using `getSupportedLanguages`.
    *
-   * Default: `en-US`.
+   * @default "en-US"
    */
   lang?: string;
   /**
    * The speed at which the utterance will be spoken at.
    *
-   * Default: `1.0`.
+   * @default 1.0
    */
   rate?: number;
   /**
    * The pitch at which the utterance will be spoken at.
    *
-   * Default: `1.0`.
+   * @default 1.0
    */
   pitch?: number;
   /**
    * The volume that the utterance will be spoken at.
    *
-   * Default: `1.0`.
+   * @default 1.0
    */
   volume?: number;
   /**
@@ -71,9 +73,9 @@ export interface TTSOptions {
    *
    * Only available for iOS.
    *
-   * Default: `ambient`.
+   * @default "ambient"
    */
-  category?: string; // iOS only
+  category?: string;
 }
 
 /**
@@ -82,25 +84,32 @@ export interface TTSOptions {
 export interface SpeechSynthesisVoice {
   /**
    * Specifies whether the voice is the default voice for the current app (`true`) or not (`false`).
+   * 
+   * @example false
    */
   default: boolean;
   /**
    * BCP 47 language tag indicating the language of the voice.
-   * Example: `en-US`.
+   * 
+   * @example "en-US"
    */
   lang: string;
   /**
    * Specifies whether the voice is supplied by a local (`true`) or remote (`false`) speech synthesizer service.
+   * 
+   * @example true
    */
   localService: boolean;
   /**
    * Human-readable name that represents the voice.
-   * Example: `Microsoft Zira Desktop - English (United States)`.
+   * 
+   * @example "Microsoft Zira Desktop - English (United States)"
    */
   name: string;
   /**
    * Type of URI and location of the speech synthesis service for this voice.
-   * Example: `urn:moz-tts:sapi:Microsoft Zira Desktop - English (United States)?en-US`.
+   * 
+   * @example "urn:moz-tts:sapi:Microsoft Zira Desktop - English (United States)?en-US"
    */
   voiceURI: string;
 }
