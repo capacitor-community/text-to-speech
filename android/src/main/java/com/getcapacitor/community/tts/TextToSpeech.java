@@ -12,10 +12,10 @@ import android.util.Log;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
-import java.util.Comparator;
 
 public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListener {
 
@@ -39,9 +39,6 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
     public void onInit(int status) {
         this.initializationStatus = status;
     }
-
-
-
 
     public void speak(
         String text,
@@ -90,7 +87,6 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
                 }
             }
 
-            
             tts.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, ttsParams, callbackId);
         } else {
             HashMap<String, String> ttsParams = new HashMap<>();
