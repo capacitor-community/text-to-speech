@@ -18,6 +18,7 @@ public class TextToSpeechPlugin: CAPPlugin {
         let rate = call.getFloat("rate") ?? 1.0
         let pitch = call.getFloat("pitch") ?? 1.0
         let volume = call.getFloat("volume") ?? 1.0
+        let voice = call.getInt("voice") ?? -1
         let category = call.getString("category") ?? "ambient"
 
         let isLanguageSupported = implementation.isLanguageSupported(lang)
@@ -27,7 +28,7 @@ public class TextToSpeechPlugin: CAPPlugin {
         }
 
         do {
-            try implementation.speak(text, lang, rate, pitch, category, volume, call)
+            try implementation.speak(text, lang, rate, pitch, category, volume, voice, call)
         } catch {
             call.reject(error.localizedDescription)
         }
