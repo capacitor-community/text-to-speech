@@ -62,8 +62,6 @@ export interface TTSOptions {
   /**
    * The index of the selected voice that will be used to speak the utterance.
    * Possible voices can be queried using `getSupportedVoices`.
-   *
-   * Only available for Web.
    */
   voice?: number;
   /**

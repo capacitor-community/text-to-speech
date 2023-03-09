@@ -35,6 +35,7 @@ public class TextToSpeechPlugin extends Plugin {
         float rate = call.getFloat("rate", 1.0f);
         float pitch = call.getFloat("pitch", 1.0f);
         float volume = call.getFloat("volume", 1.0f);
+        int voice = call.getInt("voice", -1);
 
         boolean isLanguageSupported = implementation.isLanguageSupported(lang);
         if (!isLanguageSupported) {
@@ -55,7 +56,7 @@ public class TextToSpeechPlugin extends Plugin {
         };
 
         try {
-            implementation.speak(text, lang, rate, pitch, volume, call.getCallbackId(), resultCallback);
+            implementation.speak(text, lang, rate, pitch, volume, voice, call.getCallbackId(), resultCallback);
         } catch (Exception ex) {
             call.reject(ex.getLocalizedMessage());
         }
