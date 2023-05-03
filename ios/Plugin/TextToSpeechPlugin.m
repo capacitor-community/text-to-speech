@@ -10,4 +10,6 @@ CAP_PLUGIN(TextToSpeechPlugin, "TextToSpeech",
            CAP_PLUGIN_METHOD(getSupportedLanguages, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(getSupportedVoices, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(isLanguageSupported, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(setVolume, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getVolume, CAPPluginReturnPromise);
 )

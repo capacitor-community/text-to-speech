@@ -14,6 +14,7 @@ public class TextToSpeechPlugin extends Plugin {
 
     public static final String ERROR_UTTERANCE = "Failed to read text.";
     public static final String ERROR_UNSUPPORTED_LANGUAGE = "This language is not supported.";
+    public static final String ERROR_VOLUME_MISSING = "volume must be provided.";
 
     private TextToSpeech implementation;
 
@@ -119,6 +120,35 @@ public class TextToSpeechPlugin extends Plugin {
         try {
             implementation.openInstall();
             call.resolve();
+        } catch (Exception ex) {
+            call.reject(ex.getLocalizedMessage());
+        }
+    }
+
+    @PluginMethod
+    public void setVolume(PluginCall call) {
+        try {
+            Float volume = call.getFloat("volume");
+            if (volume == null) {
+                call.reject(ERROR_VOLUME_MISSING);
+                return;
+            }
+
+            implementation.setVolume(volume);
+            call.resolve();
+        } catch (Exception ex) {
+            call.reject(ex.getLocalizedMessage());
+        }
+    }
+
+    @PluginMethod
+    public void getVolume(PluginCall call) {
+        try {
+            float volume = implementation.getVolume();
+
+            JSObject ret = new JSObject();
+            ret.put("volume", volume);
+            call.resolve(ret);
         } catch (Exception ex) {
             call.reject(ex.getLocalizedMessage());
         }

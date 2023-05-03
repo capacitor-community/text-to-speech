@@ -27,12 +27,14 @@ export interface TextToSpeechPlugin {
    * Only available for Android.
    */
   openInstall(): Promise<void>;
+  setVolume(options: SetVolumeOptions): Promise<void>;
+  getVolume(): Promise<GetVolumeOptions>;
 }
 
 export interface TTSOptions {
   /**
    * The text that will be synthesised when the utterance is spoken.
-   * 
+   *
    * @example "Hello world"
    */
   text: string;
@@ -84,32 +86,40 @@ export interface TTSOptions {
 export interface SpeechSynthesisVoice {
   /**
    * Specifies whether the voice is the default voice for the current app (`true`) or not (`false`).
-   * 
+   *
    * @example false
    */
   default: boolean;
   /**
    * BCP 47 language tag indicating the language of the voice.
-   * 
+   *
    * @example "en-US"
    */
   lang: string;
   /**
    * Specifies whether the voice is supplied by a local (`true`) or remote (`false`) speech synthesizer service.
-   * 
+   *
    * @example true
    */
   localService: boolean;
   /**
    * Human-readable name that represents the voice.
-   * 
+   *
    * @example "Microsoft Zira Desktop - English (United States)"
    */
   name: string;
   /**
    * Type of URI and location of the speech synthesis service for this voice.
-   * 
+   *
    * @example "urn:moz-tts:sapi:Microsoft Zira Desktop - English (United States)?en-US"
    */
   voiceURI: string;
+}
+
+export interface SetVolumeOptions {
+  volume: number;
+}
+
+export interface GetVolumeOptions {
+  volume: number;
 }

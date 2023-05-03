@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
@@ -163,6 +164,20 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         Locale locale = Locale.forLanguageTag(lang);
         int result = tts.isLanguageAvailable(locale);
         return result == tts.LANG_AVAILABLE || result == tts.LANG_COUNTRY_AVAILABLE || result == tts.LANG_COUNTRY_VAR_AVAILABLE;
+    }
+
+    public void setVolume(float percent) {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int volume = (int) (maxVolume*percent);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_SHOW_UI);
+    }
+
+    public float getVolume() {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        return (float) volume / maxVolume;
     }
 
     public void onDestroy() {

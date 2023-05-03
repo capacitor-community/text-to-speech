@@ -95,6 +95,8 @@ const isLanguageSupported = async (lang: string) => {
 * [`getSupportedVoices()`](#getsupportedvoices)
 * [`isLanguageSupported(...)`](#islanguagesupported)
 * [`openInstall()`](#openinstall)
+* [`setVolume(...)`](#setvolume)
+* [`getVolume()`](#getvolume)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -184,6 +186,30 @@ Only available for Android.
 --------------------
 
 
+### setVolume(...)
+
+```typescript
+setVolume(options: SetVolumeOptions) => Promise<void>
+```
+
+| Param         | Type                                                          |
+| ------------- | ------------------------------------------------------------- |
+| **`options`** | <code><a href="#setvolumeoptions">SetVolumeOptions</a></code> |
+
+--------------------
+
+
+### getVolume()
+
+```typescript
+getVolume() => Promise<GetVolumeOptions>
+```
+
+**Returns:** <code>Promise&lt;<a href="#getvolumeoptions">GetVolumeOptions</a>&gt;</code>
+
+--------------------
+
+
 ### Interfaces
 
 
@@ -211,6 +237,20 @@ The <a href="#speechsynthesisvoice">SpeechSynthesisVoice</a> interface represent
 | **`localService`** | <code>boolean</code> | Specifies whether the voice is supplied by a local (`true`) or remote (`false`) speech synthesizer service. |
 | **`name`**         | <code>string</code>  | Human-readable name that represents the voice.                                                              |
 | **`voiceURI`**     | <code>string</code>  | Type of URI and location of the speech synthesis service for this voice.                                    |
+
+
+#### SetVolumeOptions
+
+| Prop         | Type                |
+| ------------ | ------------------- |
+| **`volume`** | <code>number</code> |
+
+
+#### GetVolumeOptions
+
+| Prop         | Type                |
+| ------------ | ------------------- |
+| **`volume`** | <code>number</code> |
 
 </docgen-api>
 

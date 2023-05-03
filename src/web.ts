@@ -1,6 +1,11 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { TextToSpeechPlugin, TTSOptions } from './definitions';
+import type {
+  GetVolumeOptions,
+  SetVolumeOptions,
+  TextToSpeechPlugin,
+  TTSOptions,
+} from './definitions';
 
 export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   private speechSynthesis: SpeechSynthesis | null = null;
@@ -64,6 +69,14 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   }
 
   public async openInstall(): Promise<void> {
+    this.throwUnimplementedError();
+  }
+
+  public async setVolume(_options: SetVolumeOptions): Promise<void> {
+    this.throwUnimplementedError();
+  }
+
+  public async getVolume(): Promise<GetVolumeOptions> {
     this.throwUnimplementedError();
   }
 

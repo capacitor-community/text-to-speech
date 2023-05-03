@@ -1,5 +1,6 @@
 import AVFoundation
 import Capacitor
+import MediaPlayer
 
 @objc public class TextToSpeech: NSObject, AVSpeechSynthesizerDelegate {
     let synthesizer = AVSpeechSynthesizer()
@@ -62,6 +63,21 @@ import Capacitor
     @objc public func isLanguageSupported(_ lang: String) -> Bool {
         let voice = AVSpeechSynthesisVoice(language: lang)
         return voice != nil
+    }
+    
+    @objc public func setVolume(_ volume: Float, completion: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            let volumeView = MPVolumeView()
+            let slider = volumeView.subviews.first as? UISlider
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+                slider?.value = volume
+                completion()
+            }
+        }
+    }
+    
+    @objc public func getVolume() -> Float {
+        return AVAudioSession.sharedInstance().outputVolume
     }
 
     // Adjust rate for a closer match to other platform.

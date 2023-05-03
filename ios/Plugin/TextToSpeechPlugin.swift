@@ -9,6 +9,8 @@ import AVFoundation
 @objc(TextToSpeechPlugin)
 public class TextToSpeechPlugin: CAPPlugin {
     private static let errorUnsupportedLanguage = "This language is not supported."
+    private let errorVolumeMissing = "volume must be provided."
+    private let errorVolumeInvalid = "volume must be a value between 0 and 1."
 
     private let implementation = TextToSpeech()
 
@@ -75,6 +77,28 @@ public class TextToSpeechPlugin: CAPPlugin {
         let isLanguageSupported = self.implementation.isLanguageSupported(lang)
         call.resolve([
             "supported": isLanguageSupported
+        ])
+    }
+    
+    @objc func setVolume(_ call: CAPPluginCall) {
+        guard let volume = call.getFloat("volume") else {
+            call.reject(self.errorVolumeMissing)
+            return
+        }
+        if volume < 0 || volume > 1 {
+            call.reject(self.errorVolumeInvalid)
+            return
+        }
+        
+        self.implementation.setVolume(volume, completion: {
+            call.resolve()
+        })
+    }
+    
+    @objc func getVolume(_ call: CAPPluginCall) {
+        let volume = self.implementation.getVolume()
+        call.resolve([
+            "volume": volume
         ])
     }
 }
