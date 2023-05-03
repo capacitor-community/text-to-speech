@@ -61,10 +61,10 @@ public class TextToSpeechPlugin: CAPPlugin {
                 "localService": true,
                 "name": voice.name,
                 "voiceURI": voice.identifier
-            ] as [String : Any]
+            ] as [String: Any]
             res.append(lang)
         }
-        
+
         call.resolve([
             "voices": res
         ])
