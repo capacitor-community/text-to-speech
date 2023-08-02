@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/text-to-speech",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Capacitor plugin for synthesizing speech from text.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

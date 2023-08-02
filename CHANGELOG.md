@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/capacitor-community/text-to-speech/compare/v3.0.0...v3.0.1) (2023-08-02)
+
+
+### Bug Fixes
+
+* **android:** `java.lang.NoClassDefFoundError` error ([#109](https://github.com/capacitor-community/text-to-speech/issues/109)) ([a3d2add](https://github.com/capacitor-community/text-to-speech/commit/a3d2add74e233fbfb09aaeb11e65a2c0e830630e))
+
 ## [3.0.0](https://github.com/capacitor-community/text-to-speech/compare/v2.1.0...v3.0.0) (2023-05-04)
 
 
