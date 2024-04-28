@@ -124,12 +124,8 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         }
 
         Collections.sort(
-            orderedVoices,
-            new Comparator<Voice>() {
-                public int compare(Voice v1, Voice v2) {
-                    return v1.hashCode() - v2.hashCode();
-                }
-            }
+          orderedVoices,
+          Comparator.comparing(Voice::getName)
         );
 
         return orderedVoices;
