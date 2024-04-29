@@ -123,10 +123,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             orderedVoices.add(supportedVoice);
         }
 
-        Collections.sort(
-          orderedVoices,
-          Comparator.comparing(Voice::hashCode)
-        );
+        Collections.sort(orderedVoices, Comparator.comparing(Voice::hashCode));
 
         return orderedVoices;
     }
