@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [4.0.1](https://github.com/capacitor-community/text-to-speech/compare/v4.0.0...v4.0.1) (2024-04-29)
 
+### Bug Fixes
+
+* **android:** comparison method violates its general contract ([ada706e](https://github.com/capacitor-community/text-to-speech/commit/ada706ed26ea99e8d3a6bc66d509b0528a6203c3))
+
 ## [4.0.0](https://github.com/capacitor-community/text-to-speech/compare/v3.0.1...v4.0.0) (2024-04-16)
 
 
