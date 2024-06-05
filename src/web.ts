@@ -16,6 +16,10 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     }
   }
 
+  public async initialize(): Promise<void> {
+    return;
+  }
+
   public async speak(options: TTSOptions): Promise<void> {
     if (!this.speechSynthesis) {
       this.throwUnsupportedError();

@@ -1,5 +1,13 @@
 export interface TextToSpeechPlugin {
   /**
+   * Initializes the TTS engine.
+   *
+   * This method should be called before any other methods.
+   *
+   * @since 4.1.0
+   */
+  initialize(options: InitializeOptions): Promise<void>;
+  /**
    * Starts the TTS engine and plays the desired text.
    */
   speak(options: TTSOptions): Promise<void>;
@@ -27,6 +35,21 @@ export interface TextToSpeechPlugin {
    * Only available for Android.
    */
   openInstall(): Promise<void>;
+}
+
+/**
+ * @since 4.1.0
+ */
+export interface InitializeOptions {
+  /**
+   * The engine to use for TTS.
+   *
+   * Only available for Android.
+   *
+   * @example "com.google.android.tts"
+   * @since 4.1.0
+   */
+  engine?: string;
 }
 
 export interface TTSOptions {

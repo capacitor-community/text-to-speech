@@ -14,12 +14,36 @@ public class TextToSpeechPlugin extends Plugin {
 
     public static final String ERROR_UTTERANCE = "Failed to read text.";
     public static final String ERROR_UNSUPPORTED_LANGUAGE = "This language is not supported.";
+    public static final String ERROR_INITIALIZATION_FAILED = "Failed to initialize TextToSpeech.";
 
     private TextToSpeech implementation;
 
     @Override
     public void load() {
         implementation = new TextToSpeech(getContext());
+    }
+
+    @PluginMethod
+    public void initialize(PluginCall call) {
+        try {
+            String engine = call.getString("engine");
+
+            Callback callback = new Callback() {
+                @Override
+                public void error(Exception exception) {
+                    call.reject(exception.getLocalizedMessage());
+                }
+
+                @Override
+                public void success() {
+                    call.resolve();
+                }
+            };
+
+            implementation.initialize(engine, callback);
+        } catch (Exception ex) {
+            call.reject(ex.getLocalizedMessage());
+        }
     }
 
     @PluginMethod
@@ -43,20 +67,20 @@ public class TextToSpeechPlugin extends Plugin {
             return;
         }
 
-        SpeakResultCallback resultCallback = new SpeakResultCallback() {
+        Callback callback = new Callback() {
             @Override
-            public void onDone() {
-                call.resolve();
+            public void error(Exception exception) {
+                call.reject(exception.getLocalizedMessage());
             }
 
             @Override
-            public void onError() {
-                call.reject(ERROR_UTTERANCE);
+            public void success() {
+                call.resolve();
             }
         };
 
         try {
-            implementation.speak(text, lang, rate, pitch, volume, voice, call.getCallbackId(), resultCallback);
+            implementation.speak(text, lang, rate, pitch, volume, voice, call.getCallbackId(), callback);
         } catch (Exception ex) {
             call.reject(ex.getLocalizedMessage());
         }
