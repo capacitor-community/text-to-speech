@@ -89,6 +89,7 @@ const isLanguageSupported = async (lang: string) => {
 
 <docgen-index>
 
+* [`initialize(...)`](#initialize)
 * [`speak(...)`](#speak)
 * [`stop()`](#stop)
 * [`getSupportedLanguages()`](#getsupportedlanguages)
@@ -101,6 +102,25 @@ const isLanguageSupported = async (lang: string) => {
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+### initialize(...)
+
+```typescript
+initialize(options: InitializeOptions) => Promise<void>
+```
+
+Initializes the TTS engine.
+
+This method should be called before any other methods.
+
+| Param         | Type                                                            |
+| ------------- | --------------------------------------------------------------- |
+| **`options`** | <code><a href="#initializeoptions">InitializeOptions</a></code> |
+
+**Since:** 4.1.0
+
+--------------------
+
 
 ### speak(...)
 
@@ -185,6 +205,13 @@ Only available for Android.
 
 
 ### Interfaces
+
+
+#### InitializeOptions
+
+| Prop         | Type                | Description                                            | Since |
+| ------------ | ------------------- | ------------------------------------------------------ | ----- |
+| **`engine`** | <code>string</code> | The engine to use for TTS. Only available for Android. | 4.1.0 |
 
 
 #### TTSOptions
