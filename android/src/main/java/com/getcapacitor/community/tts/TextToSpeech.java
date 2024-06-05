@@ -12,9 +12,7 @@ import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
 import android.util.Log;
-
 import androidx.annotation.Nullable;
-
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import java.util.ArrayList;
@@ -64,16 +62,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         createTextToSpeechInstance(engine);
     }
 
-    public void speak(
-        String text,
-        String lang,
-        float rate,
-        float pitch,
-        float volume,
-        int voice,
-        String callbackId,
-        Callback callback
-    ) {
+    public void speak(String text, String lang, float rate, float pitch, float volume, int voice, String callbackId, Callback callback) {
         tts.stop();
         tts.setOnUtteranceProgressListener(
             new UtteranceProgressListener() {
