@@ -30,20 +30,6 @@ npm install @capacitor-community/text-to-speech
 npx cap sync
 ```
 
-### Android
-
-According to the [Android documentation](https://developer.android.com/reference/android/speech/tts/TextToSpeech), apps targeting **Android 11** should declare [TextToSpeech.Engine.INTENT_ACTION_TTS_SERVICE](https://developer.android.com/reference/android/speech/tts/TextToSpeech.Engine#INTENT_ACTION_TTS_SERVICE) in the queries elements of their manifest:
-
-```xml
-<queries>
-  <intent>
-    <action android:name="android.intent.action.TTS_SERVICE" />
-  </intent>
-</queries>
-```
-
-[Here](https://github.com/robingenz/capacitor-plugin-demo/commit/b7dc6c6d6652be9356d354df1faeb6a40e442797) you can find an example commit.
-
 ## Configuration
 
 No configuration required for this plugin.
