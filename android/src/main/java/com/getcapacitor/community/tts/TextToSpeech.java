@@ -13,7 +13,6 @@ import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
@@ -123,7 +122,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             orderedVoices.add(supportedVoice);
         }
 
-        Collections.sort(orderedVoices, Comparator.comparing(Voice::hashCode));
+        Collections.sort(orderedVoices, (v1, v2) -> v1.hashCode() - v2.hashCode());
 
         return orderedVoices;
     }
