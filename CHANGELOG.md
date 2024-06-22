@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/capacitor-community/text-to-speech/compare/v4.0.1...v4.0.2) (2024-06-22)
+
+
+### Bug Fixes
+
+* **android:** `getSupportedVoices()` is not available for api levels < 24 ([#124](https://github.com/capacitor-community/text-to-speech/issues/124)) ([0ccace8](https://github.com/capacitor-community/text-to-speech/commit/0ccace825ce67ec75495b202a9fc505bc0c64ce4))
+* **android:** add queries in the AndroidManifest.xml ([#121](https://github.com/capacitor-community/text-to-speech/issues/121)) ([8c3594b](https://github.com/capacitor-community/text-to-speech/commit/8c3594b1df4b6185a472ef2e9e59a1ba3a21a981))
+
 ### [4.0.1](https://github.com/capacitor-community/text-to-speech/compare/v4.0.0...v4.0.1) (2024-04-29)
 
 ### Bug Fixes
