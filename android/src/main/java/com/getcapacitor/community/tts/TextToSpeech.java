@@ -13,7 +13,6 @@ import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
@@ -116,6 +115,9 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         return result;
     }
 
+    /**
+     * @return Ordered list of voices. The order is guaranteed to remain the same as long as the voices in tts.getVoices() do not change.
+     */
     public ArrayList<Voice> getSupportedVoicesOrdered() {
         Set<Voice> supportedVoices = tts.getVoices();
         ArrayList<Voice> orderedVoices = new ArrayList<Voice>();
@@ -123,7 +125,8 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
             orderedVoices.add(supportedVoice);
         }
 
-        Collections.sort(orderedVoices, Comparator.comparing(Voice::hashCode));
+        //voice.getName() is guaranteed to be unique, so will be used for sorting.
+        Collections.sort(orderedVoices, (v1, v2) -> v1.getName().compareTo(v2.getName()));
 
         return orderedVoices;
     }
