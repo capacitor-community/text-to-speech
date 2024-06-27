@@ -1,5 +1,8 @@
 package com.getcapacitor.community.tts;
 
+import static com.getcapacitor.community.tts.TextToSpeechPlugin.ERROR_INITIALIZATION_FAILED;
+import static com.getcapacitor.community.tts.TextToSpeechPlugin.ERROR_UTTERANCE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
 import android.util.Log;
+import androidx.annotation.Nullable;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import java.util.ArrayList;
@@ -26,10 +30,12 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
     private int initializationStatus;
     private JSObject[] supportedVoices = null;
 
+    private Callback initializeCallback;
+
     TextToSpeech(Context context) {
         this.context = context;
         try {
-            tts = new android.speech.tts.TextToSpeech(context, this);
+            createTextToSpeechInstance(null);
         } catch (Exception ex) {
             Log.d(LOG_TAG, ex.getLocalizedMessage());
         }
@@ -38,18 +44,24 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
     @Override
     public void onInit(int status) {
         this.initializationStatus = status;
+        if (initializeCallback != null) {
+            if (status == android.speech.tts.TextToSpeech.SUCCESS) {
+                initializeCallback.success();
+            } else {
+                Exception exception = new Exception(ERROR_INITIALIZATION_FAILED);
+                initializeCallback.error(exception);
+            }
+            initializeCallback = null;
+        }
     }
 
-    public void speak(
-        String text,
-        String lang,
-        float rate,
-        float pitch,
-        float volume,
-        int voice,
-        String callbackId,
-        SpeakResultCallback resultCallback
-    ) {
+    public void initialize(@Nullable String engine, Callback callback) {
+        initializeCallback = callback;
+        destroyTextToSpeechInstance();
+        createTextToSpeechInstance(engine);
+    }
+
+    public void speak(String text, String lang, float rate, float pitch, float volume, int voice, String callbackId, Callback callback) {
         tts.stop();
         tts.setOnUtteranceProgressListener(
             new UtteranceProgressListener() {
@@ -58,12 +70,13 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
 
                 @Override
                 public void onDone(String utteranceId) {
-                    resultCallback.onDone();
+                    callback.success();
                 }
 
                 @Override
                 public void onError(String utteranceId) {
-                    resultCallback.onError();
+                    Exception exception = new Exception(ERROR_UTTERANCE);
+                    callback.error(exception);
                 }
             }
         );
@@ -169,11 +182,15 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
     }
 
     public void onDestroy() {
-        if (tts == null) {
-            return;
+        destroyTextToSpeechInstance();
+    }
+
+    private void createTextToSpeechInstance(@Nullable String engine) {
+        if (engine == null) {
+            this.tts = new android.speech.tts.TextToSpeech(context, this);
+        } else {
+            this.tts = new android.speech.tts.TextToSpeech(context, this, engine);
         }
-        tts.stop();
-        tts.shutdown();
     }
 
     private JSObject convertVoiceToJSObject(Voice voice) {
@@ -185,5 +202,14 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         obj.put("localService", !voice.isNetworkConnectionRequired());
         obj.put("default", false);
         return obj;
+    }
+
+    private void destroyTextToSpeechInstance() {
+        if (tts == null) {
+            return;
+        }
+        tts.stop();
+        tts.shutdown();
+        tts = null;
     }
 }
