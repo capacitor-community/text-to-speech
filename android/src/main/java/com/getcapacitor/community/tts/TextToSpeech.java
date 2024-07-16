@@ -65,6 +65,13 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
                 public void onError(String utteranceId) {
                     resultCallback.onError();
                 }
+
+                @Override
+                public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                    String spokenWord = text.substring(start, end);
+                    resultCallback.onRangeStart(start, end, spokenWord);
+                }
+
             }
         );
 

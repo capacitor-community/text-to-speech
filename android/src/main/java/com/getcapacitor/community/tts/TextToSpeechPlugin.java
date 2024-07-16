@@ -7,6 +7,8 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+import android.util.Base64;
+
 @CapacitorPlugin(name = "TextToSpeech")
 public class TextToSpeechPlugin extends Plugin {
 
@@ -52,6 +54,15 @@ public class TextToSpeechPlugin extends Plugin {
             @Override
             public void onError() {
                 call.reject(ERROR_UTTERANCE);
+            }
+
+            @Override
+            public void onRangeStart(int start, int end, String spokenWord) {
+                JSObject ret = new JSObject();
+                ret.put("start", start);
+                ret.put("end", end);
+                ret.put("spokenWord", spokenWord);
+                notifyListeners("onRangeStart", ret);
             }
         };
 
