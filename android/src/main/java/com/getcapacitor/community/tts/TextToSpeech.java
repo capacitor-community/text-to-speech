@@ -71,7 +71,6 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
                     String spokenWord = text.substring(start, end);
                     resultCallback.onRangeStart(start, end, spokenWord);
                 }
-
             }
         );
 

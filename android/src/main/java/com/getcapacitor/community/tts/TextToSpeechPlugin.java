@@ -1,13 +1,12 @@
 package com.getcapacitor.community.tts;
 
+import android.util.Base64;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-
-import android.util.Base64;
 
 @CapacitorPlugin(name = "TextToSpeech")
 public class TextToSpeechPlugin extends Plugin {

@@ -30,7 +30,14 @@ export interface TextToSpeechPlugin {
    */
   openInstall(): Promise<void>;
 
-  addListener(eventName: 'onRangeStart', listenerFunc: (info: { start: number; end: number; spokenWord: string }) => void): Promise<PluginListenerHandle>;
+  addListener(
+    eventName: 'onRangeStart',
+    listenerFunc: (info: {
+      start: number;
+      end: number;
+      spokenWord: string;
+    }) => void,
+  ): Promise<PluginListenerHandle>;
 }
 
 export interface TTSOptions {
