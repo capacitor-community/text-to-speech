@@ -1,5 +1,6 @@
 package com.getcapacitor.community.tts;
 
+import android.util.Base64;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
@@ -52,6 +53,15 @@ public class TextToSpeechPlugin extends Plugin {
             @Override
             public void onError() {
                 call.reject(ERROR_UTTERANCE);
+            }
+
+            @Override
+            public void onRangeStart(int start, int end, String spokenWord) {
+                JSObject ret = new JSObject();
+                ret.put("start", start);
+                ret.put("end", end);
+                ret.put("spokenWord", spokenWord);
+                notifyListeners("onRangeStart", ret);
             }
         };
 

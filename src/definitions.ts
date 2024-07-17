@@ -1,3 +1,5 @@
+import type { PluginListenerHandle } from '@capacitor/core';
+
 export interface TextToSpeechPlugin {
   /**
    * Starts the TTS engine and plays the desired text.
@@ -27,6 +29,15 @@ export interface TextToSpeechPlugin {
    * Only available for Android.
    */
   openInstall(): Promise<void>;
+
+  addListener(
+    eventName: 'onRangeStart',
+    listenerFunc: (info: {
+      start: number;
+      end: number;
+      spokenWord: string;
+    }) => void,
+  ): Promise<PluginListenerHandle>;
 }
 
 export interface TTSOptions {
