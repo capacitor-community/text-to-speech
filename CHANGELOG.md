@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/capacitor-community/text-to-speech/compare/v4.0.2...v4.1.0) (2024-07-17)
+
+
+### Features
+
+* add `onRangeStart` listener ([#132](https://github.com/capacitor-community/text-to-speech/issues/132)) ([d6681a6](https://github.com/capacitor-community/text-to-speech/commit/d6681a64bbdc296530fdd14cf02ba9f286efa405))
+
 ### [4.0.2](https://github.com/capacitor-community/text-to-speech/compare/v4.0.1...v4.0.2) (2024-06-22)
 
 
