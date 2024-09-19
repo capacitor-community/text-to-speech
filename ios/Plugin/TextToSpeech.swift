@@ -4,10 +4,21 @@ import Capacitor
 @objc public class TextToSpeech: NSObject, AVSpeechSynthesizerDelegate {
     let synthesizer = AVSpeechSynthesizer()
     var calls: [CAPPluginCall] = []
+    let queue = DispatchQueue(label: "backgroundAudioSetup", qos: .userInitiated, attributes: [], autoreleaseFrequency: .inherit, target: nil)
 
     override init() {
         super.init()
         self.synthesizer.delegate = self
+        // set session in background to avoid UI hangs.
+        queue.async {
+            do {
+                let avAudioSessionCategory: AVAudioSession.Category = .playback
+                try AVAudioSession.sharedInstance().setCategory(avAudioSessionCategory, mode: .default, options: .duckOthers)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                print("Error setting up AVAudioSession: \(error)")
+            }
+        }
     }
 
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
@@ -20,15 +31,6 @@ import Capacitor
 
     @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ voice: Int, _ call: CAPPluginCall) throws {
         self.synthesizer.stopSpeaking(at: .immediate)
-
-        var avAudioSessionCategory = AVAudioSession.Category.ambient
-        if category != "ambient" {
-            avAudioSessionCategory = AVAudioSession.Category.playback
-        }
-
-        try AVAudioSession.sharedInstance().setCategory(avAudioSessionCategory, mode: .default, options: AVAudioSession.CategoryOptions.duckOthers)
-        try AVAudioSession.sharedInstance().setActive(true)
-
         self.calls.append(call)
 
         let utterance = AVSpeechUtterance(string: text)
@@ -77,11 +79,6 @@ import Capacitor
     }
 
     @objc private func resolveCurrentCall() {
-        do {
-            try AVAudioSession.sharedInstance().setActive(false)
-        } catch {
-            CAPLog.print(error.localizedDescription)
-        }
         guard let call = calls.first else {
             return
         }
