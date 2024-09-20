@@ -81,6 +81,7 @@ const isLanguageSupported = async (lang: string) => {
 * [`getSupportedVoices()`](#getsupportedvoices)
 * [`isLanguageSupported(...)`](#islanguagesupported)
 * [`openInstall()`](#openinstall)
+* [`addListener('onRangeStart', ...)`](#addlisteneronrangestart)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -170,6 +171,22 @@ Only available for Android.
 --------------------
 
 
+### addListener('onRangeStart', ...)
+
+```typescript
+addListener(eventName: 'onRangeStart', listenerFunc: (info: { start: number; end: number; spokenWord: string; }) => void) => Promise<PluginListenerHandle>
+```
+
+| Param              | Type                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------- |
+| **`eventName`**    | <code>'onRangeStart'</code>                                                         |
+| **`listenerFunc`** | <code>(info: { start: number; end: number; spokenWord: string; }) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+--------------------
+
+
 ### Interfaces
 
 
@@ -197,6 +214,13 @@ The <a href="#speechsynthesisvoice">SpeechSynthesisVoice</a> interface represent
 | **`localService`** | <code>boolean</code> | Specifies whether the voice is supplied by a local (`true`) or remote (`false`) speech synthesizer service. |
 | **`name`**         | <code>string</code>  | Human-readable name that represents the voice.                                                              |
 | **`voiceURI`**     | <code>string</code>  | Type of URI and location of the speech synthesis service for this voice.                                    |
+
+
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
 
 </docgen-api>
 
