@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/capacitor-community/text-to-speech/compare/v4.1.0...v4.1.1) (2024-09-21)
+
+
+### Bug Fixes
+
+* **ios:** prevent UI hangs by optimizing AVAudioSession management ([#135](https://github.com/capacitor-community/text-to-speech/issues/135)) ([aaa4ace](https://github.com/capacitor-community/text-to-speech/commit/aaa4acef7d93b4e3e3a2744a59ad1cedfa77f44f))
+
 ## [4.1.0](https://github.com/capacitor-community/text-to-speech/compare/v4.0.2...v4.1.0) (2024-07-17)
 
 
