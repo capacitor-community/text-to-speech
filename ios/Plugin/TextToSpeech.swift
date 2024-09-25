@@ -68,14 +68,11 @@ import Capacitor
 
     // Adjust rate for a closer match to other platform.
     @objc private func adjustRate(_ rate: Float) -> Float {
-        let baseRate = AVSpeechUtteranceDefaultSpeechRate
-        if rate == 1 {
-            return baseRate
-        }
-        if rate > baseRate {
-            return baseRate + (rate * 0.025)
-        }
-        return rate / 2
+         let baseRate: Float = AVSpeechUtteranceDefaultSpeechRate
+         if (rate >= 1.0 ) {
+             return (0.1 * rate) + (baseRate - 0.1)
+         }
+        return rate * baseRate
     }
 
     @objc private func resolveCurrentCall() {
