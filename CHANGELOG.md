@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/capacitor-community/text-to-speech/compare/v4.1.1...v5.0.0) (2024-09-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ios:** The speech rate now has a linear behavior.
+
+### Bug Fixes
+
+* **ios:** linear rate adjustment ([#136](https://github.com/capacitor-community/text-to-speech/issues/136)) ([e573114](https://github.com/capacitor-community/text-to-speech/commit/e5731149ed2177538c988b5379160fba5d6212cc))
+
 ### [4.1.1](https://github.com/capacitor-community/text-to-speech/compare/v4.1.0...v4.1.1) (2024-09-21)
 
 
