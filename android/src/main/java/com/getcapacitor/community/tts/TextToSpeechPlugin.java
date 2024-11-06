@@ -1,6 +1,8 @@
 package com.getcapacitor.community.tts;
 
 import android.util.Base64;
+import android.util.Log;
+
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
@@ -37,6 +39,7 @@ public class TextToSpeechPlugin extends Plugin {
         float pitch = call.getFloat("pitch", 1.0f);
         float volume = call.getFloat("volume", 1.0f);
         int voice = call.getInt("voice", -1);
+        int queueStrategy = call.getInt("queueStrategy", 0);
 
         boolean isLanguageSupported = implementation.isLanguageSupported(lang);
         if (!isLanguageSupported) {
@@ -56,17 +59,18 @@ public class TextToSpeechPlugin extends Plugin {
             }
 
             @Override
-            public void onRangeStart(int start, int end, String spokenWord) {
+            public void onRangeStart(int start, int end) {
                 JSObject ret = new JSObject();
                 ret.put("start", start);
                 ret.put("end", end);
+                String spokenWord = text.substring(start, end);
                 ret.put("spokenWord", spokenWord);
                 notifyListeners("onRangeStart", ret);
             }
         };
 
         try {
-            implementation.speak(text, lang, rate, pitch, volume, voice, call.getCallbackId(), resultCallback);
+            implementation.speak(text, lang, rate, pitch, volume, voice, call.getCallbackId(), resultCallback, queueStrategy);
         } catch (Exception ex) {
             call.reject(ex.getLocalizedMessage());
         }
