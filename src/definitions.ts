@@ -87,6 +87,15 @@ export interface TTSOptions {
    * @default "ambient"
    */
   category?: string;
+  /**
+   * Select the strategy to adopt when several requests to speak overlap. 
+   * Possible values: `0` and `1`. 
+   * Use `0` to stop the current request when a new request is sent. 
+   * Use `1` to buffer the speech request. The request will be executed when all previous requests have been completed.
+   * 
+   * @default 0
+   */
+  queueStrategy?: number;
 }
 
 /**
