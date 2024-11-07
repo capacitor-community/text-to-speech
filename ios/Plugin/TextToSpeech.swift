@@ -1,6 +1,10 @@
 import AVFoundation
 import Capacitor
 
+enum QUEUE_STRATEGY: Int {
+    case QUEUE_ADD = 1, QUEUE_FLUSH = 0
+}
+
 @objc public class TextToSpeech: NSObject, AVSpeechSynthesizerDelegate {
     let synthesizer = AVSpeechSynthesizer()
     var calls: [CAPPluginCall] = []
@@ -29,8 +33,10 @@ import Capacitor
         self.resolveCurrentCall()
     }
 
-    @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ voice: Int, _ call: CAPPluginCall) throws {
-        self.synthesizer.stopSpeaking(at: .immediate)
+    @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ voice: Int, _ queueStrategy: Int, _ call: CAPPluginCall) throws {
+        if(queueStrategy == QUEUE_STRATEGY.QUEUE_FLUSH.rawValue) {
+            self.synthesizer.stopSpeaking(at: .immediate)
+        }
         self.calls.append(call)
 
         let utterance = AVSpeechUtterance(string: text)
