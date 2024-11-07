@@ -84,6 +84,7 @@ const isLanguageSupported = async (lang: string) => {
 * [`openInstall()`](#openinstall)
 * [`addListener('onRangeStart', ...)`](#addlisteneronrangestart)
 * [Interfaces](#interfaces)
+* [Enums](#enums)
 
 </docgen-index>
 
@@ -202,7 +203,7 @@ addListener(eventName: 'onRangeStart', listenerFunc: (info: { start: number; end
 | **`volume`**   | <code>number</code> | The volume that the utterance will be spoken at.                                                                                                                               | <code>1.0</code>       |
 | **`voice`**    | <code>number</code> | The index of the selected voice that will be used to speak the utterance. Possible voices can be queried using `getSupportedVoices`.                                           |                        |
 | **`category`** | <code>string</code> | Select the iOS Audio session category. Possible values: `ambient` and `playback`. Use `playback` to play audio even when the app is in the background. Only available for iOS. | <code>"ambient"</code> |
-| **`queueStrategy`** | <code>number</code> | Select the strategy to adopt when several requests to speak overlap. Possible values: `0` and `1`. Use `0` to stop the current request when a new request is sent. Use `1` to buffer the speech request. The request will be executed when all previous requests have been completed. | <code>0</code> |
+| **`queueStrategy`** | <code><a href="#queuestrategy">QueueStrategy</a></code> | Select the strategy to adopt when several requests to speak overlap. | <code>QueueStrategy.Flush</code> | 5.1.0 |
 
 
 #### SpeechSynthesisVoice
@@ -223,6 +224,17 @@ The <a href="#speechsynthesisvoice">SpeechSynthesisVoice</a> interface represent
 | Prop         | Type                                      |
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
+
+### Enums
+
+
+#### QueueStrategy
+
+| Members     | Value          | Description                                                                                                            |
+| ----------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **`Add`**   | <code>0</code> | Use `Add` to stop the current request when a new request is sent.                                                      |
+| **`Flush`** | <code>1</code> | Use `Flush` to buffer the speech request. The request will be executed when all previous requests have been completed. |
 
 </docgen-api>
 
