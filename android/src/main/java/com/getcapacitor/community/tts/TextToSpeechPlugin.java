@@ -2,7 +2,6 @@ package com.getcapacitor.community.tts;
 
 import android.util.Base64;
 import android.util.Log;
-
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;

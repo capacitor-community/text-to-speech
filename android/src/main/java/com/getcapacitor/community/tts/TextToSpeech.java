@@ -33,36 +33,36 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         try {
             tts = new android.speech.tts.TextToSpeech(context, this);
             tts.setOnUtteranceProgressListener(
-                    new UtteranceProgressListener() {
-                        @Override
-                        public void onStart(String utteranceId) {}
+                new UtteranceProgressListener() {
+                    @Override
+                    public void onStart(String utteranceId) {}
 
-                        @Override
-                        public void onDone(String utteranceId) {
-                            SpeakResultCallback callback = requests.get(utteranceId);
-                            if(callback != null) {
-                                callback.onDone();
-                                requests.remove(utteranceId);
-                            }
-                        }
-
-                        @Override
-                        public void onError(String utteranceId) {
-                            SpeakResultCallback callback = requests.get(utteranceId);
-                            if(callback != null) {
-                                callback.onError();
-                                requests.remove(utteranceId);
-                            }
-                        }
-
-                        @Override
-                        public void onRangeStart(String utteranceId, int start, int end, int frame) {
-                            SpeakResultCallback callback = requests.get(utteranceId);
-                            if(callback != null) {
-                                callback.onRangeStart(start, end);
-                            }
+                    @Override
+                    public void onDone(String utteranceId) {
+                        SpeakResultCallback callback = requests.get(utteranceId);
+                        if (callback != null) {
+                            callback.onDone();
+                            requests.remove(utteranceId);
                         }
                     }
+
+                    @Override
+                    public void onError(String utteranceId) {
+                        SpeakResultCallback callback = requests.get(utteranceId);
+                        if (callback != null) {
+                            callback.onError();
+                            requests.remove(utteranceId);
+                        }
+                    }
+
+                    @Override
+                    public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                        SpeakResultCallback callback = requests.get(utteranceId);
+                        if (callback != null) {
+                            callback.onRangeStart(start, end);
+                        }
+                    }
+                }
             );
         } catch (Exception ex) {
             Log.d(LOG_TAG, ex.getLocalizedMessage());
@@ -75,14 +75,14 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
     }
 
     public void speak(
-            String text,
-            String lang,
-            float rate,
-            float pitch,
-            float volume,
-            int voice,
-            String callbackId,
-            SpeakResultCallback resultCallback
+        String text,
+        String lang,
+        float rate,
+        float pitch,
+        float volume,
+        int voice,
+        String callbackId,
+        SpeakResultCallback resultCallback
     ) {
         speak(text, lang, rate, pitch, volume, voice, callbackId, resultCallback, android.speech.tts.TextToSpeech.QUEUE_FLUSH);
     }
@@ -98,7 +98,7 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
         SpeakResultCallback resultCallback,
         int queueStrategy
     ) {
-        if(queueStrategy != android.speech.tts.TextToSpeech.QUEUE_ADD) {
+        if (queueStrategy != android.speech.tts.TextToSpeech.QUEUE_ADD) {
             stop();
         }
         requests.put(callbackId, resultCallback);

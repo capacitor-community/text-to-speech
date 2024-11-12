@@ -42,13 +42,13 @@ export interface TextToSpeechPlugin {
 
 export enum QueueStrategy {
   /**
-   * Use `Flush` to stop the current request when a new request is sent. 
+   * Use `Flush` to stop the current request when a new request is sent.
    */
   Flush = 0,
   /**
    * Use `Add` to buffer the speech request. The request will be executed when all previous requests have been completed.
    */
-  Add = 1
+  Add = 1,
 }
 
 export interface TTSOptions {
@@ -99,8 +99,8 @@ export interface TTSOptions {
    */
   category?: string;
   /**
-   * Select the strategy to adopt when several requests to speak overlap. 
-   * 
+   * Select the strategy to adopt when several requests to speak overlap.
+   *
    * @since 5.1.0
    * @default QueueStrategy.Flush
    */

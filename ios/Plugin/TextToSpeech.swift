@@ -34,7 +34,7 @@ enum QUEUE_STRATEGY: Int {
     }
 
     @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ voice: Int, _ queueStrategy: Int, _ call: CAPPluginCall) throws {
-        if(queueStrategy == QUEUE_STRATEGY.QUEUE_FLUSH.rawValue) {
+        if queueStrategy == QUEUE_STRATEGY.QUEUE_FLUSH.rawValue {
             self.synthesizer.stopSpeaking(at: .immediate)
         }
         self.calls.append(call)
@@ -74,10 +74,10 @@ enum QUEUE_STRATEGY: Int {
 
     // Adjust rate for a closer match to other platform.
     @objc private func adjustRate(_ rate: Float) -> Float {
-         let baseRate: Float = AVSpeechUtteranceDefaultSpeechRate
-         if (rate >= 1.0 ) {
-             return (0.1 * rate) + (baseRate - 0.1)
-         }
+        let baseRate: Float = AVSpeechUtteranceDefaultSpeechRate
+        if rate >= 1.0 {
+            return (0.1 * rate) + (baseRate - 0.1)
+        }
         return rate * baseRate
     }
 
