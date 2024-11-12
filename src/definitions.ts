@@ -42,13 +42,13 @@ export interface TextToSpeechPlugin {
 
 export enum QueueStrategy {
   /**
-   * Use `Add` to stop the current request when a new request is sent. 
+   * Use `Flush` to stop the current request when a new request is sent. 
    */
-  Add = 0,
+  Flush = 0,
   /**
-   * Use `Flush` to buffer the speech request. The request will be executed when all previous requests have been completed.
+   * Use `Add` to buffer the speech request. The request will be executed when all previous requests have been completed.
    */
-  Flush = 1
+  Add = 1
 }
 
 export interface TTSOptions {

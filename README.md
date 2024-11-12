@@ -233,8 +233,8 @@ The <a href="#speechsynthesisvoice">SpeechSynthesisVoice</a> interface represent
 
 | Members     | Value          | Description                                                                                                            |
 | ----------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| **`Add`**   | <code>0</code> | Use `Add` to stop the current request when a new request is sent.                                                      |
-| **`Flush`** | <code>1</code> | Use `Flush` to buffer the speech request. The request will be executed when all previous requests have been completed. |
+| **`Flush`** | <code>0</code> | Use `Flush` to stop the current request when a new request is sent.                                                  |
+| **`Add`**   | <code>1</code> | Use `Add` to buffer the speech request. The request will be executed when all previous requests have been completed. |
 
 </docgen-api>
 
