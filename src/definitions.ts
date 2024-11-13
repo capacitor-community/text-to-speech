@@ -40,6 +40,17 @@ export interface TextToSpeechPlugin {
   ): Promise<PluginListenerHandle>;
 }
 
+export enum QueueStrategy {
+  /**
+   * Use `Flush` to stop the current request when a new request is sent.
+   */
+  Flush = 0,
+  /**
+   * Use `Add` to buffer the speech request. The request will be executed when all previous requests have been completed.
+   */
+  Add = 1,
+}
+
 export interface TTSOptions {
   /**
    * The text that will be synthesised when the utterance is spoken.
@@ -87,6 +98,13 @@ export interface TTSOptions {
    * @default "ambient"
    */
   category?: string;
+  /**
+   * Select the strategy to adopt when several requests to speak overlap.
+   *
+   * @since 5.1.0
+   * @default QueueStrategy.Flush
+   */
+  queueStrategy?: QueueStrategy;
 }
 
 /**
