@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/capacitor-community/text-to-speech/compare/v5.0.0...v5.1.0) (2024-11-13)
+
+
+### Features
+
+* add `queueStrategy` option ([#139](https://github.com/capacitor-community/text-to-speech/issues/139)) ([cb3e92c](https://github.com/capacitor-community/text-to-speech/commit/cb3e92cc04eb0fff6105bb342450fbc763a62c7a))
+
 ## [5.0.0](https://github.com/capacitor-community/text-to-speech/compare/v4.1.1...v5.0.0) (2024-09-25)
 
 
