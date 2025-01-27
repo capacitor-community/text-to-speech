@@ -20,9 +20,7 @@ export interface TextToSpeechPlugin {
   /**
    * Checks if a specific BCP 47 language tag is supported.
    */
-  isLanguageSupported(options: {
-    lang: string;
-  }): Promise<{ supported: boolean }>;
+  isLanguageSupported(options: { lang: string }): Promise<{ supported: boolean }>;
   /**
    * Verifies proper installation and availability of resource files on the system.
    *
@@ -32,11 +30,7 @@ export interface TextToSpeechPlugin {
 
   addListener(
     eventName: 'onRangeStart',
-    listenerFunc: (info: {
-      start: number;
-      end: number;
-      spokenWord: string;
-    }) => void,
+    listenerFunc: (info: { start: number; end: number; spokenWord: string }) => void,
   ): Promise<PluginListenerHandle>;
 }
 

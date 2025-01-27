@@ -43,7 +43,7 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
 
   public async getSupportedLanguages(): Promise<{ languages: string[] }> {
     const voices = this.getSpeechSynthesisVoices();
-    const languages = voices.map(voice => voice.lang);
+    const languages = voices.map((voice) => voice.lang);
     const filteredLanguages = languages.filter((v, i, a) => a.indexOf(v) == i);
     return { languages: filteredLanguages };
   }
@@ -55,9 +55,7 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     return { voices };
   }
 
-  public async isLanguageSupported(options: {
-    lang: string;
-  }): Promise<{ supported: boolean }> {
+  public async isLanguageSupported(options: { lang: string }): Promise<{ supported: boolean }> {
     const result = await this.getSupportedLanguages();
     const isLanguageSupported = result.languages.includes(options.lang);
     return { supported: isLanguageSupported };
@@ -67,9 +65,7 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     this.throwUnimplementedError();
   }
 
-  private createSpeechSynthesisUtterance(
-    options: TTSOptions,
-  ): SpeechSynthesisUtterance {
+  private createSpeechSynthesisUtterance(options: TTSOptions): SpeechSynthesisUtterance {
     const voices = this.getSpeechSynthesisVoices();
     const utterance = new SpeechSynthesisUtterance();
     const { text, lang, rate, pitch, volume, voice } = options;
@@ -103,9 +99,7 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
   }
 
   private throwUnsupportedError(): never {
-    throw this.unavailable(
-      'SpeechSynthesis API not available in this browser.',
-    );
+    throw this.unavailable('SpeechSynthesis API not available in this browser.');
   }
 
   private throwUnimplementedError(): never {
