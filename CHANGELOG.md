@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/capacitor-community/text-to-speech/compare/v5.1.0...v6.0.0) (2025-01-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* update to Capacitor 7 (#142)
+
+### Features
+
+* update to Capacitor 7 ([#142](https://github.com/capacitor-community/text-to-speech/issues/142)) ([f50b0c1](https://github.com/capacitor-community/text-to-speech/commit/f50b0c145dbf066c2c2cc6c36a1b0db24c07a08d))
+
 ## [5.1.0](https://github.com/capacitor-community/text-to-speech/compare/v5.0.0...v5.1.0) (2024-11-13)
 
 
