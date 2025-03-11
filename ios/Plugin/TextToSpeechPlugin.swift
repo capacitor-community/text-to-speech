@@ -10,7 +10,11 @@ import AVFoundation
 public class TextToSpeechPlugin: CAPPlugin {
     private static let errorUnsupportedLanguage = "This language is not supported."
 
-    private let implementation = TextToSpeech()
+    private var implementation: TextToSpeech!
+
+    public override func load() {
+        implementation = TextToSpeech(plugin: self)
+    }
 
     @objc public func speak(_ call: CAPPluginCall) {
         let text = call.getString("text") ?? ""
