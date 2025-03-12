@@ -105,33 +105,22 @@ public class TextToSpeech implements android.speech.tts.TextToSpeech.OnInitListe
 
         Locale locale = Locale.forLanguageTag(lang);
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            Bundle ttsParams = new Bundle();
-            ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
-            ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
+        Bundle ttsParams = new Bundle();
+        ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
+        ttsParams.putSerializable(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
 
-            tts.setLanguage(locale);
-            tts.setSpeechRate(rate);
-            tts.setPitch(pitch);
+        tts.setLanguage(locale);
+        tts.setSpeechRate(rate);
+        tts.setPitch(pitch);
 
-            if (voice >= 0) {
-                ArrayList<Voice> supportedVoices = getSupportedVoicesOrdered();
-                if (voice < supportedVoices.size()) {
-                    Voice newVoice = supportedVoices.get(voice);
-                    int resultCode = tts.setVoice(newVoice);
-                }
+        if (voice >= 0) {
+            ArrayList<Voice> supportedVoices = getSupportedVoicesOrdered();
+            if (voice < supportedVoices.size()) {
+                Voice newVoice = supportedVoices.get(voice);
+                int resultCode = tts.setVoice(newVoice);
             }
-            tts.speak(text, queueStrategy, ttsParams, callbackId);
-        } else {
-            HashMap<String, String> ttsParams = new HashMap<>();
-            ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackId);
-            ttsParams.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_VOLUME, Float.toString(volume));
-
-            tts.setLanguage(locale);
-            tts.setSpeechRate(rate);
-            tts.setPitch(pitch);
-            tts.speak(text, queueStrategy, ttsParams);
         }
+        tts.speak(text, queueStrategy, ttsParams, callbackId);
     }
 
     public void stop() {
