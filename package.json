@@ -1,6 +1,6 @@
 {
-  "name": "@capacitor-community/text-to-speech",
-  "version": "6.0.0",
+  "name": "@cantoo/text-to-speech",
+  "version": "7.0.0",
   "description": "Capacitor plugin for synthesizing speech from text.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -24,6 +24,13 @@
     "release": "standard-version"
   },
   "author": "Robin Genz <mail@robingenz.dev>",
+  "contributors": [
+    {
+      "email": "dev@cantoo.fr",
+      "name": "Cantoo",
+      "url": "https://cantoo.fr"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@capacitor/android": "7.0.0",
