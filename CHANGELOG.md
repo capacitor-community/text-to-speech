@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/capacitor-community/text-to-speech/compare/v6.0.0...v6.1.0) (2025-10-24)
+
+
+### Features
+
+* **ios:** Add SPM support ([#149](https://github.com/capacitor-community/text-to-speech/issues/149)) ([662c40f](https://github.com/capacitor-community/text-to-speech/commit/662c40f02325a671ec51c4164ea5186d393badf4))
+
 ## [6.0.0](https://github.com/capacitor-community/text-to-speech/compare/v5.1.0...v6.0.0) (2025-01-28)
 
 
