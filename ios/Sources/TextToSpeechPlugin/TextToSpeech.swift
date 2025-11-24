@@ -12,17 +12,8 @@ enum QUEUE_STRATEGY: Int {
 
     override init() {
         super.init()
+        self.synthesizer.usesApplicationAudioSession = false
         self.synthesizer.delegate = self
-        // set session in background to avoid UI hangs.
-        queue.async {
-            do {
-                let avAudioSessionCategory: AVAudioSession.Category = .playback
-                try AVAudioSession.sharedInstance().setCategory(avAudioSessionCategory, mode: .default, options: .duckOthers)
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch {
-                print("Error setting up AVAudioSession: \(error)")
-            }
-        }
     }
 
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
