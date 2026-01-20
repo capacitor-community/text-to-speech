@@ -76,27 +76,15 @@ const isLanguageSupported = async (lang: string) => {
 
 <docgen-index>
 
-- [Maintainers](#maintainers)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Demo](#demo)
-- [Usage](#usage)
-- [API](#api)
-  - [speak(...)](#speak)
-  - [stop()](#stop)
-  - [getSupportedLanguages()](#getsupportedlanguages)
-  - [getSupportedVoices()](#getsupportedvoices)
-  - [isLanguageSupported(...)](#islanguagesupported)
-  - [openInstall()](#openinstall)
-  - [addListener('onRangeStart', ...)](#addlisteneronrangestart-)
-  - [Interfaces](#interfaces)
-    - [TTSOptions](#ttsoptions)
-    - [SpeechSynthesisVoice](#speechsynthesisvoice)
-    - [PluginListenerHandle](#pluginlistenerhandle)
-  - [Enums](#enums)
-    - [QueueStrategy](#queuestrategy)
-- [Changelog](#changelog)
-- [License](#license)
+* [`speak(...)`](#speak)
+* [`stop()`](#stop)
+* [`getSupportedLanguages()`](#getsupportedlanguages)
+* [`getSupportedVoices()`](#getsupportedvoices)
+* [`isLanguageSupported(...)`](#islanguagesupported)
+* [`openInstall()`](#openinstall)
+* [`addListener('onRangeStart', ...)`](#addlisteneronrangestart-)
+* [Interfaces](#interfaces)
+* [Enums](#enums)
 
 </docgen-index>
 
