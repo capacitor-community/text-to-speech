@@ -9,11 +9,6 @@ All notable changes to this project will be documented in this file. See [commit
 
 * This plugin now supports Capacitor 8.
 
-* chore(deps): install `@types/node`
-* **ios:** The app no longer manages the audio session.
-
-Co-authored-by: laurie <>
-
 ### Features
 
 * Capacitor 8 support ([#156](https://github.com/capacitor-community/text-to-speech/issues/156)) ([2990277](https://github.com/capacitor-community/text-to-speech/commit/2990277b4f58900340bfe30b061a365fc90a2693))
