@@ -1,6 +1,27 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [8.0.0](https://github.com/capacitor-community/text-to-speech/compare/v6.1.0...v8.0.0) (2026-01-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* This plugin now supports Capacitor 8.
+
+* chore(deps): install `@types/node`
+* **ios:** The app no longer manages the audio session.
+
+Co-authored-by: laurie <>
+
+### Features
+
+* Capacitor 8 support ([#156](https://github.com/capacitor-community/text-to-speech/issues/156)) ([2990277](https://github.com/capacitor-community/text-to-speech/commit/2990277b4f58900340bfe30b061a365fc90a2693))
+
+
+### Bug Fixes
+
+* **ios:** create a separate audio session to automatically manage speech ([#155](https://github.com/capacitor-community/text-to-speech/issues/155)) ([7adcea1](https://github.com/capacitor-community/text-to-speech/commit/7adcea1db8bece35e179158ba1c77f6409214973))
 
 ## [6.1.0](https://github.com/capacitor-community/text-to-speech/compare/v6.0.0...v6.1.0) (2025-10-24)
 
