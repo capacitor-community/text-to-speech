@@ -9,11 +9,28 @@ enum QUEUE_STRATEGY: Int {
     let synthesizer = AVSpeechSynthesizer()
     var calls: [CAPPluginCall] = []
     let queue = DispatchQueue(label: "backgroundAudioSetup", qos: .userInitiated, attributes: [], autoreleaseFrequency: .inherit, target: nil)
+    private weak var plugin: TextToSpeechPlugin?
 
     override init() {
         super.init()
         self.synthesizer.usesApplicationAudioSession = false
         self.synthesizer.delegate = self
+    }
+
+    init(plugin: TextToSpeechPlugin) {
+        self.plugin = plugin
+        super.init()
+        self.synthesizer.delegate = self
+        // set session in background to avoid UI hangs.
+        queue.async {
+            do {
+                let avAudioSessionCategory: AVAudioSession.Category = .playback
+                try AVAudioSession.sharedInstance().setCategory(avAudioSessionCategory, mode: .default, options: .duckOthers)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                print("Error setting up AVAudioSession: \(error)")
+            }
+        }
     }
 
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
@@ -22,6 +39,24 @@ enum QUEUE_STRATEGY: Int {
 
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         self.resolveCurrentCall()
+    }
+
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
+        guard let plugin = self.plugin else { return }
+        
+        let start = characterRange.location
+        let end = characterRange.location + characterRange.length
+        
+        if let range = Range(characterRange, in: utterance.speechString) {
+            let spokenWord = String(utterance.speechString[range])
+            let ret = [
+                "start": start,
+                "end": end,
+                "spokenWord": spokenWord
+            ] as [String: Any]
+            
+            plugin.notifyListeners("onRangeStart", data: ret)
+        }
     }
 
     @objc public func speak(_ text: String, _ lang: String, _ rate: Float, _ pitch: Float, _ category: String, _ volume: Float, _ voice: Int, _ queueStrategy: Int, _ call: CAPPluginCall) throws {
