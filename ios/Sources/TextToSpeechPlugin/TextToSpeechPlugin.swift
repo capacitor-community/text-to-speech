@@ -23,14 +23,14 @@ public class TextToSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
     private let implementation = TextToSpeech()
 
     @objc public func speak(_ call: CAPPluginCall) {
-        let text = call.getString("text") ?? ""
-        let lang = call.getString("lang") ?? "en-US"
-        let rate = call.getFloat("rate") ?? 1.0
-        let pitch = call.getFloat("pitch") ?? 1.0
-        let volume = call.getFloat("volume") ?? 1.0
-        let voice = call.getInt("voice") ?? -1
-        let category = call.getString("category") ?? "ambient"
-        let queueStrategy = call.getInt("queueStrategy") ?? 0
+        let text = call.getString("text", "")
+        let lang = call.getString("lang", "en-US")
+        let rate = call.getFloat("rate", 1.0)
+        let pitch = call.getFloat("pitch", 1.0)
+        let volume = call.getFloat("volume", 1.0)
+        let voice = call.getInt("voice", -1)
+        let category = call.getString("category", "ambient")
+        let queueStrategy = call.getInt("queueStrategy", 0)
 
         let isLanguageSupported = implementation.isLanguageSupported(lang)
         guard isLanguageSupported else {
@@ -82,7 +82,7 @@ public class TextToSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func isLanguageSupported(_ call: CAPPluginCall) {
-        let lang = call.getString("lang") ?? ""
+        let lang = call.getString("lang", "")
         let isLanguageSupported = self.implementation.isLanguageSupported(lang)
         call.resolve([
             "supported": isLanguageSupported
