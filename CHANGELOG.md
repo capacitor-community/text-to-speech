@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [8.0.1](https://github.com/capacitor-community/text-to-speech/compare/v8.0.0...v8.0.1) (2026-06-07)
+
+
+### Bug Fixes
+
+* **web:** apply voice/volume/pitch options set to 0 ([#160](https://github.com/capacitor-community/text-to-speech/issues/160)) ([7d9a67a](https://github.com/capacitor-community/text-to-speech/commit/7d9a67acd36a14bc88ac87088426383e7bb891a0))
+
 ## [8.0.0](https://github.com/capacitor-community/text-to-speech/compare/v6.1.0...v8.0.0) (2026-01-20)
 
 
