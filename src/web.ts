@@ -69,16 +69,17 @@ export class TextToSpeechWeb extends WebPlugin implements TextToSpeechPlugin {
     const voices = this.getSpeechSynthesisVoices();
     const utterance = new SpeechSynthesisUtterance();
     const { text, lang, rate, pitch, volume, voice } = options;
-    if (voice) {
+    // Compare against undefined so an explicit 0 (a valid voice index, volume, or pitch) is applied.
+    if (voice !== undefined) {
       utterance.voice = voices[voice];
     }
-    if (volume) {
+    if (volume !== undefined) {
       utterance.volume = volume >= 0 && volume <= 1 ? volume : 1;
     }
-    if (rate) {
+    if (rate !== undefined) {
       utterance.rate = rate >= 0.1 && rate <= 10 ? rate : 1;
     }
-    if (pitch) {
+    if (pitch !== undefined) {
       utterance.pitch = pitch >= 0 && pitch <= 2 ? pitch : 2;
     }
     if (lang) {
